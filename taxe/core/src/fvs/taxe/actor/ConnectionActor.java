@@ -1,5 +1,6 @@
 package fvs.taxe.actor;
 
+import com.badlogic.gdx.Gdx;
 import gameLogic.map.IPositionable;
 
 import com.badlogic.gdx.graphics.Color;

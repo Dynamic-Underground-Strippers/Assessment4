@@ -1,5 +1,6 @@
 package fvs.taxe;
 
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import fvs.taxe.controller.Context;
 import fvs.taxe.controller.GoalController;
 import fvs.taxe.controller.ObstacleController;
@@ -90,7 +91,7 @@ public class GameScreen extends ScreenAdapter {
 	*/
 	public GameScreen(TaxeGame game) {
 		this.game = game;
-		stage = new Stage();
+		stage = new Stage(new FitViewport(TaxeGame.WIDTH, TaxeGame.HEIGHT));
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
 		gameLogic = Game.getInstance();
@@ -200,5 +201,10 @@ public class GameScreen extends ScreenAdapter {
 	public void dispose() {
 		mapTexture.dispose();
 		stage.dispose();
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		stage.getViewport().update(width, height);
 	}
 }

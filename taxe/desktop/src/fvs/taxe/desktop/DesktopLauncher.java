@@ -12,7 +12,6 @@ public class DesktopLauncher {
 		config.height = TaxeGame.HEIGHT;
 		config.width = TaxeGame.WIDTH;
 		config.title = "TaxE";
-		config.resizable = false;
 		//config.fullscreen = true;
 		new LwjglApplication(new TaxeGame(), config);
 	}

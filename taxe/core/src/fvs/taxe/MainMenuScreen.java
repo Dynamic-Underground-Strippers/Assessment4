@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**This class is used to set up the graphical interface of the main menu for the player. It is first used when the TaxeGame.java is instantiated.*/
 public class MainMenuScreen extends ScreenAdapter {
@@ -31,11 +33,13 @@ public class MainMenuScreen extends ScreenAdapter {
     /**Used to store the map texture which is placed in the background.*/
     private Texture mapTexture;
 
+    private Stage stage;
     /**Instantiation method. sets up bounds and camera.
 	 *@param game The main TaxeGame instance is assigned to the local variable game.
     */
     public MainMenuScreen(TaxeGame game) {
         this.game = game;
+        stage = new Stage(new FitViewport(TaxeGame.WIDTH, TaxeGame.HEIGHT));
         camera = new OrthographicCamera(TaxeGame.WIDTH, TaxeGame.HEIGHT);
         camera.setToOrtho(false);
 
@@ -103,4 +107,9 @@ public class MainMenuScreen extends ScreenAdapter {
         update();
         draw();
     }
+
+    @Override
+        public void resize(int width, int height) {
+            	stage.getViewport().update(width, height);
+            }
 }
