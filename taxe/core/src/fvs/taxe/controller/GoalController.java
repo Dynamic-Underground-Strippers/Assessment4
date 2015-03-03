@@ -63,7 +63,7 @@ public class GoalController {
 			y-=30;
 			TextButton button  = new TextButton(goal.toString(), context.getSkin());
 			button.setPosition(x,y);
-			button.addListener(new GoalClicked(goal));
+			button.addListener(new GoalClicked(goal,context));
 			goalButtons.addActor(button);
 		}
 
