@@ -194,7 +194,7 @@ public class Player {
     }
 
     public void removeGoal(Goal goal){
-        goals.remove(goal);
+        goal.setComplete();
         changed();
     }
 
