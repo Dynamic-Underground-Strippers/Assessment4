@@ -52,7 +52,7 @@ public class RouteController {
      */
     public RouteController(Context context) {
         this.context = context;
-
+        connections = new ArrayList<Connection>();
         StationController.subscribeStationClick(new StationClickListener() {
             @Override
             public void clicked(Station station) {
