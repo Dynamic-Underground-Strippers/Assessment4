@@ -24,7 +24,7 @@ public class Context {
     private RouteController routeController;
     
     /**A TopBarController for the context that can be get or set.*/
-    private TopBarController topBarController;
+    private SideBarController sideBarController;
 
     /**Instantiation method sets up private variables.
      * @param stage The stage to be used in the context
@@ -71,15 +71,15 @@ public class Context {
         this.routeController = routeController;
     }
 
-    /**@returns the Context's TopBarController.*/
-    public TopBarController getTopBarController() {
-        return topBarController;
+    /**@returns the Context's SideBarController.*/
+    public SideBarController getSideBarController() {
+        return sideBarController;
     }
-    /**Sets the TopBarController.
-     * @param topBarController The new TopBarController to be used in the Context.
+    /**Sets the SideBarController.
+     * @param sideBarController The new SideBarController to be used in the Context.
      */
-    public void setTopBarController(TopBarController topBarController) {
-        this.topBarController = topBarController;
+    public void setSideBarController(SideBarController sideBarController) {
+        this.sideBarController = sideBarController;
     }
 
 }

@@ -88,7 +88,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                     @Override
                     public void clicked(Station station) {
                     	if(station instanceof CollisionStation) {
-                    		context.getTopBarController().displayFlashMessage("Trains cannot be placed at junctions.", Color.RED);
+                    		context.getSideBarController().displayFlashMessage("Trains cannot be placed at junctions.", Color.RED);
                     		return;
                     	}
                     	

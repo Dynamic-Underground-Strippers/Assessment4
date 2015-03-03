@@ -1,7 +1,15 @@
 package fvs.taxe.controller;
 
+<<<<<<< HEAD
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+=======
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+>>>>>>> SideBar improvements
 import fvs.taxe.StationClickListener;
 import fvs.taxe.TaxeGame;
 import gameLogic.Game;
@@ -15,12 +23,6 @@ import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**Controller for using routing, with GUI*/
 public class RouteController {
@@ -105,6 +107,7 @@ public class RouteController {
      */
     private void addStationToRoute(Station station) {
         // the latest position chosen in the positions so far
+<<<<<<< HEAD
         if (positions.size() == 0) {
             if (editingRoute) {
                 //Checks whether the train's actor is paused due to a bug with blocked trains
@@ -158,6 +161,18 @@ public class RouteController {
                 //Sets the relevant boolean checking if the last node on the route is a junction or not
                 canEndRouting = !(station instanceof CollisionStation);
             }
+=======
+        IPositionable lastPosition =  positions.get(positions.size() - 1);
+        Station lastStation = context.getGameLogic().getMap().getStationFromPosition(lastPosition);
+
+        boolean hasConnection = context.getGameLogic().getMap().doesConnectionExist(station.getName(), lastStation.getName());
+        if(!hasConnection) {
+            context.getSideBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+        } else {
+            positions.add(station.getLocation());
+            connections.add(context.getGameLogic().getMap().getConnection(station.getName(), lastStation.getName()));
+            canEndRouting = !(station instanceof CollisionStation);
+>>>>>>> SideBar improvements
         }
     }
 
@@ -180,7 +195,7 @@ public class RouteController {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 if(!canEndRouting) {
-                    context.getTopBarController().displayFlashMessage("Your route must end at a station", Color.RED);
+                    context.getSideBarController().displayFlashMessage("Your route must end at a station", Color.RED);
                     return;
                 }
 
