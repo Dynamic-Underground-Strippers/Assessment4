@@ -1,5 +1,10 @@
 package fvs.taxe.controller;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import fvs.taxe.StationClickListener;
 import fvs.taxe.TaxeGame;
 import gameLogic.GameState;
@@ -11,12 +16,6 @@ import gameLogic.resource.Train;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**Controller for using routing, with GUI*/
 public class RouteController {
@@ -85,7 +84,7 @@ public class RouteController {
 
         boolean hasConnection = context.getGameLogic().getMap().doesConnectionExist(station.getName(), lastStation.getName());
         if(!hasConnection) {
-            context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+            context.getSideBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
         } else {
             positions.add(station.getLocation());
             connections.add(context.getGameLogic().getMap().getConnection(station.getName(), lastStation.getName()));
@@ -112,7 +111,7 @@ public class RouteController {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 if(!canEndRouting) {
-                    context.getTopBarController().displayFlashMessage("Your route must end at a station", Color.RED);
+                    context.getSideBarController().displayFlashMessage("Your route must end at a station", Color.RED);
                     return;
                 }
 

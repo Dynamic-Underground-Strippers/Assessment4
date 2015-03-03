@@ -1,22 +1,5 @@
 package fvs.taxe;
 
-import fvs.taxe.controller.Context;
-import fvs.taxe.controller.GoalController;
-import fvs.taxe.controller.ObstacleController;
-import fvs.taxe.controller.ResourceController;
-import fvs.taxe.controller.RouteController;
-import fvs.taxe.controller.ScoreController;
-import fvs.taxe.controller.StationController;
-import fvs.taxe.controller.TopBarController;
-import fvs.taxe.dialog.DialogEndGame;
-import gameLogic.Game;
-import gameLogic.GameState;
-import gameLogic.GameStateListener;
-import gameLogic.TurnListener;
-import gameLogic.map.Map;
-import gameLogic.map.Station;
-import gameLogic.obstacle.Rumble;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -25,6 +8,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import fvs.taxe.controller.*;
+import fvs.taxe.dialog.DialogEndGame;
+import gameLogic.Game;
+import gameLogic.GameState;
+import gameLogic.GameStateListener;
+import gameLogic.TurnListener;
+import gameLogic.map.Map;
+import gameLogic.map.Station;
+import gameLogic.obstacle.Rumble;
 
 /** This class displays the Game.java game state graphically to the player.*/
 public class GameScreen extends ScreenAdapter {
@@ -65,7 +57,7 @@ public class GameScreen extends ScreenAdapter {
     private StationController stationController;
     
     /**Controller for handling the graphical bar at the top of the game.*/
-    private TopBarController topBarController;
+    private SideBarController sideBarController;
     
     /**Controller for handling resources.*/
     private ResourceController resourceController;
@@ -104,7 +96,7 @@ public class GameScreen extends ScreenAdapter {
 		stage.addActor(tooltip);
 
 		stationController = new StationController(context, tooltip);
-		topBarController = new TopBarController(context);
+		sideBarController = new SideBarController(context);
 		resourceController = new ResourceController(context);
 		goalController = new GoalController(context);
 		routeController = new RouteController(context);
@@ -112,7 +104,7 @@ public class GameScreen extends ScreenAdapter {
 		scoreController = new ScoreController(context);
 
 		context.setRouteController(routeController);
-		context.setTopBarController(topBarController);
+		context.setSideBarController(sideBarController);
 
 		rumble = obstacleController.getRumble();
 
@@ -120,7 +112,7 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			public void changed() {
 				gameLogic.setState(GameState.ANIMATING);
-				topBarController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+				sideBarController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
 			}
 		});
 
@@ -191,9 +183,9 @@ public class GameScreen extends ScreenAdapter {
 		obstacleController.drawObstacleEffects();
 		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
 		goalController.drawCurrentPlayerGoals();
-		topBarController.drawBackground();
-		topBarController.drawLabels();
-		topBarController.drawEndTurnButton();
+		sideBarController.drawBackground();
+		sideBarController.drawLabels();
+		sideBarController.drawEndTurnButton();
 	}
 
 	@Override
