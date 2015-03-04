@@ -69,7 +69,7 @@ public class RouteController {
     public void begin(Train train) {
         //This method is called when the user wants to create a route
         this.train = train;
-
+        this.distance =0;
         //sets the relevant flags to show that a route is being created
         isRouting = true;
         context.getGameLogic().setState(GameState.ROUTING);
