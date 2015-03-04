@@ -171,7 +171,7 @@ public class TrainActor extends Image {
                                         //There is still the potential issue of two blocked trains colliding when they shouldn't, as it is impossible to know which connection a blocked train will occupy. i.e when one train is rerouted but not the other
 
                                         //TEMP??? - ONLY COLLIDE WHEN TRAINS ARE IN SAME DIRECTION
-                                        //TODO: DECIDE WHETHER THIS IS TEMPORARY OR PERMENTANT CHANGE
+                                        //TODO: DECIDE WHETHER THIS IS TEMPORARY OR PERMANENT CHANGE
                                         if (this.facingLeft == otherTrain.getActor().isFacingLeft())
                                             return otherTrain;
 
