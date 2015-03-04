@@ -1,5 +1,6 @@
 package gameLogic.map;
 
+import com.badlogic.gdx.graphics.Color;
 import fvs.taxe.actor.ConnectionActor;
 
 /**A connection describes the link between 2 stations.*/
@@ -56,6 +57,9 @@ public class Connection {
 		//This is run every turn to decrement the turns blocked on the connection if it is greater than 0
 		if (this.blocked > 0) {
 			this.blocked--;
+			if (this.blocked == 0)
+				this.actor.setConnectionColor(Color.BLACK);
+
 		}
 	}
 
@@ -65,6 +69,7 @@ public class Connection {
 
 	public void setBlocked(int turns) {
 		this.blocked = turns;
+		this.actor.setConnectionColor(Color.RED);
 	}
 
 }
