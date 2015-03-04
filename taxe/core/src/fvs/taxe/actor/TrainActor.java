@@ -1,6 +1,7 @@
 package fvs.taxe.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -13,7 +14,6 @@ import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
 import gameLogic.resource.Train;
 
-import java.awt.*;
 
 /**This class is a type of image specifically for creating Actors for Trains.*/
 public class TrainActor extends Image {
@@ -93,7 +93,7 @@ public class TrainActor extends Image {
             //This ensures that trains do not move through blocked connections when they are not supposed to.
 
             //find station train most recently passed
-            Station station = train.getHistory().get(train.getHistory().size() - 1).getFirst();
+            Station station = Game.getInstance().getMap().getStationByName(train.getHistory().get(train.getHistory().size() - 1).getFirst());
 //            Station station = Game.getInstance().getMap().getStationByName(stationName);
 
             // find index of this within route
@@ -131,7 +131,7 @@ public class TrainActor extends Image {
         previousX = getX();
     }
 
-    /**@returns the bounds of the TrainActor*/
+    /**returns the bounds of the TrainActor*/
     public Rectangle getBounds() {
         return bounds;
     }
@@ -176,4 +176,8 @@ public class TrainActor extends Image {
         }
         return null;
     }
+
+    public boolean getPaused() { return this.paused; }
+
+    public boolean isRecentlyPaused() { return this.recentlyPaused; }
 }
