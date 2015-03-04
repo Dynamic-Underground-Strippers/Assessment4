@@ -156,16 +156,16 @@ public class Train extends Resource {
     /** Get the history of the train
      * @return The list of pairs of stations and the turn number they arrived at the station
      */
-    public List<Tuple<String, Integer>> getHistory() {
+    public List<Tuple<Station, Integer>> getHistory() {
         return history;
     }
 
     /** Add a new history pairing of station and the turn the station was arrived at
-     * @param stationName The name of the station that the train has arrived at
+     * @param station The station that the train has arrived at
      * @param turn What turn number the train arrived at that given station
      */
-    public void addHistory(String stationName, int turn) {
-        history.add(new Tuple<String, Integer>(stationName, turn));
+    public void addHistory(Station station, int turn) {
+        history.add(new Tuple<Station, Integer>(station, turn));
     }
 
     @Override
@@ -173,5 +173,22 @@ public class Train extends Resource {
         if (actor != null) {
             actor.remove();
         }
+    }
+
+    public Station getLastStation() {
+        //Returns the station that the train has most recently visited
+        return this.history.get(history.size() - 1).getFirst();
+    }
+
+    public Station getNextStation() {
+        //Returns the next station along the route
+        Station last = getLastStation();
+        for (int i = 0; i < route.size() - 1; i++) {
+            Station station = route.get(i);
+            if (last.getName().equals(station.getName())) {
+                return route.get(i + 1);
+            }
+        }
+        return null;
     }
 }

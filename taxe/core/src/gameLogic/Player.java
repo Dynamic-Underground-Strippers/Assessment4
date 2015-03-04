@@ -207,7 +207,7 @@ public class Player {
     public int getPlayerNumber() {
     	return number;
     }
-    
+
     public List<Train> getTrains() {
         //Returns all of the player's trains
         ArrayList<Train> trains = new ArrayList<Train>();

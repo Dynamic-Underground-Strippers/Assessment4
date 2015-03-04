@@ -93,7 +93,7 @@ public class TrainActor extends Image {
             //This ensures that trains do not move through blocked connections when they are not supposed to.
 
             //find station train most recently passed
-            Station station = Game.getInstance().getMap().getStationByName(train.getHistory().get(train.getHistory().size() - 1).getFirst());
+            Station station = train.getHistory().get(train.getHistory().size() - 1).getFirst();
 //            Station station = Game.getInstance().getMap().getStationByName(stationName);
 
             // find index of this within route
