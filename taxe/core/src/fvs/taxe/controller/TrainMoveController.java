@@ -73,7 +73,7 @@ public class TrainMoveController {
 	private RunnableAction perStationAction(final Station station) {
 		return new RunnableAction() {
 			public void run() {
-				train.addHistory(station.getName(), context.getGameLogic().getPlayerManager().getTurnNumber());
+				train.addHistory(station, context.getGameLogic().getPlayerManager().getTurnNumber());
 				System.out.println("Added to history: passed " + station.getName() + " on turn "
 						+ context.getGameLogic().getPlayerManager().getTurnNumber());
 				
