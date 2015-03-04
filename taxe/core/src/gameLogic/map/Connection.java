@@ -12,6 +12,9 @@ public class Connection {
 	
 	/**The actor that represents this connection.*/
 	private ConnectionActor actor;
+
+	/**The number of turns blocked for -- 0 indicates unblocked*/
+	private int blocked;
 	
 	/**Instantiation method.
 	 * @param station1 The first station for the connection.
@@ -20,6 +23,7 @@ public class Connection {
 	public Connection(Station station1, Station station2) {
 		this.station1 = station1;
 		this.station2 = station2;
+		blocked = 0;
 	}
 	
 	/**@return The first station used in this connection.*/
@@ -43,4 +47,24 @@ public class Connection {
 	public ConnectionActor getActor(){
 		return this.actor;
 	}
+
+	public boolean isBlocked() {
+		return this.blocked > 0;
+	}
+
+	public void decrementBlocked() {
+		//This is run every turn to decrement the turns blocked on the connection if it is greater than 0
+		if (this.blocked > 0) {
+			this.blocked--;
+		}
+	}
+
+	public int getTurnsBlocked() {
+		return blocked;
+	}
+
+	public void setBlocked(int turns) {
+		this.blocked = turns;
+	}
+
 }
