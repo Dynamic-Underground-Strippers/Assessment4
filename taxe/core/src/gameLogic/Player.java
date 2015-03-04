@@ -208,5 +208,17 @@ public class Player {
     	return number;
     }
     
+    public List<Train> getTrains() {
+        //Returns all of the player's trains
+        ArrayList<Train> trains = new ArrayList<Train>();
+        for (Resource resource : resources) {
+            if (resource instanceof Train) {
+                Train train = (Train) resource;
+                trains.add(train);
+            }
+        }
+        return trains;
+    }
+    
     
 }
