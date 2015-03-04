@@ -58,7 +58,7 @@ public class Connection {
 		if (this.blocked > 0) {
 			this.blocked--;
 			if (this.blocked == 0)
-				this.actor.setConnectionColor(Color.BLACK);
+				this.actor.setConnectionColor(Color.GRAY);
 
 		}
 	}

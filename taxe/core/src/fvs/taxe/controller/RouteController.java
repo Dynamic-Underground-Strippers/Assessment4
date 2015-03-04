@@ -2,6 +2,7 @@ package fvs.taxe.controller;
 
 import fvs.taxe.StationClickListener;
 import fvs.taxe.TaxeGame;
+import gameLogic.Game;
 import gameLogic.GameState;
 import gameLogic.map.CollisionStation;
 import gameLogic.map.Connection;
@@ -154,7 +155,11 @@ public class RouteController {
      */
     public void drawRoute(Color color) {
         for (Connection connection : connections) {
-        	connection.getActor().setConnectionColor(color);
+            if ((connection.isBlocked()) && (!(Game.getInstance().getState() == GameState.PLACING) || (Game.getInstance().getState() == GameState.ROUTING))){
+                connection.getActor().setConnectionColor(Color.RED);
+            } else{
+                connection.getActor().setConnectionColor(color);
+            }
         }
     }
 }
