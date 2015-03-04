@@ -217,9 +217,6 @@ public class RouteController {
      * @param color The Color of the Route.
      */
     public void drawRoute(Color color) {
-        if(connections.size()==0){
-            return;
-        }
         for (Connection connection : connections) {
         	connection.getActor().setConnectionColor(color);
         }

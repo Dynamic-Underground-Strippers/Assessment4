@@ -10,7 +10,7 @@ public class PlayerManager {
 	
 	/**Which player's turn it is, represented by 1 or 0.*/
 	private int currentTurn = 0;
-	
+
 	/**The turn the game has reached.*/
 	private int turnNumber = 0;
 	
