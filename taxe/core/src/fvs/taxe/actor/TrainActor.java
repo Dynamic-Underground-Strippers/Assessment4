@@ -164,7 +164,12 @@ public class TrainActor extends Image {
                                         //Checks whether the two trains are recently paused, if either of them are then no collision should occur
                                         //This prevents the issue of two paused trains crashing when they shouldn't
                                         //There is still the potential issue of two blocked trains colliding when they shouldn't, as it is impossible to know which connection a blocked train will occupy. i.e when one train is rerouted but not the other
-                                        return otherTrain;
+
+                                        //TEMP??? - ONLY COLLIDE WHEN TRAINS ARE IN SAME DIRECTION
+                                        //TODO: DECIDE WHETHER THIS IS TEMPORARY OR PERMENTANT CHANGE
+                                        if (this.facingLeft == otherTrain.getActor().isFacingLeft())
+                                            return otherTrain;
+                                        
                                         //This is slightly limiting as it only allows two trains to collide with each other, whereas in theory more than 2 could collide, this is however very unlikely and due to complications
                                         //not necessary to factor in to our implementation at this stage. If you need to add more trains then you would have to build up a list of collided trains and then return it.
                                     }
@@ -185,4 +190,6 @@ public class TrainActor extends Image {
     public void setPaused(Boolean bool) { this.paused = bool; }
 
     public void setRecentlyPaused(Boolean bool) { this.recentlyPaused = bool; }
+
+    public boolean isFacingLeft() {return this.facingLeft; }
 }
