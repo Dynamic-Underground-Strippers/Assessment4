@@ -34,7 +34,7 @@ public class Train extends Resource {
     
     /** The history of where the train has travelled- list of Station names 
      * and the turn number they arrived at that station */
-    private List<Tuple<String, Integer>> history;
+    private List<Tuple<Station, Integer>> history;
 
     /** Constructor for train initialises the names, images, speed, history and route
      * @param name The string that represents this train
@@ -47,7 +47,7 @@ public class Train extends Resource {
         this.leftImage = leftImage;
         this.rightImage = rightImage;
         this.speed = speed;
-        history = new ArrayList<Tuple<String, Integer>>();
+        history = new ArrayList<Tuple<Station, Integer>>();
         route =  new ArrayList<Station>();
     }
     
