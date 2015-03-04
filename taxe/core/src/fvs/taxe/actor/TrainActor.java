@@ -80,8 +80,9 @@ public class TrainActor extends Image {
             Train collision = collided();
             if (collision != null) {
                 //If there is a collision then the user is informed, the two trains destroyed and the connection that they collided on is blocked for 5 turns.
-                context.getTopBarController().displayFlashMessage("Two trains collided.  They were both destroyed.", Color.RED, 2);
+                //context.getTopBarController().displayFlashMessage("Two trains collided.  They were both destroyed.", Color.RED, 2);
                 Game.getInstance().getMap().blockConnection(train.getLastStation(), train.getNextStation(), 5);
+
                 collision.getActor().remove();
                 collision.getPlayer().removeResource(collision);
                 train.getPlayer().removeResource(train);
@@ -149,7 +150,7 @@ public class TrainActor extends Image {
                         //don't check if collided with self
                         if (otherTrain.getPosition() != null) {
                             //Checks if the other train has been placed on the map
-                            if (otherTrain.getPosition().getX() == -1 && !otherTrain.getActor().getPaused()) {
+                            if (otherTrain.getPosition().getX() == -1 && !otherTrain.getActor().isPaused()) {
                                 //if other train moving
                                 //This is because the position of the train when it is in motion (i.e travelling along its route) is (-1,-1) as that is how FVS decided to implement it
                                 //It is necessary to check whether this is true as if the train is not in motion then it does not have an actor, hence otherTrain.getActor() would cause a null point exception.
@@ -177,7 +178,11 @@ public class TrainActor extends Image {
         return null;
     }
 
-    public boolean getPaused() { return this.paused; }
+    public boolean isPaused() { return this.paused; }
 
     public boolean isRecentlyPaused() { return this.recentlyPaused; }
+
+    public void setPaused(Boolean bool) { this.paused = bool; }
+
+    public void setRecentlyPaused(Boolean bool) { this.recentlyPaused = bool; }
 }
