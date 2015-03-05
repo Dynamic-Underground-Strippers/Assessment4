@@ -9,6 +9,7 @@ import java.util.Random;
 import Util.Node;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import gameLogic.Game;
@@ -496,5 +497,10 @@ public class Map {
 
         //Reaching here means a connection has been added to the route where a connection doesn't exist
         return true;
+    }
+
+    public float getDistance(Station s1, Station s2) {
+        //Uses vector maths to find the absolute distance between two stations' locations in pixels
+        return Vector2.dst(s1.getLocation().getX(), s1.getLocation().getY(), s2.getLocation().getX(), s2.getLocation().getY());
     }
 }
