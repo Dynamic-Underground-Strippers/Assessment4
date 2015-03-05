@@ -205,10 +205,10 @@ public class GameScreen extends ScreenAdapter {
 		stationController.drawStations();
 		obstacleController.drawObstacleEffects();
 		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
-		goalController.drawCurrentPlayerGoals();
 		sideBarController.drawBackground();
 		sideBarController.drawLabels();
 		sideBarController.drawEndTurnButton();
+		goalController.drawCurrentPlayerGoals();
 	}
 
 	@Override

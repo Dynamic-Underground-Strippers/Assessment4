@@ -2,6 +2,7 @@ package fvs.taxe.controller;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import fvs.taxe.TaxeGame;
@@ -50,18 +51,21 @@ public class GoalController {
 		drawHeaderText();
 
 		float top = (float) TaxeGame.HEIGHT;
-		float x = 10.0f;
+		float x = TaxeGame.WIDTH - SideBarController.WIDTH;
 		float y = top - 25.0f - TopBarController.CONTROLS_HEIGHT;
 
 		PlayerManager pm = context.getGameLogic().getPlayerManager();
 		Player currentPlayer = pm.getCurrentPlayer();
 
 		for (Goal goal : currentPlayer.getActiveGoals()) {
-			y-=30;
-			TextButton button  = new TextButton(goal.toString(), context.getSkin());
-			button.setPosition(x,y);
-			button.addListener(new GoalClicked(goal,context));
-			goalButtons.addActor(button);
+			y-=65;
+			Label label  = new Label (goal.toString(), context.getSkin());
+			label.setPosition(x, y);
+
+			label.setWidth(SideBarController.WIDTH);
+			label.setWrap(true);
+			label.addListener(new GoalClicked(goal));
+			goalButtons.addActor(label);
 		}
 
 		context.getStage().addActor(goalButtons);

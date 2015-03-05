@@ -29,7 +29,7 @@ public class SideBarActor extends Actor {
     public SideBarActor(){
         super();
         this.shapeRenderer = new ShapeRenderer();
-        this.controlsWidth = SideBarController.CONTROLS_WIDTH;
+        this.controlsWidth = SideBarController.WIDTH;
     }
 
     @Override

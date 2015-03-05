@@ -21,7 +21,7 @@ public class SideBarController {
     /**
      * The height of the Top Bar.
      */
-    public final static int CONTROLS_WIDTH = 250;
+    public final static int WIDTH = 250;
 
     /**
      * The Game Context.
@@ -106,8 +106,8 @@ public class SideBarController {
      */
     public void drawFlashLabel() {
         flashMessage = new Label("", context.getSkin());
-        flashMessage.setPosition(TaxeGame.WIDTH - CONTROLS_WIDTH, TaxeGame.HEIGHT - 24);
-        flashMessage.setWidth(CONTROLS_WIDTH);
+        flashMessage.setPosition(TaxeGame.WIDTH - WIDTH, TaxeGame.HEIGHT - 24);
+        flashMessage.setWidth(WIDTH);
         flashMessage.setWrap(true);
         flashMessage.setAlignment(0);
         context.getStage().addActor(flashMessage);
@@ -119,7 +119,7 @@ public class SideBarController {
     public void drawObstacleLabel() {
         obstacleLabel = new Label("", context.getSkin());
         obstacleLabel.setColor(Color.BLACK);
-        obstacleLabel.setPosition(TaxeGame.WIDTH-CONTROLS_WIDTH, TaxeGame.HEIGHT - TaxeGame.HEIGHT-(flashMessage == null ? -24 : flashMessage.getHeight()));
+        obstacleLabel.setPosition(TaxeGame.WIDTH- WIDTH, TaxeGame.HEIGHT - TaxeGame.HEIGHT-(flashMessage == null ? -24 : flashMessage.getHeight()));
         context.getStage().addActor(obstacleLabel);
     }
 
