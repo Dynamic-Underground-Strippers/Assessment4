@@ -89,7 +89,7 @@ public class GameScreen extends ScreenAdapter {
 		context = new Context(stage, skin, game, gameLogic);
 		Gdx.input.setInputProcessor(stage);
 
-		mapTexture = new Texture(Gdx.files.internal("gamemap.png"));
+		mapTexture = new Texture(Gdx.files.internal("map.jpg"));
 		map = gameLogic.getMap();
 
 		tooltip = new Tooltip(skin);
@@ -149,7 +149,7 @@ public class GameScreen extends ScreenAdapter {
 			game.batch.end();
 		} else {
 			game.batch.begin();
-			game.batch.draw(mapTexture, 0, 0);
+			game.batch.draw(mapTexture, 0, 0, 1022, 561);
 			game.batch.end();
 		}
 
@@ -178,8 +178,8 @@ public class GameScreen extends ScreenAdapter {
 	public void show() {
 		// order methods called matters for z-index!
 		obstacleController.drawObstacles();
-		stationController.drawConnections(map.getConnections(), Color.GRAY);
-		stationController.drawStations();
+		//stationController.drawConnections(map.getConnections(), Color.GRAY);
+		//stationController.drawStations();
 		obstacleController.drawObstacleEffects();
 		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
 		sideBarController.drawBackground();
