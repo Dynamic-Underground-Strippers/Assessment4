@@ -155,7 +155,7 @@ public class RouteController {
      */
     public void drawRoute(Color color) {
         for (Connection connection : connections) {
-            if ((connection.isBlocked()) && (!(Game.getInstance().getState() == GameState.PLACING) || (Game.getInstance().getState() == GameState.ROUTING))){
+            if ((connection.isBlocked()) && (!(Game.getInstance().getState() == GameState.PLACING)) && (!(Game.getInstance().getState() == GameState.ROUTING))){
                 connection.getActor().setConnectionColor(Color.RED);
             } else{
                 connection.getActor().setConnectionColor(color);
