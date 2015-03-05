@@ -1,5 +1,10 @@
 package fvs.taxe.actor;
 
+import com.badlogic.gdx.math.Vector2;
+import fvs.taxe.TaxeGame;
+import fvs.taxe.controller.Context;
+import gameLogic.Game;
+import gameLogic.GameState;
 import gameLogic.map.IPositionable;
 
 import com.badlogic.gdx.graphics.Color;
@@ -25,12 +30,15 @@ public class ConnectionActor extends Image{
 	/**The end position of the connection, where the line is drawn to.*/
 	private IPositionable end;
 
-	public ConnectionActor(Color color, IPositionable start, IPositionable end, float connectionWidth)  {
+	private TaxeGame game;
+
+	public ConnectionActor(Color color, IPositionable start, IPositionable end, float connectionWidth, Context context)  {
 		shapeRenderer = new ShapeRenderer();
 		this.color = color;
 		this.start = start;
 		this.end = end;
 		this.connectionWidth = connectionWidth;
+		game = context.getTaxeGame();
 	}
 	
 	@Override
@@ -41,6 +49,18 @@ public class ConnectionActor extends Image{
         shapeRenderer.setColor(color);
         shapeRenderer.rectLine(start.getX(), start.getY(), end.getX(), end.getY(), connectionWidth);
         shapeRenderer.end();
+
+		if (Game.getInstance().getState() == GameState.ROUTING) {
+			IPositionable midpoint = this.getMidpoint();
+			batch.begin();
+			game.fontTiny.setColor(Color.BLACK);
+			String text = String.valueOf(Math.round(getDistance()));
+			game.fontTiny.draw(batch, text,
+					midpoint.getX() - game.fontTiny.getBounds(text).width / 2f,
+					midpoint.getY() + game.fontTiny.getBounds(text).height / 2f);
+			batch.end();
+		}
+
         batch.begin();
 	}
 
@@ -80,5 +100,10 @@ public class ConnectionActor extends Image{
 				return false;
 			}
 		};
+	}
+
+	public float getDistance() {
+		//Uses vector maths to find the absolute distance of the connection
+		return Vector2.dst(start.getX(), start.getY(), end.getX(), end.getY());
 	}
 }

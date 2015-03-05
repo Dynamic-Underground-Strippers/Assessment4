@@ -151,7 +151,7 @@ public class StationController {
 		for (Connection connection : connections) {
 			final IPositionable start = connection.getStation1().getLocation();
 			final IPositionable end = connection.getStation2().getLocation();
-			ConnectionActor connectionActor = new ConnectionActor(Color.GRAY, start, end, CONNECTION_LINE_WIDTH);
+			ConnectionActor connectionActor = new ConnectionActor(Color.GRAY, start, end, CONNECTION_LINE_WIDTH, context);
 			connection.setActor(connectionActor);
 			context.getStage().addActor(connectionActor);
 		}
