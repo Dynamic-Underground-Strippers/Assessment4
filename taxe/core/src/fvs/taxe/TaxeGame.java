@@ -26,6 +26,8 @@ public class TaxeGame extends Game {
 	/**ShapeRenderer instance used to render shapes without immediately using textures.*/
 	public ShapeRenderer shapeRenderer;
 
+	public BitmapFont fontTiny;
+
 	/**Instantiation method. Sets up the batch, fonts and shapeRenderer, and then sets the Screen to the mainMenu.*/
 	@Override
 	public void create() {
@@ -40,6 +42,11 @@ public class TaxeGame extends Game {
 		font = generator.generateFont(parameter);
 		parameter.size = 20;
 		fontSmall = generator.generateFont(parameter);
+
+		//font size 12pt
+		parameter.size = 12;
+		fontTiny = generator.generateFont(parameter);
+
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 
 		setScreen(new MainMenuScreen(this));
