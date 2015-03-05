@@ -39,18 +39,18 @@ public class ResourceController {
 
         game.batch.begin();
         game.fontSmall.setColor(Color.BLACK);
-        game.fontSmall.draw(game.batch, "Unplaced Resources:", 10.0f, (float) TaxeGame.HEIGHT - 250.0f);
+        game.fontSmall.draw(game.batch, "Unplaced Resources:", (float) TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f, (float) TaxeGame.HEIGHT - 325.0f);
         game.batch.end();
     }
 
     /**This method draws a specific player's resources.
-     * @param player The active player who's resources should be drawn.
+     * @param player The active player whose resources should be drawn.
      */
     public void drawPlayerResources(Player player) {
 
         float top = (float) TaxeGame.HEIGHT;
-        float x = 10.0f;
-        float y = top - 250.0f;
+        float x = TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f;
+        float y = top - 340.0f;
         y -= 50;
 
         resourceButtons.remove();

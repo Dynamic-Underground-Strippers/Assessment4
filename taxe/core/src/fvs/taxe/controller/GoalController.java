@@ -12,6 +12,7 @@ import gameLogic.PlayerChangedListener;
 import gameLogic.PlayerManager;
 import gameLogic.goal.Goal;
 import gameLogic.goal.GoalListener;
+import javafx.geometry.Side;
 
 /**Controller for updating UI with goals.*/
 public class GoalController {
@@ -51,8 +52,8 @@ public class GoalController {
 		drawHeaderText();
 
 		float top = (float) TaxeGame.HEIGHT;
-		float x = TaxeGame.WIDTH - SideBarController.WIDTH;
-		float y = top - 25.0f - TopBarController.CONTROLS_HEIGHT;
+		float x = TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f;
+		float y = top -65.0f;
 
 		PlayerManager pm = context.getGameLogic().getPlayerManager();
 		Player currentPlayer = pm.getCurrentPlayer();
@@ -65,7 +66,7 @@ public class GoalController {
 			Label label  = new Label (goal.toString(), context.getSkin());
 			label.setPosition(x, y);
 
-			label.setWidth(SideBarController.WIDTH);
+			label.setWidth(SideBarController.WIDTH - 20);
 			label.setWrap(true);
 			label.addListener(new GoalClicked(goal));
 			goalButtons.addActor(label);
@@ -78,8 +79,8 @@ public class GoalController {
 	public void drawHeaderText() {
 		TaxeGame game = context.getTaxeGame();
 		float top = (float) TaxeGame.HEIGHT;
-		float x = 10.0f;
-		float y = top - 10.0f - TopBarController.CONTROLS_HEIGHT;
+		float x = TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f;
+		float y = top -50.0f;
 
 		game.batch.begin();
 		game.fontSmall.setColor(Color.BLACK);
