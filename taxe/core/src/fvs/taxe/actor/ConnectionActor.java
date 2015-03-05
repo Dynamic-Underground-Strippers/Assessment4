@@ -51,4 +51,34 @@ public class ConnectionActor extends Image{
 	public Color getConnectionColor(){
 		return this.color;
 	}
+
+	public IPositionable getMidpoint() {
+		//This returns the midPoint of the connection, which is useful for drawing the obstacle indicators on to the connection
+		return new IPositionable() {
+			@Override
+			public int getX() {
+				return (start.getX() + end.getX()) / 2;
+			}
+
+			@Override
+			public int getY() {
+				return (start.getY() + end.getY()) / 2;
+			}
+
+			@Override
+			public void setX(int x) {
+
+			}
+
+			@Override
+			public void setY(int y) {
+
+			}
+
+			@Override
+			public boolean equals(Object o) {
+				return false;
+			}
+		};
+	}
 }
