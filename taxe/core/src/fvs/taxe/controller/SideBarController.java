@@ -21,7 +21,7 @@ public class SideBarController {
     /**
      * The height of the Top Bar.
      */
-    public final static int WIDTH = 250;
+    public final static int WIDTH = 300;
 
     /**
      * The Game Context.

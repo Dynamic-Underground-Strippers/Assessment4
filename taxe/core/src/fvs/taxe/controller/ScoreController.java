@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import fvs.taxe.TaxeGame;
 import gameLogic.Game;
+import javafx.geometry.Side;
 
 /**Controller for updating the game with graphics for Scores.*/
 public class ScoreController {
@@ -26,8 +27,8 @@ public class ScoreController {
 
         game.batch.begin();
         game.fontSmall.setColor(Color.BLACK);
-        game.fontSmall.draw(game.batch, "Scores:", 10.0f, (float) TaxeGame.HEIGHT - 490.0f);
-        game.fontSmall.draw(game.batch, player1String, 10.0f, (float) TaxeGame.HEIGHT - 515.0f);
+        game.fontSmall.draw(game.batch, "Scores:", TaxeGame.WIDTH - SideBarController.WIDTH +10.0f, (float) TaxeGame.HEIGHT - 600.0f);
+        game.fontSmall.draw(game.batch, player1String, TaxeGame.WIDTH - SideBarController.WIDTH +10.0f, (float) TaxeGame.HEIGHT - 620.0f);
         game.batch.end();
 	}
 	
@@ -36,7 +37,7 @@ public class ScoreController {
 		TaxeGame game = context.getTaxeGame();
 		Game gameLogic = context.getGameLogic();
 		game.batch.begin();
-		game.fontSmall.draw(game.batch, "Target: " + gameLogic.TOTAL_POINTS + " points, Turn: " + (gameLogic.getPlayerManager().getTurnNumber() + 1), (float) TaxeGame.WIDTH - 250.0f, 20.0f);
+		game.fontSmall.draw(game.batch, "Target: " + gameLogic.TOTAL_POINTS + " points, Turn: " + (gameLogic.getPlayerManager().getTurnNumber() + 1), (float) TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f, 20.0f);
 		game.batch.end();
 	}
 }
