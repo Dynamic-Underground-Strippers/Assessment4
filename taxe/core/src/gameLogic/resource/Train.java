@@ -178,6 +178,7 @@ public class Train extends Resource {
     public Station getLastStation() {
         //Returns the station that the train has most recently visited
         return this.history.get(history.size() - 1).getFirst();
+
     }
 
     public Station getNextStation() {

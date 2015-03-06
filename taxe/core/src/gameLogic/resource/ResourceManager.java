@@ -102,7 +102,7 @@ public class ResourceManager {
      * @param resource The resource that will be added to the player
      */
     private void addResourceToPlayer(Player player, Resource resource) {
-        if (player.getResources().size() >= CONFIG_MAX_RESOURCES) {
+        if (player.getResources().size() >= CONFIG_MAX_RESOURCES || player.getSkip()) {
 			return;
         }
 

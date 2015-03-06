@@ -9,6 +9,7 @@ import gameLogic.map.Connection;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
 import gameLogic.resource.Train;
+import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +44,16 @@ public class RouteController {
     /**Whether or not the currently selected route is at a point where the routing can be completed*/
     private boolean canEndRouting = true;
 
+    //changeRoute
+    private boolean editingRoute = false;
+    private double distance = 0;
+
     /**Instantiation method. Sets up a listener for when a train is selected. If the RouteController is routing, that station is then added to the route,
      * @param context The context of the game.
      */
     public RouteController(Context context) {
         this.context = context;
-
+        connections = new ArrayList<Connection>();
         StationController.subscribeStationClick(new StationClickListener() {
             @Override
             public void clicked(Station station) {
@@ -63,14 +68,30 @@ public class RouteController {
      * @param train The train to produce a route for.
      */
     public void begin(Train train) {
+        //This method is called when the user wants to create a route
         this.train = train;
+        this.distance =0;
+        //sets the relevant flags to show that a route is being created
         isRouting = true;
-        positions = new ArrayList<IPositionable>();
-        connections = new ArrayList<Connection>();
-        positions.add(train.getPosition());
         context.getGameLogic().setState(GameState.ROUTING);
+
+        //Creates a new list and adds the station that the train is currently on as the first node.
+        positions = new ArrayList<IPositionable>();
+
+        //When a train has been placed at a station its position is equal to that of the station that it is located.
+        //When a train already has a route and is moving, the position of train is (-1,-1).
+        //This is checked here as we do not wish to route the train from its position to (-1,-1), hence this is only done when the train is at a station
+        if (train.getPosition().getX() != -1) {
+            positions.add(train.getPosition());
+        }else{
+            editingRoute = true;
+        }
+
+        //Generates all the buttons necessary to complete routing
         addRoutingButtons();
 
+        //This makes all trains except the currently routed train to be invisible.
+        //This makes the screen less cluttered while routing and prevents overlapping trainActors from stopping the user being able to click stations.
         TrainController trainController = new TrainController(context);
         trainController.setTrainsVisible(train, false);
         train.getActor().setVisible(true);
@@ -81,16 +102,59 @@ public class RouteController {
      */
     private void addStationToRoute(Station station) {
         // the latest position chosen in the positions so far
-        IPositionable lastPosition =  positions.get(positions.size() - 1);
-        Station lastStation = context.getGameLogic().getMap().getStationFromPosition(lastPosition);
+        if (positions.size() == 0) {
+            if (editingRoute) {
+                //Checks whether the train's actor is paused due to a bug with blocked trains
+                if (train.getActor().isPaused()){
+                    Station lastStation = train.getLastStation();
+                    //Checks if a connection exists between the station the train is paused at and the clicked station
+                    if (context.getGameLogic().getMap().doesConnectionExist(lastStation.getName(),station.getName())){
+                        positions.add(station.getLocation());
 
-        boolean hasConnection = context.getGameLogic().getMap().doesConnectionExist(station.getName(), lastStation.getName());
-        if(!hasConnection) {
-            context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
-        } else {
-            positions.add(station.getLocation());
-            connections.add(context.getGameLogic().getMap().getConnection(station.getName(), lastStation.getName()));
-            canEndRouting = !(station instanceof CollisionStation);
+                        //Sets the relevant boolean checking if the last node on the route is a junction or not
+                        canEndRouting = !(station instanceof CollisionStation);
+                    }else {
+                        context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+                    }
+                }else {
+                    Station lastStation = train.getLastStation();
+                    Station nextStation = train.getNextStation();
+                    if (station.getName() == lastStation.getName() || nextStation.getName() == station.getName()) {
+                        //If the connection exists then the station passed to the method is added to the route
+                        positions.add(station.getLocation());
+
+                        //Sets the relevant boolean checking if the last node on the route is a junction or not
+                        canEndRouting = !(station instanceof CollisionStation);
+                    } else {
+                        context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+                    }
+                }
+            }else{
+                positions.add(station.getLocation());
+            }
+        }
+        else {
+            //Finds the last station in the current route
+            IPositionable lastPosition = positions.get(positions.size() - 1);
+            Station lastStation = context.getGameLogic().getMap().getStationFromPosition(lastPosition);
+
+            //Check whether a connection exists using the function in Map
+            boolean hasConnection = context.getGameLogic().getMap().doesConnectionExist(station.getName(), lastStation.getName());
+
+            if (!hasConnection) {
+                //If the connection doesn't exist then this informs the user
+                context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+
+            } else {
+                distance+= context.getGameLogic().getMap().getDistance(lastStation, station);
+                DecimalFormat integer = new DecimalFormat("0");
+
+                context.getTopBarController().displayMessage("Total Distance: " + integer.format(distance) + ". Will take " + integer.format(Math.ceil(distance / train.getSpeed() / 2)) + " turns.", Color.BLACK);
+                //If the connection exists then the station passed to the method is added to the route
+                positions.add(station.getLocation());
+                //Sets the relevant boolean checking if the last node on the route is a junction or not
+                canEndRouting = !(station instanceof CollisionStation);
+            }
         }
     }
 

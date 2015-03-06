@@ -9,10 +9,7 @@ import fvs.taxe.controller.ScoreController;
 import fvs.taxe.controller.StationController;
 import fvs.taxe.controller.TopBarController;
 import fvs.taxe.dialog.DialogEndGame;
-import gameLogic.Game;
-import gameLogic.GameState;
-import gameLogic.GameStateListener;
-import gameLogic.TurnListener;
+import gameLogic.*;
 import gameLogic.map.Map;
 import gameLogic.map.Station;
 import gameLogic.obstacle.Rumble;
@@ -131,6 +128,13 @@ public class GameScreen extends ScreenAdapter {
 					DialogEndGame dia = new DialogEndGame(GameScreen.this.game, gameLogic.getPlayerManager(), skin);
 					dia.show(stage);
 				}
+			}
+		});
+
+		gameLogic.getPlayerManager().subscribePlayerChanged(new PlayerChangedListener() {
+			@Override
+			public void changed() {
+				goalController.drawCurrentPlayerGoals();
 			}
 		});
 
