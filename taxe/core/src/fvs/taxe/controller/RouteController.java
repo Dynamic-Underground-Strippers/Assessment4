@@ -1,5 +1,7 @@
 package fvs.taxe.controller;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import fvs.taxe.StationClickListener;
 import fvs.taxe.TaxeGame;
 import gameLogic.Game;
@@ -53,7 +55,6 @@ public class RouteController {
      */
     public RouteController(Context context) {
         this.context = context;
-        connections = new ArrayList<Connection>();
         StationController.subscribeStationClick(new StationClickListener() {
             @Override
             public void clicked(Station station) {
@@ -71,6 +72,8 @@ public class RouteController {
         //This method is called when the user wants to create a route
         this.train = train;
         this.distance =0;
+        connections = new ArrayList<Connection>();
+
         //sets the relevant flags to show that a route is being created
         isRouting = true;
         context.getGameLogic().setState(GameState.ROUTING);
@@ -122,7 +125,6 @@ public class RouteController {
                     if (station.getName() == lastStation.getName() || nextStation.getName() == station.getName()) {
                         //If the connection exists then the station passed to the method is added to the route
                         positions.add(station.getLocation());
-
                         //Sets the relevant boolean checking if the last node on the route is a junction or not
                         canEndRouting = !(station instanceof CollisionStation);
                     } else {
@@ -152,6 +154,7 @@ public class RouteController {
                 context.getTopBarController().displayMessage("Total Distance: " + integer.format(distance) + ". Will take " + integer.format(Math.ceil(distance / train.getSpeed() / 2)) + " turns.", Color.BLACK);
                 //If the connection exists then the station passed to the method is added to the route
                 positions.add(station.getLocation());
+                connections.add(context.getGameLogic().getMap().getConnection(lastStation.getName(), station.getName()));
                 //Sets the relevant boolean checking if the last node on the route is a junction or not
                 canEndRouting = !(station instanceof CollisionStation);
             }
@@ -209,8 +212,10 @@ public class RouteController {
 
         TrainController trainController = new TrainController(context);
         trainController.setTrainsVisible(train, true);
-        train.getActor().setVisible(false);
-        
+        if (train.getPosition().getX()!=-1){
+            train.getActor().setVisible(false);
+        }
+
         drawRoute(Color.GRAY);
     }
 
@@ -218,6 +223,17 @@ public class RouteController {
      * @param color The Color of the Route.
      */
     public void drawRoute(Color color) {
+        if (editingRoute && (positions.size()==1)){
+            Rectangle bounds = train.getActor().getBounds();
+            TaxeGame game = context.getTaxeGame();
+            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            game.shapeRenderer.setColor(color);
+            game.shapeRenderer.rectLine(bounds.getX(), bounds.getY(),
+                    positions.get(0).getX(), positions.get(0).getY(),
+                    StationController.CONNECTION_LINE_WIDTH);
+            game.shapeRenderer.end();
+        }
+
         for (Connection connection : connections) {
             if ((connection.isBlocked()) && (!(Game.getInstance().getState() == GameState.PLACING)) && (!(Game.getInstance().getState() == GameState.ROUTING))){
                 connection.getActor().setConnectionColor(Color.RED);
