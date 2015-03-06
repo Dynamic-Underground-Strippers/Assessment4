@@ -36,6 +36,9 @@ public class TrainActor extends Image {
     /**The default drawable for the train's right image.*/
     private Drawable rightDrawable;
 
+    //changeRoute
+    private boolean paused;
+    private boolean recentlyPaused;
     /**The instantiation method sets up the drawables and bounds and positions the TrainActor.
      * @param train The train to base the TrainActor off.
      */
@@ -87,5 +90,25 @@ public class TrainActor extends Image {
     /**@returns the bounds of the TrainActor*/
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+
+    public boolean isPaused() {
+        return this.paused;
+    }
+
+    public boolean getPaused() {
+        return this.paused;
+    }
+
+    public boolean isRecentlyPaused() {
+        return recentlyPaused;
+    }
+
+    public void setRecentlyPaused(boolean recentlyPaused) {
+        this.recentlyPaused = recentlyPaused;
     }
 }

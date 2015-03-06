@@ -35,6 +35,9 @@ public class Player {
     /**This player's number, e.g. Player1, Player2.*/
     private int number;
 
+
+    private boolean skip;
+
     /**Instantiation method.
      * @param pm The PlayerManager of the Game that handles this player.
      * @param playerNumber The player number, e.g. Player 1, Player 2.
@@ -98,7 +101,7 @@ public class Player {
     			incompleteGoals++;
     		}
     	}
-        if (incompleteGoals >= GoalManager.CONFIG_MAX_PLAYER_GOALS) {
+        if (incompleteGoals >= GoalManager.CONFIG_MAX_PLAYER_GOALS || this.skip) {
             //throw new RuntimeException("Max player goals exceeded");
         	return;
         }
@@ -206,6 +209,15 @@ public class Player {
     /**Returns which player this is, e.g. Player 1, player 2.*/
     public int getPlayerNumber() {
     	return number;
+    }
+
+
+    public void setSkip(boolean skip){
+        this.skip = skip;
+    }
+
+    public boolean getSkip(){
+        return skip;
     }
     
     

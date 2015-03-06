@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.math.Vector2;
+
 import Util.Node;
 
 import com.badlogic.gdx.Gdx;
@@ -57,7 +59,12 @@ public class Map {
             addConnection(station1, station2);
         }
     }
-    
+
+    public float getDistance(Station s1, Station s2) {
+        //Uses vector maths to find the absolute distance between two stations' locations in pixels
+        return Vector2.dst(s1.getLocation().getX(), s1.getLocation().getY(), s2.getLocation().getX(), s2.getLocation().getY());
+    }
+
     /**This method takes a JsonValue and produces an array of stations for use in the map.
      * @param jsonVal The Json data to use.
      */

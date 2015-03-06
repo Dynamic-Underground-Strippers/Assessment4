@@ -119,6 +119,12 @@ public class TrainMoveController {
 	public void addMoveActions() {
 		action = new InterruptableSequenceAction();
 		IPositionable current = train.getPosition();
+
+		//for changeRoute
+		if (train.getPosition().getX() == -1){
+			current = new Position ((int) train.getActor().getBounds().getX(),(int) train.getActor().getBounds().getY());
+		}
+
 		action.addAction(beforeAction());
 
 		for (final Station station : train.getRoute()) {
