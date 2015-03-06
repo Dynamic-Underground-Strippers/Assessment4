@@ -193,6 +193,11 @@ public class Player {
         
     }
 
+    public void removeGoal(Goal goal){
+        goal.setComplete();
+        changed();
+    }
+
     /**Get's the player's goals.*/
     public List<Goal> getGoals() {
         return goals;
