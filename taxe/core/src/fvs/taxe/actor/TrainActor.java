@@ -41,7 +41,6 @@ public class TrainActor extends Image {
     /**The default drawable for the train's right image.*/
     private Drawable rightDrawable;
 
-<<<<<<< HEAD
     /**Indicates whether the train is paused at a blocked connection or not.*/
     private boolean paused;
 
@@ -50,11 +49,6 @@ public class TrainActor extends Image {
 
     private Context context;
 
-=======
-    //changeRoute
-    private boolean paused;
-    private boolean recentlyPaused;
->>>>>>> master
     /**The instantiation method sets up the drawables and bounds and positions the TrainActor.
      * @param train The train to base the TrainActor off.
      */
@@ -143,7 +137,6 @@ public class TrainActor extends Image {
         return bounds;
     }
 
-<<<<<<< HEAD
     public Train collided() {
         //The aim of this function is to check whether the train represented by the actor has collided with any other trains on the board
         Station last = train.getLastStation();
@@ -194,7 +187,6 @@ public class TrainActor extends Image {
         }
         return null;
     }
-
     public boolean isPaused() { return this.paused; }
 
     public boolean isRecentlyPaused() { return this.recentlyPaused; }
@@ -204,25 +196,4 @@ public class TrainActor extends Image {
     public void setRecentlyPaused(Boolean bool) { this.recentlyPaused = bool; }
 
     public boolean isFacingLeft() {return this.facingLeft; }
-=======
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-    }
-
-    public boolean isPaused() {
-        return this.paused;
-    }
-
-    public boolean getPaused() {
-        return this.paused;
-    }
-
-    public boolean isRecentlyPaused() {
-        return recentlyPaused;
-    }
-
-    public void setRecentlyPaused(boolean recentlyPaused) {
-        this.recentlyPaused = recentlyPaused;
-    }
->>>>>>> master
 }

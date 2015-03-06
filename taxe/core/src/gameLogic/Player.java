@@ -226,7 +226,7 @@ public class Player {
             }
         }
         return trains;
-
+    }
     public void setSkip(boolean skip){
         this.skip = skip;
     }

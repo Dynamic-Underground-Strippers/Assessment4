@@ -506,8 +506,4 @@ public class Map {
         return true;
     }
 
-    public float getDistance(Station s1, Station s2) {
-        //Uses vector maths to find the absolute distance between two stations' locations in pixels
-        return Vector2.dst(s1.getLocation().getX(), s1.getLocation().getY(), s2.getLocation().getX(), s2.getLocation().getY());
-    }
 }
