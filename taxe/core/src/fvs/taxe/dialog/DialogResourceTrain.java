@@ -38,6 +38,9 @@ public class DialogResourceTrain extends Dialog {
             button("Place at a station", "PLACE");
         } else if(!train.isMoving()) {
             button("Choose a route", "ROUTE");
+        } else if (train.getRoute() != null) {
+            //If the train has a route then generate button to change the route
+            button("Change route", "CHANGE_ROUTE");
         }
     }
 
@@ -76,6 +79,8 @@ public class DialogResourceTrain extends Dialog {
             clicked(Button.TRAIN_PLACE);
         } else if(obj == "ROUTE") {
             clicked(Button.TRAIN_ROUTE);
+        } else if (obj == "CHANGE_ROUTE") {
+            clicked(Button.TRAIN_CHANGE_ROUTE);
         }
         
     }

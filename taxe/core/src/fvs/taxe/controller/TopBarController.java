@@ -101,6 +101,18 @@ public class TopBarController {
 		context.getStage().addActor(obstacleLabel);
 	}
 
+	public void displayMessage(String message, Color color){
+		//This method sets a permanent message until it is overwritten
+		flashMessage.setText(message);
+		flashMessage.setColor(color);
+	}
+
+	public void clearMessage(){
+		//This method clears the current message
+		flashMessage.setText("");
+		flashMessage.setColor(Color.LIGHT_GRAY);
+	}
+
 	/**This method displays a message of a certain color in the Top Bar.
 	 * @param message The message to be displayed.
 	 * @param color The color of the message to be displayed.
