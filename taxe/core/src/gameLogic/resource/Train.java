@@ -174,4 +174,24 @@ public class Train extends Resource {
             actor.remove();
         }
     }
+
+
+
+    public Station getLastStation() {
+        //Returns the station that the train has most recently visited
+        String stationName =  this.history.get(history.size() - 1).getFirst();
+        return gameLogic.Game.getInstance().getMap().getStationByName(stationName);
+    }
+
+    public Station getNextStation() {
+        //Returns the next station along the route
+        Station last = getLastStation();
+        for (int i = 0; i < route.size() - 1; i++) {
+            Station station = route.get(i);
+            if (last.getName().equals(station.getName())) {
+                return route.get(i + 1);
+            }
+        }
+        return null;
+    }
 }
