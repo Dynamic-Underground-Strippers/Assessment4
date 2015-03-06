@@ -34,7 +34,7 @@ public class Train extends Resource {
     
     /** The history of where the train has travelled- list of Station names 
      * and the turn number they arrived at that station */
-    private List<Tuple<String, Integer>> history;
+    private List<Tuple<Station, Integer>> history;
 
     /** Constructor for train initialises the names, images, speed, history and route
      * @param name The string that represents this train
@@ -47,7 +47,7 @@ public class Train extends Resource {
         this.leftImage = leftImage;
         this.rightImage = rightImage;
         this.speed = speed;
-        history = new ArrayList<Tuple<String, Integer>>();
+        history = new ArrayList<Tuple<Station, Integer>>();
         route =  new ArrayList<Station>();
     }
     
@@ -156,16 +156,16 @@ public class Train extends Resource {
     /** Get the history of the train
      * @return The list of pairs of stations and the turn number they arrived at the station
      */
-    public List<Tuple<String, Integer>> getHistory() {
+    public List<Tuple<Station, Integer>> getHistory() {
         return history;
     }
 
     /** Add a new history pairing of station and the turn the station was arrived at
-     * @param stationName The name of the station that the train has arrived at
+     * @param station The station that the train has arrived at
      * @param turn What turn number the train arrived at that given station
      */
-    public void addHistory(String stationName, int turn) {
-        history.add(new Tuple<String, Integer>(stationName, turn));
+    public void addHistory(Station station, int turn) {
+        history.add(new Tuple<Station, Integer>(station, turn));
     }
 
     @Override
@@ -175,12 +175,10 @@ public class Train extends Resource {
         }
     }
 
-
-
     public Station getLastStation() {
         //Returns the station that the train has most recently visited
-        String stationName =  this.history.get(history.size() - 1).getFirst();
-        return gameLogic.Game.getInstance().getMap().getStationByName(stationName);
+        return this.history.get(history.size() - 1).getFirst();
+
     }
 
     public Station getNextStation() {

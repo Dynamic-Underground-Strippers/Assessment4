@@ -68,6 +68,8 @@ public class Game {
 				goalManager.updatePlayerGoals(currentPlayer);
 				resourceManager.addRandomResourceToPlayer(currentPlayer);
 				resourceManager.addRandomResourceToPlayer(currentPlayer);
+				map.decrementBlockedConnections();
+				map.blockRandomConnection();
 				calculateObstacles();
 				decreaseObstacleTime();
 			}

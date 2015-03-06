@@ -152,8 +152,8 @@ public class Goal {
 		boolean passedExclusion = false;
 		int locationCountClone = -1;
 		int originTurn = 0;
-		for(Tuple<String, Integer> history: train.getHistory()) {
-			if(history.getFirst().equals(origin.getName()) && history.getSecond() >= turnIssued) {
+		for(Tuple<Station, Integer> history: train.getHistory()) {
+			if(history.getFirst().getName().equals(origin.getName()) && history.getSecond() >= turnIssued) {
 				passedOrigin = true;
 				originTurn = history.getSecond();
 				locationCountClone = locationCount;
@@ -168,8 +168,8 @@ public class Goal {
 		}
 		if(exclusionStation != null && passedOrigin)
 		{
-			for(Tuple<String, Integer> history: train.getHistory()) {
-				if(history.getFirst().equals(exclusionStation.getName()) && history.getSecond() >= originTurn) {
+			for(Tuple<Station, Integer> history: train.getHistory()) {
+				if(history.getFirst().getName().equals(exclusionStation.getName()) && history.getSecond() >= originTurn) {
 					passedExclusion = true;
 				}
 			}

@@ -2,6 +2,7 @@ package fvs.taxe.controller;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import fvs.taxe.actor.TrainActor;
+import gameLogic.Game;
 import gameLogic.Player;
 import gameLogic.TurnListener;
 import gameLogic.map.CollisionStation;
@@ -70,18 +71,44 @@ public class TrainMoveController {
 	 * @param station The station reached.
 	 * @return An action which adds the train movement to the move history and continues the journey of the train.
 	 */
+	// this action will run every time the train reaches a station within a route
 	private RunnableAction perStationAction(final Station station) {
 		return new RunnableAction() {
 			public void run() {
-				train.addHistory(station.getName(), context.getGameLogic().getPlayerManager().getTurnNumber());
-				System.out.println("Added to history: passed " + station.getName() + " on turn "
-						+ context.getGameLogic().getPlayerManager().getTurnNumber());
-				
-				junctionFailure(station);
-				collisions(station);
-				obstacleCollision(station);
-			}
+				if (!train.getRoute().get(0).equals(station)) {
+					train.getActor().setRecentlyPaused(false);
+				}
 
+				train.addHistory(station, context.getGameLogic().getPlayerManager().getTurnNumber());
+
+				//Uncomment to test whether or not the train is correctly adding stations to its history.
+/*                System.out.println("Added to history: passed " + station.getName() + " on turn "
+                        + context.getGameLogic().getPlayerManager().getTurnNumber());*/
+
+				int stationIndex = train.getRoute().indexOf(station); //find this station in route
+				int nextIndex = stationIndex + 1;
+
+				//This checks whether or not the train is at its final destination by checking whether the index is still less than the list size
+				if (nextIndex < train.getRoute().size()) {
+					Station nextStation = train.getRoute().get(nextIndex);
+
+					//Checks whether the next connection is blocked, if so the train is paused, if not the train is unpaused.
+					if (Game.getInstance().getMap().isConnectionBlocked(station, nextStation)) {
+						train.getActor().setPaused(true);
+						train.getActor().setRecentlyPaused(false);
+					} else {
+						if (train.getActor().isPaused()) {
+							train.getActor().setPaused(false);
+							train.getActor().setRecentlyPaused(true);
+						}
+					}
+				} else {
+					//If the train is at its final destination then the train is set to unpaused so that it does not cause issues elsewhere in the program.
+					train.getActor().setPaused(false);
+				}
+
+
+			}
 		};
 	}
 

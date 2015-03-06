@@ -50,11 +50,11 @@ public class GoalManagerTest extends LibGdxTest {
         route.add(station2);
         train.setRoute(route);
 
-        train.addHistory("station1", 0);
+        train.addHistory(station1, 0);
 
         pm.turnOver();
         pm.turnOver();
-        train.addHistory("station2", 1);
+        train.addHistory(station2, 1);
 
         ArrayList<String> completedStrings = gm.trainArrived(train, player1);
         assertTrue("Goal wasn't completed", goal.isComplete(train));
