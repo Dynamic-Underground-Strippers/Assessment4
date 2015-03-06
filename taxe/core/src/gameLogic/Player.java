@@ -226,14 +226,6 @@ public class Player {
             }
         }
         return trains;
-
-    public void setSkip(boolean skip){
-        this.skip = skip;
-    }
-
-    public boolean getSkip(){
-        return skip;
-
     }
     public void setSkip(boolean skip){
         this.skip = skip;
@@ -243,6 +235,4 @@ public class Player {
         return skip;
 
     }
-    
-    
 }
