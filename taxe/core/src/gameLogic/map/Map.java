@@ -506,4 +506,11 @@ public class Map {
         return true;
     }
 
+    public void removeConnection(Station station1, Station station2) {
+        for (Connection c : connections) {
+            if (c.getStation1().equals(station1) && c.getStation2().equals(station2))
+                connections.remove(c);
+        }
+    }
+
 }

@@ -143,7 +143,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                             if (!(context.getGameLogic().getMap().doesConnectionExist(newConnection.getStation1().getName(), newConnection.getStation2().getName()))) {
 
                                 //Create connection and actor then check if connection overlaps others
-                                Boolean bool = newConnection.use();
+                                Boolean bool = newConnection.use(context);
 
                                 //The obstacle is removed from the player's inventory as it has been used
                                 currentPlayer.removeResource(newConnection);
