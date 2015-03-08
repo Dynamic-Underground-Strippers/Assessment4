@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import fvs.taxe.TaxeGame;
+import fvs.taxe.dialog.NewConnectionClicked;
 import fvs.taxe.dialog.TrainClicked;
 import gameLogic.Player;
 import gameLogic.PlayerChangedListener;
+import gameLogic.resource.NewConnection;
 import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
@@ -71,6 +73,16 @@ public class ResourceController {
                 button.setPosition(x, y);
                 button.addListener(listener);
 
+                resourceButtons.addActor(button);
+
+                y -= 30;
+            } else if (resource instanceof NewConnection) {
+                //Creates a clickListener for the button and adds it to the list of buttons
+                NewConnection newConnection = (NewConnection) resource;
+                NewConnectionClicked listener = new NewConnectionClicked(context, newConnection);
+                TextButton button = new TextButton("Obstacle", context.getSkin());
+                button.setPosition(x, y);
+                button.addListener(listener);
                 resourceButtons.addActor(button);
 
                 y -= 30;
