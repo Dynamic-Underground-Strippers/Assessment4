@@ -80,7 +80,7 @@ public class ResourceController {
                 //Creates a clickListener for the button and adds it to the list of buttons
                 NewConnection newConnection = (NewConnection) resource;
                 NewConnectionClicked listener = new NewConnectionClicked(context, newConnection);
-                TextButton button = new TextButton("Obstacle", context.getSkin());
+                TextButton button = new TextButton("New Connection", context.getSkin());
                 button.setPosition(x, y);
                 button.addListener(listener);
                 resourceButtons.addActor(button);

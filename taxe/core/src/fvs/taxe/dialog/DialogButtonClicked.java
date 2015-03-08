@@ -158,7 +158,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                 //Informs the player that their selection is invalid and cancels placement
                                 Dialog dia = new Dialog("Invalid Selection", context.getSkin());
                                 dia.text("You have selected two stations which are already connected." +
-                                        "\nPlease use the obstacle again.").align(Align.center);
+                                        "\nPlease use the New Connection resource again.").align(Align.center);
                                 dia.button("OK", "OK");
                                 dia.show(context.getStage());
                                 newConnection.setStation1(null);

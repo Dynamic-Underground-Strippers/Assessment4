@@ -87,7 +87,7 @@ public class ResourceManager {
 		//Returns a random resource
 
 
-		int idx = random.nextInt(11);
+		int idx = random.nextInt(10);
 		if (idx == 1) {
 			//1 in 10 chance to return an obstacle
 			return new NewConnection();

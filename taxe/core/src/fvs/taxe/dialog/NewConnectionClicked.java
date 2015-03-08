@@ -12,7 +12,7 @@ import gameLogic.GameState;
 import gameLogic.Player;
 import gameLogic.resource.NewConnection;
 
-//Responsible for checking whether the Obstacle is clicked.
+//Responsible for checking whether the Connection is clicked.
 public class NewConnectionClicked extends ClickListener {
     private NewConnection newConnection;
     private Context context;
