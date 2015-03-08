@@ -145,13 +145,20 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                 //Create connection and actor then check if connection overlaps others
                                 Boolean bool = newConnection.use(context);
 
-                                //The obstacle is removed from the player's inventory as it has been used
-                                currentPlayer.removeResource(newConnection);
-
-                                //Note: No checking is put in place to see if a train is already travelling along the track that the user blocks
-                                //In practice this means that a train already on the track will continue its motion unopposed
-                                //This is considered the intended behaviour of the obstacle feature as its intent is to reward proactive players, not reward reactive ones
-                                //If this is not how you want your obstacles to work you might consider preventing the player from placing obstacles on blocked connections or immediately pausing any train on that connection
+                                if (bool){
+                                    //new connection successfully added
+                                    //The obstacle is removed from the player's inventory as it has been used
+                                    currentPlayer.removeResource(newConnection);
+                                } else {
+                                    //Informs the player that their selection is invalid and cancels placement
+                                    Dialog dia = new Dialog("Invalid Selection", context.getSkin());
+                                    dia.text("That connection would overlap other tracks." +
+                                            "\nPlease use the New Connection resource again.").align(Align.center);
+                                    dia.button("OK", "OK");
+                                    dia.show(context.getStage());
+                                    newConnection.setStation1(null);
+                                    newConnection.setStation2(null);
+                                }
 
                             } else {
 
