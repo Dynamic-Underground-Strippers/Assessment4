@@ -1,5 +1,7 @@
 package gameLogic.resource;
 
+import fvs.taxe.controller.Context;
+import gameLogic.Game;
 import gameLogic.map.Connection;
 import gameLogic.map.Station;
 
@@ -14,7 +16,6 @@ public class NewConnection extends Resource {
         //By default forTurns set to 5, possible to make this random instead
         this.station1 = null;
         this.station2 = null;
-
     }
 
 
@@ -32,6 +33,11 @@ public class NewConnection extends Resource {
 
     public void setStation2(Station station2) {
         this.station2 = station2;
+    }
+
+    public boolean use(){
+        Game.getInstance().getMap().addConnection(station1, station2);
+        return true;
     }
 
     @Override
