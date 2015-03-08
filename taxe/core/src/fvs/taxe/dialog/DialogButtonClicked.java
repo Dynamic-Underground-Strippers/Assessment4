@@ -14,6 +14,7 @@ import gameLogic.GameState;
 import gameLogic.Player;
 import gameLogic.map.CollisionStation;
 import gameLogic.map.Station;
+import gameLogic.resource.NewConnection;
 import gameLogic.resource.Train;
 
 /**This class is a specific type fo ResourceDialogueClickListener for dialogue Buttons.*/
@@ -28,6 +29,8 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
     /**The train the Dialogue represents.*/
     private Train train;
 
+    private NewConnection newConnection;
+
     /**Instantiation
      * @param context The game Context.
      * @param player The current player for the dialogue.
@@ -37,6 +40,14 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
         this.currentPlayer = player;
         this.train = train;
         this.context = context;
+        this.newConnection = null;
+    }
+
+    public DialogButtonClicked(Context context, Player player, NewConnection newConnection) {
+        this.currentPlayer = player;
+        this.train = null;
+        this.context = context;
+        this.newConnection = newConnection;
     }
 
     /**When a button is clicked, this method is called. It acts according to the case of the button.*/
@@ -87,6 +98,11 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
             case TRAIN_CHANGE_ROUTE:
                 context.getRouteController().begin(train);
 
+                break;
+
+            case NEWCONNECTION_DROP:
+                //Removes the obstacle from the current player's inventory if they click the OBSTACLE_DROP button
+                currentPlayer.removeResource(newConnection);
                 break;
         }
     }

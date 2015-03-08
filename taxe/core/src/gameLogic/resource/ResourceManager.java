@@ -91,7 +91,7 @@ public class ResourceManager {
 		if (idx == 1) {
 			//1 in 10 chance to return an obstacle
 			return new NewConnection();
-			
+
 		} else {
 			//Otherwise randomly selects a train to give the player.
 			//We decided not to use the value of idx to choose the train as this allows us to change the number of trains in the system independently of this routine
