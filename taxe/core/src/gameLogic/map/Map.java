@@ -507,9 +507,15 @@ public class Map {
     }
 
     public void removeConnection(Station station1, Station station2) {
+        Connection toRemove = null;
         for (Connection c : connections) {
             if (c.getStation1().equals(station1) && c.getStation2().equals(station2))
-                connections.remove(c);
+                //when found station, mark for deletion
+                //can't delete during loop as will break for loop
+                toRemove = c;
+        }
+        if (!(toRemove == null)){
+            connections.remove(toRemove);
         }
     }
 

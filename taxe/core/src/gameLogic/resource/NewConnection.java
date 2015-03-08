@@ -9,6 +9,8 @@ import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
 import com.badlogic.gdx.math.Intersector;
 
+import javax.swing.*;
+
 
 public class NewConnection extends Resource {
 
@@ -45,8 +47,10 @@ public class NewConnection extends Resource {
 
         for (Connection c : Game.getInstance().getMap().getConnections()){
 
-            //if connection to check isn't this connection
-            if (c.equals(connection)) {
+            //if connection doesn't contain one of the stations involved in new connection
+            //as this would register as an intersection
+            if (!(c.getStation1().equals(station1)) && (!(c.getStation2().equals(station2))) &&
+                    (!(c.getStation1().equals(station2))) && (!(c.getStation2().equals(station1)))) {
 
                 if (Intersector.intersectSegments(
                         c.getStation1().getLocation().getX(),
@@ -60,6 +64,8 @@ public class NewConnection extends Resource {
                         null)){
                     //if lines intersect, remove connection and return false
                     Game.getInstance().getMap().removeConnection(station1, station2);
+
+                    JOptionPane.showMessageDialog(null, "" + c.getStation1().getName() + "," + c.getStation2().getName(), "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                     return false;
                 }
                 //else continue with loop
