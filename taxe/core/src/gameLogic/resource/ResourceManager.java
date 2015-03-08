@@ -4,8 +4,12 @@ import Util.Tuple;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import fvs.taxe.GameScreen;
+import fvs.taxe.actor.TrainActor;
+import gameLogic.Game;
 import gameLogic.Player;
-
+import gameLogic.map.IPositionable;
+import gameLogic.map.Station;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -127,4 +131,25 @@ public class ResourceManager {
         resource.setPlayer(player);
         player.addResource(resource);
     }
+
+	public void jelly(){
+		int rand = random.nextInt(2);
+		if (rand == 0) {
+			Train jelly = new Train("Jelly", "GreenTrain.png", "GreenTrainRight.png", 50);
+			Station randStation = Game.getInstance().getMap().getRandomStation();
+			jelly.setPosition(randStation.getLocation());
+			ArrayList<IPositionable> route = new ArrayList();
+			Station nextStation = Game.getInstance().getMap().getConnectedStations(randStation, null).get(0);
+			route.add(nextStation.getLocation());
+			Station nextStation1 = Game.getInstance().getMap().getConnectedStations(randStation, null).get(0);
+			route.add(nextStation1.getLocation());
+			route.add(nextStation.getLocation());
+			route.add(randStation.getLocation());
+			route.add(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getLocation());
+			jelly.setFinalDestination(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1));
+			jelly.setRoute(Game.getInstance().getMap().createRoute(route));
+			System.out.println("new jelly in " + randStation.getName());
+		}
+	}
+
 }

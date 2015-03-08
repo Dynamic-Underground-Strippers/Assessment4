@@ -36,6 +36,9 @@ public abstract class Resource implements Disposable {
 
 	/** Notifies the player that owns the resource that the resource has changed */
 	protected void changed() {
+		if (player == null){
+			return;
+		}
 		player.changed();
 	}
 	
