@@ -1,5 +1,6 @@
 package gameLogic.resource;
 
+import Util.Node;
 import com.badlogic.gdx.graphics.Color;
 
 import fvs.taxe.actor.ConnectionActor;
@@ -15,6 +16,8 @@ import gameLogic.map.CollisionStation;
 import com.badlogic.gdx.math.Intersector;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DeleteConnection extends Resource {
@@ -48,67 +51,28 @@ public class DeleteConnection extends Resource {
 
     public boolean use(Context context) {
         Map map = Game.getInstance().getMap();
-        map.addConnection(station1, station2);
-        Connection connection = map.getConnection(station1.getName(), station2.getName());
 
-        for (Connection c : map.getConnections()) {
+        Connection tempDeleted = map.getConnection(station1.getName(), station2.getName());
+        map.removeConnection(station1, station2);
 
-            //if connection doesn't contain one of the stations involved in new connection
-            //as this would register as an intersection
-            if (!(c.getStation1().equals(station1)) && (!(c.getStation2().equals(station2))) &&
-                    (!(c.getStation1().equals(station2))) && (!(c.getStation2().equals(station1)))) {
+        //Find the ideal solution to solving this objective
+        Node<Station> originNode = new Node<Station>();
+        originNode.setData(station1);
+        ArrayList<Node<Station>> searchFringe = new ArrayList<Node<Station>>();
+        searchFringe.add(originNode);
+        List<Station> route = map.getIdealRoute(station2, searchFringe, map.getStationsList());
 
-                if (Intersector.intersectSegments(
-                        c.getStation1().getLocation().getX(),
-                        c.getStation1().getLocation().getY(),
-                        c.getStation2().getLocation().getX(),
-                        c.getStation2().getLocation().getY(),
-                        station1.getLocation().getX(),
-                        station1.getLocation().getY(),
-                        station2.getLocation().getX(),
-                        station2.getLocation().getY(),
-                        null)) {
-                    //if lines intersect, remove connection and return false
-                    map.removeConnection(station1, station2);
-
-                    JOptionPane.showMessageDialog(null, "" + c.getStation1().getName() + "," + c.getStation2().getName(), "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
-                    return false;
-                }
-                //else continue with loop
-
-            }
-
-        }
-
-        //if exit loop then no connections overlap, so draw connection and return true
-        final IPositionable start = connection.getStation1().getLocation();
-        final IPositionable end = connection.getStation2().getLocation();
-        ConnectionActor connectionActor = new ConnectionActor(Color.GRAY, start, end, 5, context);
-        connection.setActor(connectionActor);
-        context.getStage().addActor(connectionActor);
-
-        Station s1 = map.getStationByName(station1.getName());
-        if (s1 instanceof CollisionStation) {
-            CollisionStation c1 = (CollisionStation) s1;
-            c1.getCollisionActor().toFront();
+        if (route == null) {
+            //if no route exists between two stations
+            //stations not allowed to be isolated
+            //add back in connection and return false
+            map.addConnection(station1, station2);
+            return false;
         } else {
-            s1.getActor().toFront();
+            tempDeleted.getActor().remove();
+            return true;
         }
 
-        Station s2 = map.getStationByName(station2.getName());
-        if (s2 instanceof CollisionStation) {
-            CollisionStation c2 = (CollisionStation) s2;
-            c2.getCollisionActor().toFront();
-        } else {
-            s2.getActor().toFront();
-        }
-
-        for (Player player : Game.getInstance().getPlayerManager().getAllPlayers()) {
-            for (Train train : player.getActiveTrains()) {
-                train.getActor().toFront();
-            }
-        }
-        return true;
     }
 
     @Override
