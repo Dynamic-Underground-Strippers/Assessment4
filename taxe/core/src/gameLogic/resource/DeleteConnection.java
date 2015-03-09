@@ -66,7 +66,7 @@ public class DeleteConnection extends Resource {
             //if no route exists between two stations
             //stations not allowed to be isolated
             //add back in connection and return false
-            map.addConnection(station1, station2);
+            map.addConnection(tempDeleted);
             return false;
         } else {
             tempDeleted.getActor().remove();

@@ -185,6 +185,10 @@ public class Map {
         return newConnection;
     }
 
+    public void addConnection(Connection connection) {
+        connections.add(connection);
+    }
+
     /**This method replicated addConnection but allows the use of station names instead of objects.
      * @param station1 The name of the first station.
      * @param station2 The name of the second station.
