@@ -273,23 +273,54 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                             //Checks whether a connection exists between the two stations
                             if (context.getGameLogic().getMap().doesConnectionExist(deleteConnection.getStation1().getName(), deleteConnection.getStation2().getName())) {
 
-                                //Create connection and actor then check if connection overlaps others
-                                Boolean bool = deleteConnection.use(context);
+                                Boolean trainOnConnection = false;
+                                System.out.println("Clicked:"+deleteConnection.getStation1().getName()+","+deleteConnection.getStation2().getName());
+                                for (Player player : Game.getInstance().getPlayerManager().getAllPlayers()){
+                                    for (Train train : player.getActiveTrains()){
+                                        System.out.println(train.getLastStation().getName()+","+train.getNextStation().getName());
+                                        if ((train.getLastStation().getName().equals(deleteConnection.getStation1().getName()) &&
+                                                train.getNextStation().getName().equals(deleteConnection.getStation2().getName())) ||
+                                                (train.getLastStation().getName().equals(deleteConnection.getStation2().getName()) &&
+                                                train.getNextStation().getName().equals(deleteConnection.getStation1().getName()))) {
+                                            //sets trainOnConnection to true if a train is on the connection to be deleted
+                                            trainOnConnection = true;
+                                        }
+                                    }
+                                }
 
-                                if (bool){
-                                    //connection deleted successfully added
-                                    //The obstacle is removed from the player's inventory as it has been used
-                                    currentPlayer.removeResource(deleteConnection);
-                                } else {
+                                if (trainOnConnection) {
                                     //Informs the player that their selection is invalid and cancels placement
                                     Dialog dia = new Dialog("Invalid Selection", context.getSkin());
-                                    dia.text("You can't delete the only connection between two stations." +
-                                            "\nPlease use the 'Remove Connection' resource again.").align(Align.center);
+                                    dia.text("You can't delete a connection that has a train on it." +
+                                            "\nPlease use the 'Delete Connection' resource again.").align(Align.center);
                                     dia.button("OK", "OK");
                                     dia.show(context.getStage());
                                     deleteConnection.setStation1(null);
                                     deleteConnection.setStation2(null);
+                                } else {
+
+                                    //Delete connection ensuring that the two stations are still connected
+                                    Boolean bool = deleteConnection.use(context);
+
+                                    if (bool){
+                                        //connection deleted successfully added
+                                        //The obstacle is removed from the player's inventory as it has been used
+                                        currentPlayer.removeResource(deleteConnection);
+                                    } else {
+                                        //Informs the player that their selection is invalid and cancels placement
+                                        Dialog dia = new Dialog("Invalid Selection", context.getSkin());
+                                        dia.text("You can't delete the only connection between two stations." +
+                                                "\nPlease use the 'Remove Connection' resource again.").align(Align.center);
+                                        dia.button("OK", "OK");
+                                        dia.show(context.getStage());
+                                        deleteConnection.setStation1(null);
+                                        deleteConnection.setStation2(null);
+                                    }
+
                                 }
+
+
+
 
                             } else {
 

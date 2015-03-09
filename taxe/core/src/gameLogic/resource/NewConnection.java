@@ -71,7 +71,6 @@ public class NewConnection extends Resource {
                     //if lines intersect, remove connection and return false
                 	map.removeConnection(station1, station2);
 
-                    JOptionPane.showMessageDialog(null, "" + c.getStation1().getName() + "," + c.getStation2().getName(), "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                     return false;
                 }
                 //else continue with loop
