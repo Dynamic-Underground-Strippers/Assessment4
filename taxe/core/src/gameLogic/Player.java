@@ -65,13 +65,13 @@ public class Player {
     }
     
     /**@return The player's active trains.*/
-    public List<Resource> getActiveTrains() {
+    public List<Train> getActiveTrains() {
     	// get all of the players trains that are active (placed)
-    	List<Resource> activeResources = new ArrayList<Resource>();
+    	List<Train> activeResources = new ArrayList<Train>();
     	for (Resource resource: resources) {
     		if (resource instanceof Train) {
     			if(((Train) resource).getPosition() != null) {
-    				activeResources.add(resource);
+    				activeResources.add((Train) resource);
     			}
     		}
     	}

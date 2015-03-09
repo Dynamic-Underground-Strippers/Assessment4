@@ -1,12 +1,17 @@
 package gameLogic.resource;
 
 import com.badlogic.gdx.graphics.Color;
+
 import fvs.taxe.actor.ConnectionActor;
 import fvs.taxe.controller.Context;
 import gameLogic.Game;
+import gameLogic.Player;
+import gameLogic.map.Map;
 import gameLogic.map.Connection;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
+import gameLogic.map.CollisionStation;
+
 import com.badlogic.gdx.math.Intersector;
 
 import javax.swing.*;
@@ -42,10 +47,11 @@ public class NewConnection extends Resource {
     }
 
     public boolean use(Context context){
-        Game.getInstance().getMap().addConnection(station1, station2);
-        Connection connection = Game.getInstance().getMap().getConnection(station1.getName(),station2.getName());
+    	Map map = Game.getInstance().getMap();
+        map.addConnection(station1, station2);
+        Connection connection = map.getConnection(station1.getName(),station2.getName());
 
-        for (Connection c : Game.getInstance().getMap().getConnections()){
+        for (Connection c : map.getConnections()){
 
             //if connection doesn't contain one of the stations involved in new connection
             //as this would register as an intersection
@@ -63,7 +69,7 @@ public class NewConnection extends Resource {
                         station2.getLocation().getY(),
                         null)){
                     //if lines intersect, remove connection and return false
-                    Game.getInstance().getMap().removeConnection(station1, station2);
+                	map.removeConnection(station1, station2);
 
                     JOptionPane.showMessageDialog(null, "" + c.getStation1().getName() + "," + c.getStation2().getName(), "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                     return false;
@@ -80,6 +86,28 @@ public class NewConnection extends Resource {
         ConnectionActor connectionActor = new ConnectionActor(Color.GRAY, start, end, 5, context);
         connection.setActor(connectionActor);
         context.getStage().addActor(connectionActor);
+        
+        Station s1 = map.getStationByName(station1.getName());
+        if (s1 instanceof CollisionStation){
+        	CollisionStation c1 = (CollisionStation) s1;
+        	c1.getCollisionActor().toFront();
+        } else {
+        	s1.getActor().toFront();
+        }
+        
+        Station s2 = map.getStationByName(station2.getName());
+        if (s2 instanceof CollisionStation){
+        	CollisionStation c2 = (CollisionStation) s2;
+        	c2.getCollisionActor().toFront();
+        } else {
+        	s2.getActor().toFront();
+        }
+
+        for (Player player : Game.getInstance().getPlayerManager().getAllPlayers()) {
+        	for (Train train : player.getActiveTrains()){
+        		train.getActor().toFront();
+        	}
+        }
         return true;
     }
 
