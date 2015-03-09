@@ -1,5 +1,11 @@
 package fvs.taxe;
 
+import fvs.taxe.controller.*;
+import fvs.taxe.dialog.DialogEndGame;
+import gameLogic.*;
+import gameLogic.map.Map;
+import gameLogic.map.Station;
+import gameLogic.obstacle.Rumble;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -128,12 +134,21 @@ public class GameScreen extends ScreenAdapter {
 			}
 		});
 
+		gameLogic.getResourceManager().newJelly(new JellyListener(){
+			@Override
+			public void changed(){
+
+			}
+		});
+
 		gameLogic.getPlayerManager().subscribePlayerChanged(new PlayerChangedListener() {
 			@Override
 			public void changed() {
 				goalController.drawCurrentPlayerGoals();
 			}
 		});
+
+
 
 		StationController.subscribeStationClick(new StationClickListener() {
 			@Override
@@ -144,6 +159,7 @@ public class GameScreen extends ScreenAdapter {
 				}
 			}
 		});
+
 	}
 
 	@Override

@@ -7,19 +7,25 @@ import com.badlogic.gdx.utils.JsonValue;
 import fvs.taxe.GameScreen;
 import fvs.taxe.actor.TrainActor;
 import gameLogic.Game;
+import gameLogic.JellyListener;
 import gameLogic.Player;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**This class creates and stores the Trains specified from trains.json*/
 public class ResourceManager {
 	/** The maximum number of resources a Player can own */
     public final int CONFIG_MAX_RESOURCES = 7;
-    
+
     /** Random instance for generating random resources*/
     private Random random = new Random();
+
+	private ArrayList<Train> jellies = new ArrayList<Train>();
+
+	private ArrayList<JellyListener> jellyListener = new ArrayList<JellyListener>();
     
     /** List of pairs of train names and the trains associated speed*/
     private ArrayList<Tuple<String, Integer>> trains;
@@ -148,8 +154,15 @@ public class ResourceManager {
 			route.add(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getLocation());
 			jelly.setFinalDestination(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1));
 			jelly.setRoute(Game.getInstance().getMap().createRoute(route));
+			this.jellies.add(jelly);
+
+
 			System.out.println("new jelly in " + randStation.getName());
 		}
+	}
+
+	public void newJelly(JellyListener listener){
+		jellyListener.add(listener);
 	}
 
 }
