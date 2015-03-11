@@ -44,7 +44,7 @@ public class DialogStationMultitrain extends Dialog {
 		if (localTrains.size() == 0) {
 			// if no active trains at station do nothing!
 			hide();
-			context.getSideBarController().displayFlashMessage("No Player " + context.getGameLogic().getPlayerManager().getCurrentPlayer().getPlayerNumber() + " trains at this station", Color.RED);
+			context.getNotepadController().displayFlashMessage("No Player " + context.getGameLogic().getPlayerManager().getCurrentPlayer().getPlayerNumber() + " trains at this station", Color.RED);
 		} else if (localTrains.size() == 1) {
 			// if one active train, skip the dialog and go straight to train
 			hide();

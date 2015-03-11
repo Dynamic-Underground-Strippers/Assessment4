@@ -3,7 +3,6 @@ package fvs.taxe.controller;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import fvs.taxe.TaxeGame;
 import fvs.taxe.dialog.GoalClicked;
@@ -12,7 +11,6 @@ import gameLogic.PlayerChangedListener;
 import gameLogic.PlayerManager;
 import gameLogic.goal.Goal;
 import gameLogic.goal.GoalListener;
-import javafx.geometry.Side;
 
 /**Controller for updating UI with goals.*/
 public class GoalController {
@@ -52,7 +50,7 @@ public class GoalController {
 		drawHeaderText();
 
 		float top = (float) TaxeGame.HEIGHT;
-		float x = TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f;
+		float x = TaxeGame.WIDTH - NotepadController.WIDTH + 10.0f;
 		float y = top -65.0f;
 
 		PlayerManager pm = context.getGameLogic().getPlayerManager();
@@ -66,7 +64,7 @@ public class GoalController {
 			Label label  = new Label (goal.toString(), context.getSkin());
 			label.setPosition(x, y);
 
-			label.setWidth(SideBarController.WIDTH - 20);
+			label.setWidth(NotepadController.WIDTH - 20);
 			label.setWrap(true);
 			label.addListener(new GoalClicked(goal));
 			goalButtons.addActor(label);
@@ -79,7 +77,7 @@ public class GoalController {
 	public void drawHeaderText() {
 		TaxeGame game = context.getTaxeGame();
 		float top = (float) TaxeGame.HEIGHT;
-		float x = TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f;
+		float x = TaxeGame.WIDTH - NotepadController.WIDTH + 10.0f;
 		float y = top -50.0f;
 
 		game.batch.begin();

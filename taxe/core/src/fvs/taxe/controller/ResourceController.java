@@ -39,7 +39,7 @@ public class ResourceController {
 
         game.batch.begin();
         game.fontSmall.setColor(Color.BLACK);
-        game.fontSmall.draw(game.batch, "Unplaced Resources:", (float) TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f, (float) TaxeGame.HEIGHT - 325.0f);
+        game.fontSmall.draw(game.batch, "Unplaced Resources:", (float) TaxeGame.WIDTH - NotepadController.WIDTH + 10.0f, (float) TaxeGame.HEIGHT - 325.0f);
         game.batch.end();
     }
 
@@ -49,7 +49,7 @@ public class ResourceController {
     public void drawPlayerResources(Player player) {
 
         float top = (float) TaxeGame.HEIGHT;
-        float x = TaxeGame.WIDTH - SideBarController.WIDTH + 10.0f;
+        float x = TaxeGame.WIDTH - NotepadController.WIDTH + 10.0f;
         float y = top - 340.0f;
         y -= 50;
 

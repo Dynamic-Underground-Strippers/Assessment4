@@ -57,7 +57,7 @@ public class GameScreen extends ScreenAdapter {
     private StationController stationController;
     
     /**Controller for handling the graphical bar at the top of the game.*/
-    private SideBarController sideBarController;
+    private NotepadController notepadController;
     
     /**Controller for handling resources.*/
     private ResourceController resourceController;
@@ -96,7 +96,7 @@ public class GameScreen extends ScreenAdapter {
 		stage.addActor(tooltip);
 
 		stationController = new StationController(context, tooltip);
-		sideBarController = new SideBarController(context);
+		notepadController = new NotepadController(context);
 		resourceController = new ResourceController(context);
 		goalController = new GoalController(context);
 		routeController = new RouteController(context);
@@ -104,7 +104,7 @@ public class GameScreen extends ScreenAdapter {
 		scoreController = new ScoreController(context);
 
 		context.setRouteController(routeController);
-		context.setSideBarController(sideBarController);
+		context.setNotepadController(notepadController);
 
 		rumble = obstacleController.getRumble();
 
@@ -112,7 +112,7 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			public void changed() {
 				gameLogic.setState(GameState.ANIMATING);
-				sideBarController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
 			}
 		});
 
@@ -182,9 +182,9 @@ public class GameScreen extends ScreenAdapter {
 		stationController.drawStations();
 		obstacleController.drawObstacleEffects();
 		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
-		sideBarController.drawBackground();
-		sideBarController.drawLabels();
-		sideBarController.drawEndTurnButton();
+		notepadController.drawBackground();
+		notepadController.drawLabels();
+		notepadController.drawEndTurnButton();
 		goalController.drawCurrentPlayerGoals();
 	}
 
