@@ -1,8 +1,9 @@
 package fvs.taxe.actor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import fvs.taxe.TaxeGame;
 import fvs.taxe.controller.NotepadController;
@@ -10,8 +11,7 @@ import fvs.taxe.controller.NotepadController;
 /**Type of Actor specifically for implementing the Top bar in the game GUI*/
 public class NotepadActor extends Actor {
 
-    /**ShapeRenderer used to render the shape of the TopBar*/
-    private ShapeRenderer shapeRenderer;
+    private Texture notepadTexture;
 
     /**Width of obstacle Top Bar*/
     private float obstacleWidth = 0;
@@ -25,25 +25,19 @@ public class NotepadActor extends Actor {
     /**Instantiation method sets up variables*/
     public NotepadActor(){
         super();
-        this.shapeRenderer = new ShapeRenderer();
-    }
+        notepadTexture = new Texture(Gdx.files.internal("notepad.png"));
+        setSize(NotepadController.WIDTH, NotepadController.HEIGHT);
+        setPosition(TaxeGame.WIDTH-NotepadController.WIDTH-15, TaxeGame.HEIGHT-NotepadController.HEIGHT-5);
+        }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        // main topBar
-        shapeRenderer.setColor(controlsColor);
-        shapeRenderer.rect(TaxeGame.WIDTH - NotepadController.WIDTH, 0, TaxeGame.WIDTH, TaxeGame.HEIGHT);
-
-        // obstacle topBar
-        shapeRenderer.setColor(obstacleColor);
-        shapeRenderer.rect(0, TaxeGame.HEIGHT - NotepadController.WIDTH, obstacleWidth, NotepadController.WIDTH);
-
-
-        shapeRenderer.end();
+        batch.begin();
+        batch.draw(notepadTexture, getX(), getY(), getWidth(), getHeight());
+        batch.end();
         batch.begin();
     }
 

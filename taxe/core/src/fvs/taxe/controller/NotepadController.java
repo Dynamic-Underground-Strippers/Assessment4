@@ -21,8 +21,8 @@ public class NotepadController {
     /**
      * The height of the Top Bar.
      */
-    public final static int WIDTH = 300;
-    public final static int HEIGHT = 364;
+    public final static float WIDTH = 300*0.8f;
+    public final static float HEIGHT = 364*0.8f;
 
     /**
      * The Game Context.
@@ -83,7 +83,8 @@ public class NotepadController {
             @Override
             public void ended(Obstacle obstacle) {
             }
-        });
+        }
+        );
     }
 
     /**
