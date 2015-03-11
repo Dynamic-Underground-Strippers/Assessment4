@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import fvs.taxe.TaxeGame;
-import fvs.taxe.actor.SideBarActor;
+import fvs.taxe.actor.NotepadActor;
 import gameLogic.GameState;
 import gameLogic.GameStateListener;
 import gameLogic.obstacle.Obstacle;
@@ -16,12 +16,13 @@ import gameLogic.obstacle.ObstacleType;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 
-public class SideBarController {
+public class NotepadController {
 
     /**
      * The height of the Top Bar.
      */
     public final static int WIDTH = 300;
+    public final static int HEIGHT = 364;
 
     /**
      * The Game Context.
@@ -46,14 +47,14 @@ public class SideBarController {
     /**
      * Actor for the background to the Top Bar
      */
-    private SideBarActor sideBarBackground;
+    private NotepadActor sideBarBackground;
 
     /**
      * Instantiation method sets up a listener for Events starting to display the Event message in the Top Bar.
      *
      * @param context The game Context.
      */
-    public SideBarController(final Context context) {
+    public NotepadController(final Context context) {
         this.context = context;
 
         context.getGameLogic().subscribeObstacleChanged(new ObstacleListener() {
@@ -89,7 +90,7 @@ public class SideBarController {
      * This method adds the background to the game.
      */
     public void drawBackground() {
-        sideBarBackground = new SideBarActor();
+        sideBarBackground = new NotepadActor();
         context.getStage().addActor(sideBarBackground);
     }
 

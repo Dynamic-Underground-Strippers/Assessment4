@@ -138,7 +138,7 @@ public class TrainMoveController {
 			boolean junctionFailed = MathUtils.randomBoolean(JUNCTION_FAILURE_CHANCE);
 			if (junctionFailed && station != train.getRoute().get(0)) {
 				action.setInterrupt(true);
-				context.getSideBarController().displayObstacleMessage("Junction failed, " + train.getName() + " stopped!", Color.YELLOW);
+				context.getNotepadController().displayObstacleMessage("Junction failed, " + train.getName() + " stopped!", Color.YELLOW);
 			}
 		}
 	}
@@ -151,7 +151,7 @@ public class TrainMoveController {
 			public void run() {
 				ArrayList<String> completedGoals = context.getGameLogic().getGoalManager().trainArrived(train, train.getPlayer());
 				for(String message : completedGoals) {
-					context.getSideBarController().displayFlashMessage(message, Color.WHITE, 2);
+					context.getNotepadController().displayFlashMessage(message, Color.WHITE, 2);
 				}
 				System.out.println(train.getFinalDestination().getLocation().getX() + "," + train.getFinalDestination().getLocation().getY());
 				train.setPosition(train.getFinalDestination().getLocation());
@@ -214,7 +214,7 @@ public class TrainMoveController {
 				trainToDestroy.getPlayer().removeResource(trainToDestroy);
 			}
 
-			context.getSideBarController().displayFlashMessage("Two trains collided at a Junction.  They were both destroyed.", Color.BLACK, Color.RED, 4);
+			context.getNotepadController().displayFlashMessage("Two trains collided at a Junction.  They were both destroyed.", Color.BLACK, Color.RED, 4);
 		}
 	}
 
@@ -224,7 +224,7 @@ public class TrainMoveController {
 		if (station.hasObstacle() && MathUtils.randomBoolean(station.getObstacle().getDestructionChance())){
 			train.getActor().remove();
 			train.getPlayer().removeResource(train);
-			context.getSideBarController().displayFlashMessage("Your train was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
+			context.getNotepadController().displayFlashMessage("Your train was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
 		}
 	}
 

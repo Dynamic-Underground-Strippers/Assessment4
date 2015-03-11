@@ -24,7 +24,7 @@ public class Context {
     private RouteController routeController;
     
     /**A TopBarController for the context that can be get or set.*/
-    private SideBarController sideBarController;
+    private NotepadController notepadController;
 
     /**Instantiation method sets up private variables.
      * @param stage The stage to be used in the context
@@ -71,15 +71,15 @@ public class Context {
         this.routeController = routeController;
     }
 
-    /**@returns the Context's SideBarController.*/
-    public SideBarController getSideBarController() {
-        return sideBarController;
+    /**@returns the Context's NotepadController.*/
+    public NotepadController getNotepadController() {
+        return notepadController;
     }
-    /**Sets the SideBarController.
-     * @param sideBarController The new SideBarController to be used in the Context.
+    /**Sets the NotepadController.
+     * @param notepadController The new NotepadController to be used in the Context.
      */
-    public void setSideBarController(SideBarController sideBarController) {
-        this.sideBarController = sideBarController;
+    public void setNotepadController(NotepadController notepadController) {
+        this.notepadController = notepadController;
     }
 
 }
