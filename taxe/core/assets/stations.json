@@ -8,7 +8,7 @@
     },
     {
       "name": "Random Node",
-      "junction": false,
+      "junction": true,
       "x": "270",
       "y": 149
     },
@@ -26,15 +26,15 @@
     },
     {
       "name": "Central Hall",
-      "junction": true,
+      "junction": false,
       "x": "222",
       "y": 334
     },
     {
       "name": "Charles",
       "junction": false,
-      "x": "411",
-      "y": 84
+      "x": "481",
+      "y": 240
     },
     {
       "name": "Heslington Hall",
@@ -45,8 +45,8 @@
     {
       "name": "Library",
       "junction": false,
-      "x": "548",
-      "y": 65
+      "x": "248",
+      "y": 440
     },
     {
       "name": "Alcuin",
@@ -57,32 +57,32 @@
     {
       "name": "Science Park",
       "junction": false,
-      "x": "360",
-      "y": 436
+      "x": "415",
+      "y": 470
     },
     {
       "name": "Chemistry Dept",
-      "junction": true,
+      "junction": false,
       "x": "390",
       "y": 400
     },
     {
       "name": "Derwent",
       "junction": false,
-      "x": "417",
-      "y": 105
+      "x": "320",
+      "y": 355
     },
     {
       "name": "Vanbrugh",
       "junction": false,
       "x": "200",
-      "y": 405
+      "y": 380
     },
     {
       "name": "Wentworth",
-      "junction": true,
+      "junction": false,
       "x": "50",
-      "y": 350
+      "y": 380
     },
     {
       "name": "To Town",
@@ -93,44 +93,44 @@
     {
       "name": "Biology",
       "junction": false,
-      "x": "700",
-      "y": 399
+      "x": "50",
+      "y": 289
     },
     {
       "name": "Yellow Brick Road",
-      "junction": false,
-      "x": "702",
-      "y": 323
+      "junction": true,
+      "x": "565",
+      "y": 360
     },
     {
       "name": "Computer Science",
       "junction": false,
-      "x": "592",
-      "y": 306
+      "x": "600",
+      "y": 136
     },
     {
       "name": "Goodricke",
       "junction": false,
-      "x": "693",
-      "y": 234
+      "x": "625",
+      "y": 225
     },
     {
       "name": "Langwith",
-      "junction": true,
-      "x": "639",
-      "y": 379
+      "junction": false,
+      "x": "720",
+      "y": 200
     },
     {
       "name": "Constantine",
       "junction": false,
-      "x": "685",
-      "y": 128
+      "x": "800",
+      "y": 200
     },  
     {
       "name": "Sport Village",
       "junction": false,
-      "x": "621",
-      "y": 259
+      "x": "900",
+      "y": 200
     },
     {
       "name": "James",
@@ -245,6 +245,38 @@
     {
       "station1": "Sport Village",
       "station2": "Constantine"
+    },
+    {
+      "station1": "Derwent",
+      "station2": "Chemistry Dept"
+    },
+    {
+      "station1": "Derwent",
+      "station2": "Vanbrugh"
+    },
+    {
+      "station1": "Chemistry Dept",
+      "station2": "Alcuin"
+    },
+    {
+      "station1": "Derwent",
+      "station2": "Heslington Hall"
+    },
+    {
+      "station1": "Science Park",
+      "station2": "Heslington Hall"
+    },
+    {
+      "station1": "James",
+      "station2": "Sports Centre"
+    },
+    {
+      "station1": "Physics Building",
+      "station2": "James"
+    },
+    {
+      "station1": "Langwith",
+      "station2": "Computer Science"
     }
 
 
