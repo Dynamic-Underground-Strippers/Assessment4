@@ -1,16 +1,11 @@
 package gameLogic.map;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
-
 import Util.Node;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+
+import java.util.*;
 
 public class Map {
 	/**The stations that exist on the map.*/
@@ -182,6 +177,9 @@ public class Map {
     public Connection addConnection(String station1, String station2) {
         Station st1 = getStationByName(station1);
         Station st2 = getStationByName(station2);
+        if (st1 == null || st2 == null) {
+            System.out.println(st1 + ", " + st2 + ", " + station1 + ", " + station2);
+        }
         return addConnection(st1, st2);
     }
 
@@ -209,6 +207,7 @@ public class Map {
 		ArrayList<Station> connectedStations = new ArrayList<Station>();
 		for(Connection c : getConnectionsFromStation(station))
 		{
+            System.out.println(c + ", " + (c.getStation1() == null ? "null" : c.getStation1().getName()) + ", " + (c.getStation2() == null ? "null" : c.getStation2().getName()));
 			//Establish which end of the connection is the discovered station
 			Station discoveredStation;
 			if(c.getStation1().equals(station))
@@ -385,6 +384,7 @@ public class Map {
 	 * @return The length of the route.
 	 */
 	public float getRouteLength(List<Station> idealRoute) {
+        System.out.println("Ideal route: " + idealRoute);
 		//Simple method for finding the length of a route
 		int i = 1;
 		float length = 0.0f;
