@@ -9,38 +9,38 @@
     {
       "name": "Random Node",
       "junction": false,
-      "x": "175",
-      "y": 159
+      "x": "270",
+      "y": 149
     },
     {
       "name": "Halifax",
       "junction": false,
-      "x": "330",
-      "y": 280
+      "x": "360",
+      "y": 50
     },
     {
       "name": "Physics Building",
       "junction": false,
-      "x": "300",
-      "y": 373
+      "x": "200",
+      "y": 273
     },
     {
       "name": "Central Hall",
       "junction": true,
-      "x": "352",
+      "x": "222",
       "y": 334
     },
     {
       "name": "Charles",
       "junction": false,
       "x": "411",
-      "y": 384
+      "y": 84
     },
     {
       "name": "Heslington Hall",
       "junction": false,
-      "x": "545",
-      "y": 385
+      "x": "415",
+      "y": 270
     },
     {
       "name": "Library",
@@ -51,20 +51,20 @@
     {
       "name": "Alcuin",
       "junction": false,
-      "x": "115",
-      "y": 220
+      "x": "315",
+      "y": 520
     },
     {
       "name": "Science Park",
       "junction": false,
-      "x": "260",
-      "y": 36
+      "x": "360",
+      "y": 436
     },
     {
       "name": "Chemistry Dept",
       "junction": true,
-      "x": "260",
-      "y": 150
+      "x": "390",
+      "y": 400
     },
     {
       "name": "Derwent",
@@ -75,19 +75,19 @@
     {
       "name": "Vanbrugh",
       "junction": false,
-      "x": "485",
-      "y": 161
+      "x": "200",
+      "y": 405
     },
     {
       "name": "Wentworth",
       "junction": true,
-      "x": "480",
-      "y": 216
+      "x": "50",
+      "y": 350
     },
     {
       "name": "To Town",
       "junction": false,
-      "x": "508",
+      "x": "98",
       "y": 473
     },
     {
@@ -135,8 +135,8 @@
     {
       "name": "James",
       "junction": false,
-      "x": "621",
-      "y": 400
+      "x": "116",
+      "y": 220
     }
 
   ],
