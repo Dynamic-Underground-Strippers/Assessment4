@@ -244,4 +244,8 @@ public class Player {
         return messageBuffer;
     }
 
+    public void addMessageToBuffer(String message){
+        messageBuffer.add(message);
+    }
+
 }

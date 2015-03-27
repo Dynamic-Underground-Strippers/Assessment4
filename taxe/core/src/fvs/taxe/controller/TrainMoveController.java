@@ -112,13 +112,12 @@ public class TrainMoveController {
 					} else {
 						//if connection has been deleted
 						System.out.println("A train has stopped because its connection has been deleted");
-						//train.getActor().clearActions();
 
 						train.getActor().remove();
 						train.setPosition(station.getLocation());
 
-						//TODO: ADD MESSAGE TO MESSAGE BUFFER TO INDICATE THIS TO PLAYER ON THEIR NEXT TURN
-						//train.getActor().setPosition(station.getLocation().getX(),station.getLocation().getY());
+						train.getPlayer().addMessageToBuffer("One of your trains has stopped at " + station.getName()
+							+ " because the connection has been deleted.");
 
 					}
 
