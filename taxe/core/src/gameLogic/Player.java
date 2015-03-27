@@ -51,6 +51,7 @@ public class Player {
         resources = new ArrayList<Resource>();
         this.pm = pm;
         number = playerNumber;
+        messageBuffer = new ArrayList<String>();
     }
     
     /**@return The Player's current score.*/
@@ -246,6 +247,10 @@ public class Player {
 
     public void addMessageToBuffer(String message){
         messageBuffer.add(message);
+    }
+
+    public void clearBuffer(){
+        messageBuffer.clear();
     }
 
 }

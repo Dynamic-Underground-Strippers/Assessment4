@@ -513,14 +513,17 @@ public class Map {
     public void removeConnection(Station station1, Station station2) {
         Connection toRemove = null;
         for (Connection c : connections) {
-            if (c.getStation1().equals(station1) && c.getStation2().equals(station2))
+            if ((c.getStation1().equals(station1) && c.getStation2().equals(station2))
+                || (c.getStation1().equals(station2) && c.getStation2().equals(station1)))
                 //when found station, mark for deletion
                 //can't delete during loop as will break for loop
                 toRemove = c;
         }
         if (!(toRemove == null)){
             connections.remove(toRemove);
+            System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "has been deleted");
         }
+        System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "NOT deleted");
     }
 
 }

@@ -137,13 +137,6 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			public void changed() {
 				goalController.drawCurrentPlayerGoals();
-				for (String message : gameLogic.getPlayerManager().getCurrentPlayer().getMessages()){
-					Dialog dia = new Dialog("Notice", context.getSkin());
-					dia.text(message).align(Align.center);
-					dia.button("OK", "OK");
-					dia.show(stage);
-				}
-
 			}
 		});
 
@@ -179,6 +172,7 @@ public class GameScreen extends ScreenAdapter {
 			if (timeAnimated >= ANIMATION_TIME) {
 				gameLogic.setState(GameState.NORMAL);
 				timeAnimated = 0;
+				displayMessagesInBuffer();
 			}
 		}
 
@@ -214,4 +208,16 @@ public class GameScreen extends ScreenAdapter {
 		mapTexture.dispose();
 		stage.dispose();
 	}
+
+	public void displayMessagesInBuffer(){
+		Player currentPlayer = gameLogic.getPlayerManager().getCurrentPlayer();
+		for (String message : currentPlayer.getMessages()){
+			Dialog dia = new Dialog("Notice", context.getSkin());
+			dia.text(message).align(Align.center);
+			dia.button("OK", "OK");
+			dia.show(stage);
+		}
+		currentPlayer.clearBuffer();
+	}
+
 }

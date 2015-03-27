@@ -55,6 +55,7 @@ public class DeleteConnection extends Resource {
         Connection tempDeleted = map.getConnection(station1.getName(), station2.getName());
         map.removeConnection(station1, station2);
 
+
         //Find the ideal solution to solving this objective
         Node<Station> originNode = new Node<Station>();
         originNode.setData(station1);
