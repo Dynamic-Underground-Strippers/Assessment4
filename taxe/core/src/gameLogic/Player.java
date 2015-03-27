@@ -35,8 +35,12 @@ public class Player {
     /**This player's number, e.g. Player1, Player2.*/
     private int number;
 
-
+    /**Indicates whether player is to skip the next turn.*/
     private boolean skip;
+
+    /**Stores all messages for this player on their next turn.*/
+    private ArrayList<String> messageBuffer;
+
 
     /**Instantiation method.
      * @param pm The PlayerManager of the Game that handles this player.
@@ -235,4 +239,9 @@ public class Player {
         return skip;
 
     }
+
+    public ArrayList<String> getMessages(){
+        return messageBuffer;
+    }
+
 }

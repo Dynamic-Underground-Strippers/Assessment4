@@ -1,5 +1,7 @@
 package gameLogic;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import gameLogic.goal.GoalManager;
 import gameLogic.map.Map;
 import gameLogic.obstacle.Obstacle;
@@ -72,6 +74,7 @@ public class Game {
 				map.blockRandomConnection();
 				calculateObstacles();
 				decreaseObstacleTime();
+				//displayMessages(currentPlayer.getMessages());
 			}
 		});
 	}
@@ -198,4 +201,6 @@ public class Game {
 		}
 		
 	}
+
+
 }

@@ -97,7 +97,7 @@ public class TrainMoveController {
 
 					//Checks whether connection has not been deleted
 					if (Game.getInstance().getMap().doesConnectionExist(station.getName(),nextStation.getName())){
-
+						System.out.println("Connection exists between " +station.getName()+","+nextStation.getName());
 						//Checks whether the next connection is blocked, if so the train is paused, if not the train is unpaused.
 						if (Game.getInstance().getMap().isConnectionBlocked(station, nextStation)) {
 							train.getActor().setPaused(true);
@@ -111,8 +111,14 @@ public class TrainMoveController {
 
 					} else {
 						//if connection has been deleted
-						train.getActor().clearActions();
-						train.getActor().setPosition(station.getLocation().getX(),station.getLocation().getY());
+						System.out.println("A train has stopped because its connection has been deleted");
+						//train.getActor().clearActions();
+
+						train.getActor().remove();
+						train.setPosition(station.getLocation());
+
+						//TODO: ADD MESSAGE TO MESSAGE BUFFER TO INDICATE THIS TO PLAYER ON THEIR NEXT TURN
+						//train.getActor().setPosition(station.getLocation().getX(),station.getLocation().getY());
 
 					}
 

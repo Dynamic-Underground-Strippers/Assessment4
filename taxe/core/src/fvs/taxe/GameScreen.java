@@ -1,5 +1,7 @@
 package fvs.taxe;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import fvs.taxe.controller.Context;
 import fvs.taxe.controller.GoalController;
 import fvs.taxe.controller.ObstacleController;
@@ -135,6 +137,13 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			public void changed() {
 				goalController.drawCurrentPlayerGoals();
+				for (String message : gameLogic.getPlayerManager().getCurrentPlayer().getMessages()){
+					Dialog dia = new Dialog("Notice", context.getSkin());
+					dia.text(message).align(Align.center);
+					dia.button("OK", "OK");
+					dia.show(stage);
+				}
+
 			}
 		});
 
