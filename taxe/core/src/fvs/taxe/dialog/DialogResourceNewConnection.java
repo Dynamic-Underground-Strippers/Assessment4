@@ -19,7 +19,7 @@ public class DialogResourceNewConnection extends Dialog {
         //Generates all the buttons that allow the user to interact with the dialog
         text("What do you want to do with this new connection?");
         button("Create a connection", "CREATE");
-        button("Drop", "DROP");
+        button("Delete", "DROP");
         button("Cancel", "CLOSE");
     }
 

@@ -20,7 +20,7 @@ public class DialogResourceDeleteConnection extends Dialog {
         //Generates all the buttons that allow the user to interact with the dialog
         text("What do you want to do with this 'Remove Connection'?");
         button("Remove connection", "DELETE");
-        button("Drop", "DROP");
+        button("Delete", "DROP");
         button("Cancel", "CLOSE");
     }
 
