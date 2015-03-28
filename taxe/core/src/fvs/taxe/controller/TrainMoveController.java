@@ -81,6 +81,8 @@ public class TrainMoveController {
 
 				train.addHistory(station, context.getGameLogic().getPlayerManager().getTurnNumber());
 
+
+
 				//Uncomment to test whether or not the train is correctly adding stations to its history.
 /*                System.out.println("Added to history: passed " + station.getName() + " on turn "
                         + context.getGameLogic().getPlayerManager().getTurnNumber());*/
@@ -88,20 +90,38 @@ public class TrainMoveController {
 				int stationIndex = train.getRoute().indexOf(station); //find this station in route
 				int nextIndex = stationIndex + 1;
 
+
 				//This checks whether or not the train is at its final destination by checking whether the index is still less than the list size
 				if (nextIndex < train.getRoute().size()) {
 					Station nextStation = train.getRoute().get(nextIndex);
 
-					//Checks whether the next connection is blocked, if so the train is paused, if not the train is unpaused.
-					if (Game.getInstance().getMap().isConnectionBlocked(station, nextStation)) {
-						train.getActor().setPaused(true);
-						train.getActor().setRecentlyPaused(false);
-					} else {
-						if (train.getActor().isPaused()) {
-							train.getActor().setPaused(false);
-							train.getActor().setRecentlyPaused(true);
+					//Checks whether connection has not been deleted
+					if (Game.getInstance().getMap().doesConnectionExist(station.getName(),nextStation.getName())){
+						System.out.println("Connection exists between " +station.getName()+","+nextStation.getName());
+						//Checks whether the next connection is blocked, if so the train is paused, if not the train is unpaused.
+						if (Game.getInstance().getMap().isConnectionBlocked(station, nextStation)) {
+							train.getActor().setPaused(true);
+							train.getActor().setRecentlyPaused(false);
+						} else {
+							if (train.getActor().isPaused()) {
+								train.getActor().setPaused(false);
+								train.getActor().setRecentlyPaused(true);
+							}
 						}
+
+					} else {
+						//if connection has been deleted
+						System.out.println("A train has stopped because its connection has been deleted");
+
+						train.getActor().remove();
+						train.setPosition(station.getLocation());
+
+						train.getPlayer().addMessageToBuffer("One of your trains has stopped at " + station.getName()
+							+ " because the connection has been deleted.");
+
 					}
+
+
 				} else {
 					//If the train is at its final destination then the train is set to unpaused so that it does not cause issues elsewhere in the program.
 					train.getActor().setPaused(false);

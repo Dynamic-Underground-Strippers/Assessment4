@@ -83,12 +83,30 @@ public class ResourceManager {
 	 * @return A randomly selected Train object from the list of created trains, with the speed and image set
 	 * according to the properties of the train defined in trains.json
 	 */
-    private Resource getRandomResource() {   	
-    	int index = random.nextInt(trains.size());
-    	Tuple<String, Integer> train = trains.get(index);
-    	return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png",train.getSecond());
-    	
-    }
+	private Resource getRandomResource() {
+		//Returns a random resource
+
+
+		int idx = random.nextInt(10);
+		if (idx == 1) {
+			//1 in 10 chance to return an obstacle
+			return new NewConnection();
+		} else if (idx == 2) {
+			return new DeleteConnection();
+		} else {
+			//Otherwise randomly selects a train to give the player.
+			//We decided not to use the value of idx to choose the train as this allows us to change the number of trains in the system independently of this routine
+			//i.e we could have 30 trains, but still retain a 1 in 10 chance to get an engineer/skip/obstacle
+			return getRandomTrain();
+		}
+	}
+
+	public Train getRandomTrain() {
+		//Uses a random number generator to pick a random train and return the complete train class for that train.
+		int index = random.nextInt(trains.size());
+		Tuple<String, Integer> train = trains.get(index);
+		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond());
+	}
 
     /** Add one randomly generated Train to the given Player
      * @param player The player that will have a randomly generated resource added to it

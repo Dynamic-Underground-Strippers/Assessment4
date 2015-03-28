@@ -35,8 +35,12 @@ public class Player {
     /**This player's number, e.g. Player1, Player2.*/
     private int number;
 
-
+    /**Indicates whether player is to skip the next turn.*/
     private boolean skip;
+
+    /**Stores all messages for this player on their next turn.*/
+    private ArrayList<String> messageBuffer;
+
 
     /**Instantiation method.
      * @param pm The PlayerManager of the Game that handles this player.
@@ -47,6 +51,7 @@ public class Player {
         resources = new ArrayList<Resource>();
         this.pm = pm;
         number = playerNumber;
+        messageBuffer = new ArrayList<String>();
     }
     
     /**@return The Player's current score.*/
@@ -65,13 +70,13 @@ public class Player {
     }
     
     /**@return The player's active trains.*/
-    public List<Resource> getActiveTrains() {
+    public List<Train> getActiveTrains() {
     	// get all of the players trains that are active (placed)
-    	List<Resource> activeResources = new ArrayList<Resource>();
+    	List<Train> activeResources = new ArrayList<Train>();
     	for (Resource resource: resources) {
     		if (resource instanceof Train) {
     			if(((Train) resource).getPosition() != null) {
-    				activeResources.add(resource);
+    				activeResources.add((Train) resource);
     			}
     		}
     	}
@@ -235,4 +240,17 @@ public class Player {
         return skip;
 
     }
+
+    public ArrayList<String> getMessages(){
+        return messageBuffer;
+    }
+
+    public void addMessageToBuffer(String message){
+        messageBuffer.add(message);
+    }
+
+    public void clearBuffer(){
+        messageBuffer.clear();
+    }
+
 }

@@ -109,7 +109,7 @@ public class StationController {
 	 */
 	private void renderCollisionStation(final CollisionStation collisionStation) {
 		final CollisionStationActor collisionStationActor = new CollisionStationActor(collisionStation.getLocation());
-
+		
 		collisionStationActor.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -127,6 +127,7 @@ public class StationController {
                 tooltip.hide();
             }
         });
+		collisionStation.setActor(collisionStationActor);
 		context.getStage().addActor(collisionStationActor);
 	}
 

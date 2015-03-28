@@ -1,5 +1,7 @@
 package fvs.taxe;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import fvs.taxe.controller.Context;
 import fvs.taxe.controller.GoalController;
 import fvs.taxe.controller.ObstacleController;
@@ -170,6 +172,7 @@ public class GameScreen extends ScreenAdapter {
 			if (timeAnimated >= ANIMATION_TIME) {
 				gameLogic.setState(GameState.NORMAL);
 				timeAnimated = 0;
+				displayMessagesInBuffer();
 			}
 		}
 
@@ -205,4 +208,16 @@ public class GameScreen extends ScreenAdapter {
 		mapTexture.dispose();
 		stage.dispose();
 	}
+
+	public void displayMessagesInBuffer(){
+		Player currentPlayer = gameLogic.getPlayerManager().getCurrentPlayer();
+		for (String message : currentPlayer.getMessages()){
+			Dialog dia = new Dialog("Notice", context.getSkin());
+			dia.text(message).align(Align.center);
+			dia.button("OK", "OK");
+			dia.show(stage);
+		}
+		currentPlayer.clearBuffer();
+	}
+
 }

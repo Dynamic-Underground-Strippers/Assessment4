@@ -185,6 +185,10 @@ public class Map {
         return newConnection;
     }
 
+    public void addConnection(Connection connection) {
+        connections.add(connection);
+    }
+
     /**This method replicated addConnection but allows the use of station names instead of objects.
      * @param station1 The name of the first station.
      * @param station2 The name of the second station.
@@ -504,6 +508,22 @@ public class Map {
 
         //Reaching here means a connection has been added to the route where a connection doesn't exist
         return true;
+    }
+
+    public void removeConnection(Station station1, Station station2) {
+        Connection toRemove = null;
+        for (Connection c : connections) {
+            if ((c.getStation1().equals(station1) && c.getStation2().equals(station2))
+                || (c.getStation1().equals(station2) && c.getStation2().equals(station1)))
+                //when found station, mark for deletion
+                //can't delete during loop as will break for loop
+                toRemove = c;
+        }
+        if (!(toRemove == null)){
+            connections.remove(toRemove);
+            System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "has been deleted");
+        }
+        System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "NOT deleted");
     }
 
 }
