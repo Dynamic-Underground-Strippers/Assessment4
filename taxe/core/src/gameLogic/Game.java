@@ -2,6 +2,7 @@ package gameLogic;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import gameLogic.event.EventsManager;
 import gameLogic.goal.GoalManager;
 import gameLogic.map.Map;
 import gameLogic.obstacle.Obstacle;
@@ -38,6 +39,8 @@ public class Game {
 	
 	/**The game state.*/
 	private GameState state;
+
+	private EventsManager eventsManager;
 	
 	/**List of listeners that listen to changes in game state.*/
 	private List<GameStateListener> gameStateListeners = new ArrayList<GameStateListener>();
@@ -60,6 +63,8 @@ public class Game {
 		goalManager = new GoalManager(resourceManager);
 		map = new Map();
 		obstacleManager = new ObstacleManager(map);
+		eventsManager = new EventsManager(playerManager);
+
 		
 		state = GameState.NORMAL;
 
@@ -74,7 +79,9 @@ public class Game {
 				map.blockRandomConnection();
 				calculateObstacles();
 				decreaseObstacleTime();
-				//displayMessages(currentPlayer.getMessages());
+
+				if ((playerManager.getTurnNumber() % 10) == 0) //every 10th turn, add event
+					eventsManager.eventAct();
 			}
 		});
 	}
