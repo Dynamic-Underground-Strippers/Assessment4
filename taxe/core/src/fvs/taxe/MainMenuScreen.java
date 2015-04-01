@@ -88,7 +88,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         //Draw text into rectangles
         game.batch.begin();
-        String startGameString = "Start game";
+        String startGameString = "Start Game";
         game.font.draw(game.batch, startGameString, playBounds.getX() + playBounds.getWidth()/2 - game.font.getBounds(startGameString).width/2,
                 playBounds.getY() + playBounds.getHeight()/2 + game.font.getBounds(startGameString).height/2); // center the text
         String exitGameString = "Exit";
