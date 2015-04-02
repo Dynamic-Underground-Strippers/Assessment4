@@ -57,7 +57,7 @@ public class ObstacleManager {
 		}
 	}
 
-	/** Create the obstacle that has given type, and is located at the station assoicated with the given string
+	/** Create the obstacle that has given type, and is located at the station associated with the given string
 	 * @param typeName The string that represents the name of the type of the obstacle (ObstacleType enum)
 	 * @param stationName The string that represents the station that the obstacle is associated with
 	 * @return An obstacle with type given, station given if both that type and station exist, otherwise null
