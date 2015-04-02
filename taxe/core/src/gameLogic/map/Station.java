@@ -2,6 +2,9 @@ package gameLogic.map;
 
 import fvs.taxe.actor.StationActor;
 import gameLogic.obstacle.Obstacle;
+
+import java.util.ArrayList;
+
 /**This class is used to store information about a station.*/
 public class Station{
 	/**The name of the station.*/
@@ -15,7 +18,9 @@ public class Station{
 	
 	/**The obstacle occupying the station, if any.*/
 	private Obstacle obstacle;
-	
+
+	private NodeType type;
+	private ArrayList<Station> aliases;
 	/**Instantiation method.
 	 * @param name The name of the station.
 	 * @param location The location of the station.
@@ -23,6 +28,14 @@ public class Station{
 	public Station(String name, IPositionable location) {
 		this.name = name;
 		this.location = location;
+		aliases = new ArrayList<Station>();
+	}
+
+	public Station(String name, IPositionable location,NodeType type) {
+		this.name = name;
+		this.location = location;
+		aliases = new ArrayList<Station>();
+		this.type = type;
 	}
 	
 	/**@return The name of the station.*/
@@ -50,7 +63,7 @@ public class Station{
 	}
 	
 	/**This method sets the actor that graphically represents the station.
-	 * @param name The new actor of the station.
+	 * @param actor The new actor of the station.
 	 */
 	public void setActor(StationActor actor){
 		this.actor = actor;
@@ -84,5 +97,6 @@ public class Station{
 	public void clearObstacle() {
 		this.obstacle = null;
 	}
-	
+
+	public void addAlias(Station station){this.aliases.add(station);}
 }
