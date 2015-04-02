@@ -202,7 +202,14 @@ public class Player {
     }
 
     public void removeGoal(Goal goal){
-        goal.setComplete();
+        goals.remove(goal);
+        if (goal.equals(easyGoal)){
+            easyGoal=null;
+        }else if (goal.equals(mediumGoal)){
+            mediumGoal = null;
+        }else if (goal.equals(hardGoal)){
+            hardGoal = null;
+        }
         changed();
     }
 
