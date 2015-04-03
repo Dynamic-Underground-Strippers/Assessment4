@@ -23,7 +23,7 @@ public class ResourceManager {
     /** Random instance for generating random resources*/
     private Random random = new Random();
 
-	private ArrayList<Train> jellies = new ArrayList<Train>();
+	private ArrayList<Jelly> jellies = new ArrayList<Jelly>();
 
 	private ArrayList<JellyListener> jellyListener = new ArrayList<JellyListener>();
     
@@ -141,7 +141,7 @@ public class ResourceManager {
 	public void jelly(){
 		int rand = random.nextInt(2);
 		if (rand == 0) {
-			Train jelly = new Train("Jelly", "GreenTrain.png", "GreenTrainRight.png", 50);
+			Jelly jelly = new Jelly("Jelly", "GreenTrain.png", "GreenTrainRight.png", 50);
 			Station randStation = Game.getInstance().getMap().getRandomStation();
 			jelly.setPosition(randStation.getLocation());
 			ArrayList<IPositionable> route = new ArrayList();

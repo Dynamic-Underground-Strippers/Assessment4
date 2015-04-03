@@ -3,6 +3,8 @@ package gameLogic.resource;
 import Util.Tuple;
 import fvs.taxe.actor.JellyActor;
 import fvs.taxe.actor.TrainActor;
+import fvs.taxe.controller.JellyController;
+import gameLogic.Game;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
 
@@ -50,6 +52,20 @@ public class Jelly extends Resource {
         this.speed = speed;
         history = new ArrayList<Tuple<Station, Integer>>();
         route =  new ArrayList<Station>();
+        //Old route implementation
+        Station randStation = Game.getInstance().getMap().getRandomStation();
+        this.setPosition(randStation.getLocation());
+        ArrayList<IPositionable> route = new ArrayList();
+        Station nextStation = Game.getInstance().getMap().getConnectedStations(randStation, null).get(0);
+        route.add(nextStation.getLocation());
+        Station nextStation1 = Game.getInstance().getMap().getConnectedStations(randStation, null).get(0);
+        route.add(nextStation1.getLocation());
+        route.add(nextStation.getLocation());
+        route.add(randStation.getLocation());
+        route.add(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getLocation());
+        this.setFinalDestination(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1));
+        this.setRoute(Game.getInstance().getMap().createRoute(route));
+
     }
 
     /** Get the name of the train

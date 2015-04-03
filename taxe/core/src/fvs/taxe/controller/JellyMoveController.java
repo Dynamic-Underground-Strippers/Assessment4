@@ -132,9 +132,9 @@ public class JellyMoveController {
         return new RunnableAction() {
             public void run() {
                // ArrayList<String> completedGoals = context.getGameLogic().getGoalManager().jellyArrived(jelly, jelly.getPlayer());
-                for(String message : completedGoals) {
+               /** for(String message : completedGoals) {
                     context.getTopBarController().displayFlashMessage(message, Color.WHITE, 2);
-                }
+                }**/
                 System.out.println(jelly.getFinalDestination().getLocation().getX() + "," + jelly.getFinalDestination().getLocation().getY());
                 jelly.setPosition(jelly.getFinalDestination().getLocation());
                 jelly.getActor().setVisible(false);

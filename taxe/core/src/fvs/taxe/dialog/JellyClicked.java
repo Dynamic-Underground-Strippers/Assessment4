@@ -27,7 +27,8 @@ public class JellyClicked extends ClickListener {
     }
 
     /**This method is called when the TrainClicked is Clicked. The GUI is updated accordingly.*/
-    @Override
+    /** @Override
+    * jelly do not require to be clicked
     public void clicked(InputEvent event, float x, float y) {
         if (Game.getInstance().getState() != GameState.NORMAL) return;
 
@@ -48,6 +49,6 @@ public class JellyClicked extends ClickListener {
         DialogResourceJelly dia = new DialogResourceJelly(context, jelly, context.getSkin(), jelly.getPosition() != null);
         dia.show(context.getStage());
         dia.subscribeClick(listener);
-    }
+    }**/
 
 }
