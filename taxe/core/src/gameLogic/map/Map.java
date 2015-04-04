@@ -78,7 +78,7 @@ public class Map {
             int x = 0;
             int y = 0;
             boolean isJunction = false;
-
+            ArrayList<String> aliases = new ArrayList<String>();
             for(JsonValue val = station.child; val != null; val = val.next) {
                 if(val.name.equalsIgnoreCase("name")) {
                     name = val.asString();
@@ -86,8 +86,10 @@ public class Map {
                     x = val.asInt();
                 } else if(val.name.equalsIgnoreCase("y")) {
                     y = val.asInt();
-                } else {
+                } else if(val.name.equalsIgnoreCase("junction")) {
                     isJunction = val.asBoolean();
+                } else{
+                    //Add in loading of aliases
                 }
             }
 

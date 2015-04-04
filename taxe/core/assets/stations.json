@@ -5,6 +5,12 @@
       "junction": false,
       "x": "159",
       "y": 19
+      "aliases": [
+        {
+          "name": "Madrid2",
+          "type": "Madrid"
+        }
+        ]
     },
     {
       "name": "Paris",

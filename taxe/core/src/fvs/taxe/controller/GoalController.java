@@ -56,10 +56,7 @@ public class GoalController {
 		PlayerManager pm = context.getGameLogic().getPlayerManager();
 		Player currentPlayer = pm.getCurrentPlayer();
 
-		for (Goal goal : currentPlayer.getGoals()) {
-			if(goal.getComplete()) {
-				continue;
-			}
+		for (Goal goal : currentPlayer.getActiveGoals()) {
 			y-=30;
 			TextButton button  = new TextButton(goal.toString(), context.getSkin());
 			button.setPosition(x,y);

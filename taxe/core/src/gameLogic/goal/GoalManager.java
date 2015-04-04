@@ -39,7 +39,7 @@ public class GoalManager {
 	 * @param extraConstraints The number of extra constraints to add. Can be zero.
 	 * @return
 	 */
-	public Goal generateRandomGoal(int turn, int extraConstraints) {
+	public Goal generateRandomGoal(int turn) {
 		Map map = Game.getInstance().getMap();
 		Station origin;
 		do {
@@ -60,19 +60,16 @@ public class GoalManager {
 		Goal goal = new Goal(origin, destination, turn, idealRoute);
 				
 		//Check if we need to complicate the Goal with further constraints
-		if(extraConstraints > 0)
-		{
+
 			//Generate a set of constraints to add to the goal
 			ArrayList<Tuple<String, Object>> availableConstraints = generateExtraConstraints(idealRoute, map.getRouteLength(idealRoute));
-			for(int i = 0; i < extraConstraints; i++)
-			{
+
 				//Pick one of our available constraints and add it to the goal
 				Tuple<String, Object> goalConstraint = availableConstraints.get(new Random().nextInt(availableConstraints.size()));
 				availableConstraints.remove(goalConstraint);
-				
+
 				goal.addConstraint(resourceManager, goalConstraint.getFirst(), goalConstraint.getSecond());
-			}
-		}
+
 		return goal;
 	}
 	
@@ -84,9 +81,7 @@ public class GoalManager {
 	private ArrayList<Tuple<String, Object>> generateExtraConstraints(List<Station> idealRoute, float routeLength) {
 		ArrayList<Tuple<String, Object>> list =  new ArrayList<Tuple<String, Object>>();
 		//Add a constraint based on number of turns, based on the time taken for a Bullet Train to complete the route of Param routeLength
-		list.add(new Tuple<String, Object>("turnCount", (int)Math.ceil((routeLength / resourceManager.getTrainSpeed("Bullet Train")))));
-		//Add a constraint based on the number of trains completing the same goal, with a random value of either 2 or 3
-		list.add(new Tuple<String, Object>("trainCount", new Random().nextInt(2) + 2));
+		list.add(new Tuple<String, Object>("turnCount", (int)Math.ceil((routeLength / resourceManager.getTrainSpeed("Bullet Train"))/2)));
 		//Add a constraint based on the train type, picking a random train type
 		list.add(new Tuple<String, Object>("trainType", resourceManager.getTrainNames().get(new Random().nextInt(resourceManager.getTrainNames().size()))));
 		//If the route is not linear between 2 points, then we can add an exclusion constraint from the idealRoute
@@ -104,7 +99,6 @@ public class GoalManager {
 			}
 		}
 		//Add a constraint of the maximum number of journeys a train can make to get between the 2 locations, the length of the ideal route + 1 (since the ideal route contains the origin)
-		list.add(new Tuple<String, Object>("locationCount", idealRoute.size()));
 		return list;
 	}
 	
@@ -123,7 +117,7 @@ public class GoalManager {
 	 */
 	public ArrayList<String> trainArrived(Train train, Player player) {
 		ArrayList<String> completedString = new ArrayList<String>();
-		for(Goal goal:player.getGoals()) {
+		for(Goal goal:player.getActiveGoals()) {
 			//Check if a goal was completed by the train arrival
 			if(goal.isComplete(train)) {
 				player.completeGoal(goal);
