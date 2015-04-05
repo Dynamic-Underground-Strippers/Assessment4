@@ -124,9 +124,11 @@ public class GoalManager {
 				player.removeResource(train);
 				completedString.add("Player " + player.getPlayerNumber() + " completed a goal to " + goal.toString() + "!");
 				goalFinished(goal);
+				//This break is necessary as a train can only complete a single goal and without it the game crashes due to an ieration error as the goal us renoved fron the iterated list
+				break;
 			}
 		}
-		System.out.println("Train arrived to final destination: " + train.getFinalDestination().getName());
+		System.out.println("Train arrived at final destination: " + train.getFinalDestination().getName());
 		return completedString;
 	}
 
