@@ -52,7 +52,7 @@ public class NewConnection extends Resource {
         Connection connection = map.getConnection(station1.getName(),station2.getName());
 
         for (Connection c : map.getConnections()){
-
+            //TODO: Add check for the same station
             //if connection doesn't contain one of the stations involved in new connection
             //as this would register as an intersection
             if (!(c.getStation1().equals(station1)) && (!(c.getStation2().equals(station2))) &&

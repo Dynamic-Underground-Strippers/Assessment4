@@ -19,7 +19,7 @@
       "y": 50
     },
     {
-      "name": "Physics Building",
+      "name": "Physics",
       "junction": false,
       "x": "200",
       "y": 273
@@ -31,7 +31,7 @@
       "y": 334
     },
     {
-      "name": "Charles",
+      "name": "The Charles",
       "junction": false,
       "x": "481",
       "y": 240
@@ -61,7 +61,7 @@
       "y": 470
     },
     {
-      "name": "Chemistry Dept",
+      "name": "Chemistry",
       "junction": false,
       "x": "390",
       "y": 400
@@ -85,7 +85,7 @@
       "y": 380
     },
     {
-      "name": "To Town",
+      "name": "Taxi Rank",
       "junction": false,
       "x": "98",
       "y": 473
@@ -144,7 +144,7 @@
   "connections": [
     {
       "station1": "Heslington Hall",
-      "station2": "Charles"
+      "station2": "The Charles"
     },
     {
       "station1": "Heslington Hall",
@@ -164,10 +164,10 @@
     },
     {
       "station1": "Random Node",
-      "station2": "Physics Building"
+      "station2": "Physics"
     },
     {
-      "station1": "Physics Building",
+      "station1": "Physics",
       "station2": "Central Hall"
     },
     {
@@ -188,10 +188,10 @@
     },
     {
       "station1": "Wentworth",
-      "station2": "To Town"
+      "station2": "Taxi Rank"
     },
     {
-      "station1": "To Town",
+      "station1": "Taxi Rank",
       "station2": "Library"
     },
     {
@@ -208,10 +208,10 @@
     },
     {
       "station1": "Science Park",
-      "station2": "Chemistry Dept"
+      "station2": "Chemistry"
     },
     {
-      "station1": "Chemistry Dept",
+      "station1": "Chemistry",
       "station2": "Heslington Hall"
     },
     {
@@ -248,14 +248,14 @@
     },
     {
       "station1": "Derwent",
-      "station2": "Chemistry Dept"
+      "station2": "Chemistry"
     },
     {
       "station1": "Derwent",
       "station2": "Vanbrugh"
     },
     {
-      "station1": "Chemistry Dept",
+      "station1": "Chemistry",
       "station2": "Alcuin"
     },
     {
@@ -271,7 +271,7 @@
       "station2": "Sports Centre"
     },
     {
-      "station1": "Physics Building",
+      "station1": "Physics",
       "station2": "James"
     },
     {
