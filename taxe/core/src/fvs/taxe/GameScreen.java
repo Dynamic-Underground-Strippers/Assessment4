@@ -15,7 +15,6 @@ import gameLogic.*;
 import gameLogic.map.Map;
 import gameLogic.map.Station;
 import gameLogic.obstacle.Rumble;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -24,6 +23,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import fvs.taxe.controller.*;
+import fvs.taxe.dialog.DialogEndGame;
+import gameLogic.Game;
+import gameLogic.GameState;
+import gameLogic.GameStateListener;
+import gameLogic.TurnListener;
+import gameLogic.map.Map;
+import gameLogic.map.Station;
+import gameLogic.obstacle.Rumble;
 
 /** This class displays the Game.java game state graphically to the player.*/
 public class GameScreen extends ScreenAdapter {
@@ -64,7 +72,7 @@ public class GameScreen extends ScreenAdapter {
     private StationController stationController;
     
     /**Controller for handling the graphical bar at the top of the game.*/
-    private TopBarController topBarController;
+    private NotepadController notepadController;
     
     /**Controller for handling resources.*/
     private ResourceController resourceController;
@@ -96,14 +104,14 @@ public class GameScreen extends ScreenAdapter {
 		context = new Context(stage, skin, game, gameLogic);
 		Gdx.input.setInputProcessor(stage);
 
-		mapTexture = new Texture(Gdx.files.internal("gamemap.png"));
+		mapTexture = new Texture(Gdx.files.internal("Map4.png"));
 		map = gameLogic.getMap();
 
 		tooltip = new Tooltip(skin);
 		stage.addActor(tooltip);
 
 		stationController = new StationController(context, tooltip);
-		topBarController = new TopBarController(context);
+		notepadController = new NotepadController(context);
 		resourceController = new ResourceController(context);
 		goalController = new GoalController(context);
 		routeController = new RouteController(context);
@@ -111,7 +119,7 @@ public class GameScreen extends ScreenAdapter {
 		scoreController = new ScoreController(context);
 
 		context.setRouteController(routeController);
-		context.setTopBarController(topBarController);
+		context.setNotepadController(notepadController);
 
 		rumble = obstacleController.getRumble();
 
@@ -119,7 +127,7 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			public void changed() {
 				gameLogic.setState(GameState.ANIMATING);
-				topBarController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
 			}
 		});
 
@@ -163,7 +171,7 @@ public class GameScreen extends ScreenAdapter {
 			game.batch.end();
 		} else {
 			game.batch.begin();
-			game.batch.draw(mapTexture, 0, 0);
+			game.batch.draw(mapTexture, 0, 0, 1022, 561);
 			game.batch.end();
 		}
 
@@ -197,10 +205,10 @@ public class GameScreen extends ScreenAdapter {
 		stationController.drawStations();
 		obstacleController.drawObstacleEffects();
 		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
+		notepadController.drawBackground();
+		notepadController.drawLabels();
+		notepadController.drawEndTurnButton();
 		goalController.drawCurrentPlayerGoals();
-		topBarController.drawBackground();
-		topBarController.drawLabels();
-		topBarController.drawEndTurnButton();
 	}
 
 	@Override

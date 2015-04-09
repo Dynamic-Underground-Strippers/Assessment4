@@ -42,7 +42,7 @@ public class MainMenuScreen extends ScreenAdapter {
         playBounds = new Rectangle(TaxeGame.WIDTH/2 - 200, 350, 400, 100);
         exitBounds = new Rectangle(TaxeGame.WIDTH/2 - 200, 200, 400, 100);
         touchPoint = new Vector3();
-        mapTexture = new Texture(Gdx.files.internal("gamemap.png"));
+        mapTexture = new Texture(Gdx.files.internal("Map4.png"));
     }
 
     /**This method is called once every frame using the render method. It checks whether there has been a touch, and if so, checks whether this touch is within one of the buttons bounds.*/
@@ -88,7 +88,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
         //Draw text into rectangles
         game.batch.begin();
-        String startGameString = "Start game";
+        String startGameString = "Start Game";
         game.font.draw(game.batch, startGameString, playBounds.getX() + playBounds.getWidth()/2 - game.font.getBounds(startGameString).width/2,
                 playBounds.getY() + playBounds.getHeight()/2 + game.font.getBounds(startGameString).height/2); // center the text
         String exitGameString = "Exit";

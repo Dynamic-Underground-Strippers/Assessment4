@@ -172,16 +172,18 @@ public class Game {
 	private void calculateObstacles() {
 		// randomly choose one obstacle, then make the obstacle happen with its associated probability
 		ArrayList<Tuple<Obstacle, Float>> obstacles = obstacleManager.getObstacles();
-		int index = MathUtils.random(obstacles.size()-1);
-		
-		
-		Tuple<Obstacle, Float> obstacleProbPair = obstacles.get(index);
-		boolean obstacleOccured = MathUtils.randomBoolean(obstacleProbPair.getSecond());
-		Obstacle obstacle = obstacleProbPair.getFirst();
-		
-		// if it has occurred and isnt already active, start the obstacle
-		if(obstacleOccured && !obstacle.isActive()){
-			obstacleStarted(obstacle);
+		if (obstacles.size() > 0) {
+			int index = MathUtils.random(obstacles.size() - 1);
+
+
+			Tuple<Obstacle, Float> obstacleProbPair = obstacles.get(index);
+			boolean obstacleOccured = MathUtils.randomBoolean(obstacleProbPair.getSecond());
+			Obstacle obstacle = obstacleProbPair.getFirst();
+
+			// if it has occurred and isn't already active, start the obstacle
+			if (obstacleOccured && !obstacle.isActive()) {
+				obstacleStarted(obstacle);
+			}
 		}
 	}
 	

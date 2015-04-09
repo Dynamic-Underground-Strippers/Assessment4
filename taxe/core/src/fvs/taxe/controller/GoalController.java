@@ -1,9 +1,11 @@
 package fvs.taxe.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import fvs.taxe.TaxeGame;
 import fvs.taxe.dialog.GoalClicked;
 import gameLogic.Player;
@@ -19,6 +21,8 @@ public class GoalController {
 	
 	/**A group of buttons used for controlling the goals,*/
 	private Group goalButtons = new Group();
+
+	private BitmapFont font;
 
 	/**The instantation method sets up listeners for Goal changes and Player changes so that it can update the UI accordingly,
 	 * @param context The context of the game.
@@ -40,6 +44,12 @@ public class GoalController {
 				drawCurrentPlayerGoals();
 			}
 		});
+
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("handwriting2.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = 15;
+		font = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
 	}
 	
 	/**This method draws the current player's goals in the game UI.*/
@@ -50,18 +60,22 @@ public class GoalController {
 		drawHeaderText();
 
 		float top = (float) TaxeGame.HEIGHT;
-		float x = 10.0f;
-		float y = top - 25.0f - TopBarController.CONTROLS_HEIGHT;
+		float x = TaxeGame.WIDTH - NotepadController.WIDTH + 10.0f;
+		float y = top -35.0f;
 
 		PlayerManager pm = context.getGameLogic().getPlayerManager();
 		Player currentPlayer = pm.getCurrentPlayer();
 
 		for (Goal goal : currentPlayer.getActiveGoals()) {
-			y-=30;
-			TextButton button  = new TextButton(goal.toString(), context.getSkin());
-			button.setPosition(x,y);
-			button.addListener(new GoalClicked(goal,context));
-			goalButtons.addActor(button);
+			y-=65;
+			Label label  = new Label (goal.toString(), context.getSkin());
+			label.setStyle(new Label.LabelStyle(font, Color.BLACK));
+			label.setPosition(x, y);
+
+			label.setWidth(NotepadController.WIDTH - 30);
+			label.setWrap(true);
+			label.addListener(new GoalClicked(goal,context));
+			goalButtons.addActor(label);
 		}
 
 		context.getStage().addActor(goalButtons);
@@ -71,8 +85,8 @@ public class GoalController {
 	public void drawHeaderText() {
 		TaxeGame game = context.getTaxeGame();
 		float top = (float) TaxeGame.HEIGHT;
-		float x = 10.0f;
-		float y = top - 10.0f - TopBarController.CONTROLS_HEIGHT;
+		float x = TaxeGame.WIDTH - NotepadController.WIDTH + 10.0f;
+		float y = top -30.0f;
 
 		game.batch.begin();
 		game.fontSmall.setColor(Color.BLACK);
@@ -84,6 +98,6 @@ public class GoalController {
 	 * @return A string consisting of "Player " + the player number + " Goals:".
 	 */
 	private String playerGoalHeader() {
-		return "Player " + context.getGameLogic().getPlayerManager().getCurrentPlayer().getPlayerNumber() + " Goals:";
+		return "Goals for the day";
 	}
 }

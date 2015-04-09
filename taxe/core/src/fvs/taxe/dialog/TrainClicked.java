@@ -35,14 +35,14 @@ public class TrainClicked extends ClickListener {
         Player currentPlayer = Game.getInstance().getPlayerManager().getCurrentPlayer();
 
         if (!train.isOwnedBy(currentPlayer)) {
-            context.getTopBarController().displayFlashMessage("Opponent's " + train.getName() + ". Speed: " + train.getSpeed(), Color.RED, 2);
+            context.getNotepadController().displayFlashMessage("Opponent's " + train.getName() + ". Speed: " + train.getSpeed(), Color.RED, 2);
             return;
         }
 
         if (train.getFinalDestination() == null) {
-            context.getTopBarController().displayFlashMessage("Your " + train.getName() + ". Speed: " + train.getSpeed(), Color.BLACK, 2);
+            context.getNotepadController().displayFlashMessage("Your " + train.getName() + ". Speed: " + train.getSpeed(), Color.BLACK, 2);
         } else {
-            context.getTopBarController().displayFlashMessage("Your " + train.getName() + ". Speed: " + train.getSpeed() + ". Destination: " + train.getFinalDestination().getName(), Color.BLACK, 2);
+            context.getNotepadController().displayFlashMessage("Your " + train.getName() + ". Speed: " + train.getSpeed() + ". Destination: " + train.getFinalDestination().getName(), Color.BLACK, 2);
         }
         DialogButtonClicked listener = new DialogButtonClicked(context, currentPlayer, train);
         DialogResourceTrain dia = new DialogResourceTrain(context, train, context.getSkin(), train.getPosition() != null);

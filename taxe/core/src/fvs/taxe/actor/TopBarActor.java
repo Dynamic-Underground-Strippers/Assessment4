@@ -1,4 +1,4 @@
-package fvs.taxe.controller;
+package fvs.taxe.actor;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import fvs.taxe.TaxeGame;
+import fvs.taxe.controller.TopBarController;
 
 /**Type of Actor specifically for implementing the Top bar in the game GUI*/
 public class TopBarActor extends Actor {
