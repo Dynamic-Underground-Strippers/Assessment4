@@ -277,7 +277,6 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                 System.out.println("Clicked:"+deleteConnection.getStation1().getName()+","+deleteConnection.getStation2().getName());
                                 for (Player player : Game.getInstance().getPlayerManager().getAllPlayers()){
                                     for (Train train : player.getActiveTrains()){
-                                        System.out.println(train.getLastStation().getName()+","+train.getNextStation().getName());
                                         if ((train.getLastStation().getName().equals(deleteConnection.getStation1().getName()) &&
                                                 train.getNextStation().getName().equals(deleteConnection.getStation2().getName())) ||
                                                 (train.getLastStation().getName().equals(deleteConnection.getStation2().getName()) &&
