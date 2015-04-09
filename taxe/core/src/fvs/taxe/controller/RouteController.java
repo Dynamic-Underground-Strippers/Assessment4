@@ -1,15 +1,15 @@
 package fvs.taxe.controller;
 
-<<<<<<< HEAD
+
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-=======
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
->>>>>>> SideBar improvements
+
 import fvs.taxe.StationClickListener;
 import fvs.taxe.TaxeGame;
 import gameLogic.Game;
@@ -107,7 +107,6 @@ public class RouteController {
      */
     private void addStationToRoute(Station station) {
         // the latest position chosen in the positions so far
-<<<<<<< HEAD
         if (positions.size() == 0) {
             if (editingRoute) {
                 //Checks whether the train's actor is paused due to a bug with blocked trains
@@ -120,7 +119,7 @@ public class RouteController {
                         //Sets the relevant boolean checking if the last node on the route is a junction or not
                         canEndRouting = !(station instanceof CollisionStation);
                     }else {
-                        context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+                        context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
                     }
                 }else {
                     Station lastStation = train.getLastStation();
@@ -131,7 +130,7 @@ public class RouteController {
                         //Sets the relevant boolean checking if the last node on the route is a junction or not
                         canEndRouting = !(station instanceof CollisionStation);
                     } else {
-                        context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+                        context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
                     }
                 }
             }else{
@@ -148,31 +147,19 @@ public class RouteController {
 
             if (!hasConnection) {
                 //If the connection doesn't exist then this informs the user
-                context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+                context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
 
             } else {
                 distance+= context.getGameLogic().getMap().getDistance(lastStation, station);
                 DecimalFormat integer = new DecimalFormat("0");
 
-                context.getTopBarController().displayMessage("Total Distance: " + integer.format(distance) + ". Will take " + integer.format(Math.ceil(distance / train.getSpeed() / 2)) + " turns.", Color.BLACK);
+                //context.getTopBarController().displayMessage("Total Distance: " + integer.format(distance) + ". Will take " + integer.format(Math.ceil(distance / train.getSpeed() / 2)) + " turns.", Color.BLACK);
                 //If the connection exists then the station passed to the method is added to the route
                 positions.add(station.getLocation());
                 connections.add(context.getGameLogic().getMap().getConnection(lastStation.getName(), station.getName()));
                 //Sets the relevant boolean checking if the last node on the route is a junction or not
                 canEndRouting = !(station instanceof CollisionStation);
             }
-=======
-        IPositionable lastPosition =  positions.get(positions.size() - 1);
-        Station lastStation = context.getGameLogic().getMap().getStationFromPosition(lastPosition);
-
-        boolean hasConnection = context.getGameLogic().getMap().doesConnectionExist(station.getName(), lastStation.getName());
-        if(!hasConnection) {
-            context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
-        } else {
-            positions.add(station.getLocation());
-            connections.add(context.getGameLogic().getMap().getConnection(station.getName(), lastStation.getName()));
-            canEndRouting = !(station instanceof CollisionStation);
->>>>>>> SideBar improvements
         }
     }
 

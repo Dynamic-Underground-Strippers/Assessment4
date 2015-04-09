@@ -74,7 +74,7 @@ public class GoalController {
 
 			label.setWidth(NotepadController.WIDTH - 30);
 			label.setWrap(true);
-			label.addListener(new GoalClicked(goal));
+			label.addListener(new GoalClicked(goal,context));
 			goalButtons.addActor(label);
 		}
 

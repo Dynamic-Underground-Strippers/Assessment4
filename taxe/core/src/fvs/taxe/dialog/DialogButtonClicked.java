@@ -135,7 +135,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                 Game.getInstance().setState(GameState.PLACING_RESOURCE);
                 final TrainController trainControl = new TrainController(context);
                 trainControl.setTrainsVisible(null, false);
-                context.getTopBarController().displayMessage("Creating New Connection", Color.BLACK);
+                //context.getTopBarController().displayMessage("Creating New Connection", Color.BLACK);
 
                 //Creates a clickListener for when a station is clicked
                 final StationClickListener stationListener = new StationClickListener() {
@@ -187,7 +187,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                             //This code runs regardless of whether the placement was successful, this returns the game to its normal state
 
                             //Resets the topBar
-                            context.getTopBarController().displayFlashMessage("", Color.BLACK);
+                            context.getNotepadController().displayFlashMessage("", Color.BLACK);
 
                             //Unsubscribes from the StationClickListener as this would cause a lot of errors and unexpected behaviour is not called from the correct context
                             StationController.unsubscribeStationClick(this);
@@ -218,7 +218,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                             Game.getInstance().setState(GameState.NORMAL);
 
                             //Resets the topBar
-                            context.getTopBarController().clearMessage();
+                            //context.getTopBarController().clearMessage();
 
                             //Removes itself from the keylisteners of the game as otherwise there would be a lot of null pointer exceptions and unintended behaviour
                             context.getStage().removeListener(this);
@@ -253,7 +253,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                 Game.getInstance().setState(GameState.PLACING_RESOURCE);
                 final TrainController trainControl2 = new TrainController(context);
                 trainControl2.setTrainsVisible(null, false);
-                context.getTopBarController().displayMessage("Creating New Connection", Color.BLACK);
+                //context.getTopBarController().displayMessage("Creating New Connection", Color.BLACK);
 
                 //Creates a clickListener for when a station is clicked
                 final StationClickListener stationListener2 = new StationClickListener() {
@@ -335,7 +335,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                             //This code runs regardless of whether the placement was successful, this returns the game to its normal state
 
                             //Resets the topBar
-                            context.getTopBarController().displayFlashMessage("", Color.BLACK);
+                            //context.getTopBarController().displayFlashMessage("", Color.BLACK);
 
                             //Unsubscribes from the StationClickListener as this would cause a lot of errors and unexpected behaviour is not called from the correct context
                             StationController.unsubscribeStationClick(this);
@@ -366,7 +366,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                             Game.getInstance().setState(GameState.NORMAL);
 
                             //Resets the topBar
-                            context.getTopBarController().clearMessage();
+                            //context.getTopBarController().clearMessage();
 
                             //Removes itself from the keylisteners of the game as otherwise there would be a lot of null pointer exceptions and unintended behaviour
                             context.getStage().removeListener(this);
