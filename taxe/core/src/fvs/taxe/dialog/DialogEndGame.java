@@ -28,7 +28,7 @@ public class DialogEndGame extends Dialog{
 		int playernum = 0;
 		for(Player player : pm.getAllPlayers()) {
 			int goalsComplete = 0;
-			for(Goal goal : player.getGoals()) {
+			for(Goal goal : player.getActiveGoals()) {
 				if(goal.getComplete()){
 					goalsComplete++;
 				}

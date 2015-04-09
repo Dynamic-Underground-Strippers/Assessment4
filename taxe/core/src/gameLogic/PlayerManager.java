@@ -53,7 +53,7 @@ public class PlayerManager {
 		turnListeners.add(listener);
 	}
 
-	/**This method is called each time the turn changes. It incremembers the turnNumber and notifies all of the turn listeners.*/
+	/**This method is called each time the turn changes. It increments the turnNumber and notifies all of the turn listeners.*/
 	private void turnChanged() {
 		turnNumber++;
 		// reverse iterate to give priority to calls from Game() (obstacles)

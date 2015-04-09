@@ -17,18 +17,9 @@ public class Player {
     /**The resources that this player owns.*/
     private List<Resource> resources;
     
-    /**The goals that this player has available to them.*/
-    private List<Goal> goals;
-    
-    /**This player's easy goal, with 0 constraints.*/
-    private Goal easyGoal;
-    
-    /**This player's medium goal, with 1 constraint.*/
-    private Goal mediumGoal;
-    
-    /**This player's hard goal, with 2 constraints.*/
-    private Goal hardGoal;
-    
+    /**The activeGoals that this player has available to them.*/
+    private List<Goal> activeGoals;
+
     /**The player's current score.*/
     private int score;
     
@@ -47,7 +38,7 @@ public class Player {
      * @param playerNumber The player number, e.g. Player 1, Player 2.
      */
     public Player(PlayerManager pm, int playerNumber) {
-        goals = new ArrayList<Goal>();
+        activeGoals = new ArrayList<Goal>();
         resources = new ArrayList<Resource>();
         this.pm = pm;
         number = playerNumber;
@@ -96,100 +87,44 @@ public class Player {
         changed();
     }
 
-    /**This method adds a goal to the player's goal, checking to ensure that the maximum number of goals has not been exceeded.
+    /**This method adds a goal to the player's goal, checking to ensure that the maximum number of activeGoals has not been exceeded.
      * @param goal The goal to add.
      */
     public void addGoal(Goal goal) {
     	int incompleteGoals = 0;
-    	for(Goal existingGoal : goals) {
-    		if(!existingGoal.getComplete()) {
-    			incompleteGoals++;
-    		}
+    	for(Goal activeGoal : activeGoals) {
+    		incompleteGoals++;
+
     	}
         if (incompleteGoals >= GoalManager.CONFIG_MAX_PLAYER_GOALS || this.skip) {
-            //throw new RuntimeException("Max player goals exceeded");
         	return;
         }
 
-        goals.add(goal);
+        activeGoals.add(goal);
         changed();
     }
-    
-    /**This method checks if the Easy Goal has expired or is complete. If it is complete, it is regenerated.
-    * @param sender The GoalManager that sent the update post
-    */
-    private void updateEasyTierGoal(GoalManager sender)
-    {
-    	if(easyGoal != null)
-    	{
-    		if(!easyGoal.getComplete())
-    		{
-    			//The current Easy Goal is not complete, so bail out of the method
-    			return;
-    		}
-    	}
-    	//Generate a new Easy goal, varying the number of extra criteria
-    	easyGoal = sender.generateRandomGoal(getPlayerManager().getTurnNumber(), 0);
-    	addGoal(easyGoal);
-    }
 
-    /**This method checks if the Medium Goal has expired or is complete. If it is complete, it is regenerated.
-    * @param sender The GoalManager that sent the update post
-    */
-    private void updateMediumTierGoal(GoalManager sender)
-    {
-    	if(mediumGoal != null)
-    	{
-    		if(!mediumGoal.getComplete())
-    		{
-    			//The current Medium Goal is not complete, so bail out of themethod
-    			return;
-    		}
-    	}
-    	//Generate a new Medium Goal
-    	mediumGoal = sender.generateRandomGoal(getPlayerManager().getTurnNumber(), 1);
-    	addGoal(mediumGoal);
-    }
-
-    /**This method checks if the Hard Goal has expired or is complete. If it is complete, it is regenerated.
-    * @param sender The GoalManager that sent the update post
-    */
-    private void updateHardTierGoal(GoalManager sender)
-    {
-    	if(hardGoal != null)
-    	{
-    		if(!hardGoal.getComplete())
-    		{
-    			//The current Hard Goal is not complete, so bail out of themethod
-    			return;
-    		}
-    	}
-    	//Generate a new Hard Goal
-    	hardGoal = sender.generateRandomGoal(getPlayerManager().getTurnNumber(), 2);
-    	addGoal(hardGoal);
-    }
     
-    /**This method is called externally and updates all of the player's goals, clearing out any goal that has failed.
+    /**This method is called externally and updates all of the player's activeGoals, clearing out any goal that has failed.
      * @param sender The GoalManager that sent the update post
      */
     public void updateGoals(GoalManager sender)
     {
-    	for(Goal goal : goals)
+    	for(Goal goal : activeGoals)
     	{
     		if(goal.isFailed())
     		{
-    			goal.setComplete();
+    			activeGoals.remove(activeGoals);
     		}
     	}
-    	updateEasyTierGoal(sender);
-    	updateMediumTierGoal(sender);
-    	updateHardTierGoal(sender);
+       addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
+
     }
     
     /**This method completes a goal, giving the player the reward score and setting the goal to complete.*/
     public void completeGoal(Goal goal) {
     	addScore(goal.getRewardScore());
-    	goal.setComplete();
+    	activeGoals.remove(goal);
         changed();
     }
 
@@ -202,20 +137,13 @@ public class Player {
     }
 
     public void removeGoal(Goal goal){
-        goals.remove(goal);
-        if (goal.equals(easyGoal)){
-            easyGoal=null;
-        }else if (goal.equals(mediumGoal)){
-            mediumGoal = null;
-        }else if (goal.equals(hardGoal)){
-            hardGoal = null;
-        }
+        activeGoals.remove(goal);
         changed();
     }
 
-    /**Get's the player's goals.*/
-    public List<Goal> getGoals() {
-        return goals;
+    /**Get's the player's activeGoals.*/
+    public List<Goal> getActiveGoals() {
+        return activeGoals;
     }
     
     /**Gets the PlayerManager instance used to create this player.*/
