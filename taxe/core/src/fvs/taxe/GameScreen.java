@@ -1,20 +1,5 @@
 package fvs.taxe;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import fvs.taxe.controller.Context;
-import fvs.taxe.controller.GoalController;
-import fvs.taxe.controller.ObstacleController;
-import fvs.taxe.controller.ResourceController;
-import fvs.taxe.controller.RouteController;
-import fvs.taxe.controller.ScoreController;
-import fvs.taxe.controller.StationController;
-import fvs.taxe.controller.TopBarController;
-import fvs.taxe.dialog.DialogEndGame;
-import gameLogic.*;
-import gameLogic.map.Map;
-import gameLogic.map.Station;
-import gameLogic.obstacle.Rumble;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -22,13 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import fvs.taxe.controller.*;
 import fvs.taxe.dialog.DialogEndGame;
-import gameLogic.Game;
-import gameLogic.GameState;
-import gameLogic.GameStateListener;
-import gameLogic.TurnListener;
+import gameLogic.*;
 import gameLogic.map.Map;
 import gameLogic.map.Station;
 import gameLogic.obstacle.Rumble;
@@ -91,6 +75,8 @@ public class GameScreen extends ScreenAdapter {
 
 	/**Variable that is used to visibly "rumble" the game when an obstacle is placed.*/
 	private Rumble rumble;
+
+    private ClockController clockController;
 	
 	/**Instantiation method. Sets up the game using the passed TaxeGame argument. 
 	 *@param game The instance of TaxeGame to be passed to the GameScreen to display.
@@ -117,19 +103,20 @@ public class GameScreen extends ScreenAdapter {
 		routeController = new RouteController(context);
 		obstacleController = new ObstacleController(context);
 		scoreController = new ScoreController(context);
+        clockController = new ClockController(context);
 
 		context.setRouteController(routeController);
 		context.setNotepadController(notepadController);
 
 		rumble = obstacleController.getRumble();
 
-		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
-			@Override
-			public void changed() {
-				gameLogic.setState(GameState.ANIMATING);
-				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
-			}
-		});
+//		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
+//			@Override
+//			public void changed() {
+//				gameLogic.setState(GameState.ANIMATING);
+//				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+//			}
+//		});
 
 		gameLogic.subscribeStateChanged(new GameStateListener() {
 			@Override
@@ -195,6 +182,7 @@ public class GameScreen extends ScreenAdapter {
 		goalController.drawHeaderText();
 		scoreController.drawScoreDetails();
 		scoreController.drawFinalScoreDetails();
+        clockController.draw();
 	}
 
 	@Override
