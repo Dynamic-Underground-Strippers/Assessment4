@@ -127,4 +127,32 @@ public class ResourceManager {
         resource.setPlayer(player);
         player.addResource(resource);
     }
+
+	private void addTrainToPlayer(Player player, int ID, int trainType){
+		Tuple<String, Integer> trainTuple = trains.get(trainType);
+		Train train = new Train(trainTuple.getFirst(), trainTuple.getFirst().replaceAll(" ", "") + ".png", trainTuple.getFirst().replaceAll(" ", "") + "Right.png", trainTuple.getSecond());
+		addResourceToPlayer(player, train);
+	}
+
+	public void addTrainsToPlayer(Player player, ArrayList<Train> placedTrains){
+		for (Train train : placedTrains) {
+			addTrainToPlayer(player, train.getID(), train.getType());
+		}
+	}
+
+	public void addResourcesToPlayer(Player player, ArrayList<Resource> addedResources){
+		for (Resource r : addedResources){
+			player.addResource(r);
+		}
+	}
+
+	public void removeResourcesFromPlayer(Player player, ArrayList<Resource> removedResources){
+		for (Resource r : removedResources){
+			player.removeResource(r);
+		}
+	}
+
+
+
+
 }

@@ -195,7 +195,9 @@ public class GameScreen extends ScreenAdapter {
 		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
 		notepadController.drawBackground();
 		notepadController.drawLabels();
-		notepadController.drawEndTurnButton();
+		if (!Game.getInstance().isReplay()) {
+			notepadController.drawEndTurnButton();
+		}
 		goalController.drawCurrentPlayerGoals();
 	}
 

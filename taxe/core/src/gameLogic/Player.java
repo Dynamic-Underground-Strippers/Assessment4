@@ -1,7 +1,9 @@
 package gameLogic;
 
+import Util.Tuple;
 import gameLogic.goal.Goal;
 import gameLogic.goal.GoalManager;
+import gameLogic.map.Station;
 import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
@@ -191,6 +193,22 @@ public class Player {
 
     public void clearBuffer(){
         messageBuffer.clear();
+    }
+
+    public Train getTrainByID(int id){
+        List<Train> allTrains = getTrains();
+        for (Train train : allTrains){
+            if (train.getID() == id){
+                return train;
+            }
+        }
+        return null;
+    }
+
+    public void setTrainsRoutes(ArrayList<Tuple<Integer,List<Station>>> routes){
+        for (Tuple<Integer,List<Station>> route : routes){
+            getTrainByID(route.getFirst()).setRoute(route.getSecond());
+        }
     }
 
 }

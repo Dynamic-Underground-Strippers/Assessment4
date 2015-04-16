@@ -54,6 +54,9 @@ public class Game {
 	public final int TOTAL_POINTS = 200;
 
 	public final int MAX_TURNS = 30;
+
+	private final boolean replay = true;
+
 	/**The Instantiation method, sets up the players and game listeners.*/
 	private Game() {
 		playerManager = new PlayerManager();
@@ -64,22 +67,45 @@ public class Game {
 		map = new Map();
 		obstacleManager = new ObstacleManager(map);
 		
-		state = GameState.NORMAL;
+		if (replay) {
+			state = GameState.REPLAY_SETUP;
+		} else {
+			state = GameState.NORMAL;
+		}
+
+
+
 		recorder = new Recorder(playerManager);
-		playerManager.subscribeTurnChanged(new TurnListener() {
-			@Override
-			public void changed() {
-				Player currentPlayer = playerManager.getCurrentPlayer();
-				goalManager.updatePlayerGoals(currentPlayer);
-				resourceManager.addRandomResourceToPlayer(currentPlayer);
-				resourceManager.addRandomResourceToPlayer(currentPlayer);
-				map.decrementBlockedConnections();
-				map.blockRandomConnection();
-				calculateObstacles();
-				decreaseObstacleTime();
-				//displayMessages(currentPlayer.getMessages());
-			}
-		});
+
+		if (replay) {
+
+			playerManager.subscribeTurnChanged(new TurnListener() {
+				@Override
+				public void changed() {
+					setUpForReplay(playerManager.getCurrentPlayer());
+				}
+			});
+		} else {
+			playerManager.subscribeTurnChanged(new TurnListener() {
+				@Override
+				public void changed() {
+					Player currentPlayer = playerManager.getCurrentPlayer();
+					goalManager.updatePlayerGoals(currentPlayer);
+					resourceManager.addRandomResourceToPlayer(currentPlayer);
+					resourceManager.addRandomResourceToPlayer(currentPlayer);
+					map.decrementBlockedConnections();
+					map.blockRandomConnection();
+					calculateObstacles();
+					decreaseObstacleTime();
+					//displayMessages(currentPlayer.getMessages());
+
+				}
+			});
+		}
+
+
+
+
 	}
 
 	/**Returns the main game instance.*/
@@ -129,7 +155,13 @@ public class Game {
 
 	/**Sets the GameState of the Game. Listeners are notified using stateChanged().*/
 	public void setState(GameState state) {
-		this.state = state;
+		if (!replay) {
+			this.state = state;
+		} else if (state == GameState.ANIMATING) {
+			this.state = GameState.ANIMATING;
+		} else {
+			this.state = GameState.REPLAY_SETUP;
+		}
 		stateChanged();
 	}
 
@@ -209,6 +241,43 @@ public class Game {
 
 	public Recorder getRecorder(){
 		return this.recorder;
+	}
+
+	public boolean isReplay() { return this.replay; }
+
+	public void setUpForReplay(Player currentPlayer){
+		/*
+
+		goalManager.updatePlayerGoals(currentPlayer, SOMEPARAMETERS HERE); //TODO: NOT RANDOM, GET GOALS FROM FILE
+
+		resourceManager.addTrainsToPlayer(currentPlayer, placedTrains);
+
+		map.addConnections(placedConnections);
+
+		map.removeConnections(removedConnections);
+
+		currentPlayer.setTrainsRoutes(routes);
+
+		addGoalsInSomeWay;
+
+		removeGoalsInSomeWay;
+
+		resourceManager.addResourcesToPlayer(currentPlayer, addedResources);
+
+		resourceManager.removeResourcesFromPlayer(currentPlayer, removedResources);
+
+		map.blockConnections(blockedConnections);
+
+
+
+
+		*/
+
+		map.decrementBlockedConnections();
+		calculateObstacles();
+		decreaseObstacleTime();
+
+		playerManager.turnOver();
 	}
 
 

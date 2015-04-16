@@ -521,7 +521,7 @@ public class Map {
         Connection toRemove = null;
         for (Connection c : connections) {
             if ((c.getStation1().equals(station1) && c.getStation2().equals(station2))
-                || (c.getStation1().equals(station2) && c.getStation2().equals(station1)))
+                    || (c.getStation1().equals(station2) && c.getStation2().equals(station1)))
                 //when found station, mark for deletion
                 //can't delete during loop as will break for loop
                 toRemove = c;
@@ -532,5 +532,35 @@ public class Map {
         }
         System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "NOT deleted");
     }
+
+    private void removeConnection(Connection connection) {
+        Station station1 = connection.getStation1();
+        Station station2 = connection.getStation2();
+        removeConnection(station1, station2);
+    }
+
+    public void removeConnections(ArrayList<Connection> removedConnections){
+        for (Connection connection : removedConnections){
+            removeConnection(connection);
+        }
+    }
+
+    public void addConnections(ArrayList<Connection> placedConnections){
+        for (Connection connection : placedConnections){
+            addConnection(connection);
+        }
+    }
+
+    public void blockConnection(Connection c, int turnsBlocked){
+        blockConnection(c.getStation1(),c.getStation2(),turnsBlocked);
+    }
+
+    public void blockConnections(ArrayList<Connection> blockedConnections){
+        for (Connection connection : blockedConnections){
+            blockConnection(connection,5);
+        }
+    }
+
+
 
 }

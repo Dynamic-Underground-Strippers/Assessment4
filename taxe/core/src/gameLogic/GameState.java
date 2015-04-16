@@ -8,4 +8,5 @@ public enum GameState {
     ANIMATING,
     WAITING,
     PLACING_RESOURCE,
+    REPLAY_SETUP
 }
