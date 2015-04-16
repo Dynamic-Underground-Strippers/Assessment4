@@ -17,6 +17,7 @@ public class Recorder {
     ArrayList<Turn> turns;
     public Recorder(PlayerManager pm){
         turns = new ArrayList<Turn>();
+        turns.add(new Turn());
         pm.subscribeTurnChanged(new TurnListener() {
             @Override
             public void changed() {
@@ -59,12 +60,11 @@ public class Recorder {
     }
 
     public void saveReplay(){
-        Json json = new Json();
-        System.out.println(json.toJson(turns));
+       //Saves replay
     }
 
     private class Turn{
-        ArrayList<Train> placedTrains=new ArrayList<Train>();
+        public ArrayList<Train> placedTrains=new ArrayList<Train>();
         ArrayList<Connection> placedConnections = new ArrayList<Connection>();
         ArrayList<Connection> removedConnections = new ArrayList<Connection>();
         ArrayList<Tuple<Integer,List<Station>>> setRoutes = new ArrayList<Tuple<Integer, List<Station>>>();

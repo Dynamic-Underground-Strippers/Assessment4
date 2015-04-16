@@ -2,6 +2,7 @@ package gameLogic.resource;
 
 import Util.Tuple;
 import fvs.taxe.actor.TrainActor;
+import gameLogic.Game;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
 
@@ -117,6 +118,7 @@ public class Train extends Resource {
         	finalDestination = route.get(route.size() - 1);
         }
         this.route = route;
+        Game.getInstance().getRecorder().addRoute(this);
     }
 
     /** Return whether the train is currently moving

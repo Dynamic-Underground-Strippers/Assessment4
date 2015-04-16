@@ -1,6 +1,7 @@
 package fvs.taxe.dialog;
 
 import fvs.taxe.Button;
+import gameLogic.Game;
 import gameLogic.Player;
 import gameLogic.goal.Goal;
 
@@ -19,7 +20,7 @@ public class DialogGoalButtonClicked implements ResourceDialogClickListener {
             case GOAL_DELETE:
                 currentPlayer.removeGoal(goal);
                 //simulate mouse exiting goal button to remove tooltips
-
+                Game.getInstance().getRecorder().removeGoal(goal);
                 break;
         }
     }
