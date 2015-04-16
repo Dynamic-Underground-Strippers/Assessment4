@@ -114,7 +114,7 @@ public class Player {
     	{
     		if(goal.isFailed())
     		{
-    			activeGoals.remove(activeGoals);
+    			activeGoals.remove(goal);
     		}
     	}
        addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
