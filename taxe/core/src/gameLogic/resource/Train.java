@@ -36,6 +36,7 @@ public class Train extends Resource {
      * and the turn number they arrived at that station */
     private List<Tuple<Station, Integer>> history;
 
+    private int id;
     /** Constructor for train initialises the names, images, speed, history and route
      * @param name The string that represents this train
      * @param leftImage The file name in assets/trains that corresponds to the left image
@@ -191,5 +192,9 @@ public class Train extends Resource {
             }
         }
         return null;
+    }
+
+    public int getID(){
+        return this.id;
     }
 }
