@@ -60,7 +60,7 @@ public class Recorder {
 
     public void saveReplay(){
         Json json = new Json();
-        System.out.println(json.toJson(turns));
+        System.out.println(json.prettyPrint(turns));
     }
 
     private class Turn{
