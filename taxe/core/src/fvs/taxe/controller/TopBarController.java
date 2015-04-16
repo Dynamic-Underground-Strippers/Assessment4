@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import fvs.taxe.TaxeGame;
 import fvs.taxe.actor.TopBarActor;
+import gameLogic.Game;
 import gameLogic.GameState;
 import gameLogic.GameStateListener;
 import gameLogic.obstacle.Obstacle;
@@ -182,6 +183,7 @@ public class TopBarController {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				context.getGameLogic().getPlayerManager().turnOver();
+				Game.getInstance().getRecorder().saveReplay();
 			}
 		});
 

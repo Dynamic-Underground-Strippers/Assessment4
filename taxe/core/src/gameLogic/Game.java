@@ -64,7 +64,7 @@ public class Game {
 		obstacleManager = new ObstacleManager(map);
 		
 		state = GameState.NORMAL;
-
+		recorder = new Recorder(playerManager);
 		playerManager.subscribeTurnChanged(new TurnListener() {
 			@Override
 			public void changed() {

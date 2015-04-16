@@ -17,6 +17,7 @@ public class Recorder {
     ArrayList<Turn> turns;
     public Recorder(PlayerManager pm){
         turns = new ArrayList<Turn>();
+        turns.add(new Turn());
         pm.subscribeTurnChanged(new TurnListener() {
             @Override
             public void changed() {
