@@ -53,6 +53,7 @@ public class Game {
 	/**The score a player must reach to win the game.*/
 	public final int TOTAL_POINTS = 200;
 
+	public final int MAX_TURNS = 30;
 	/**The Instantiation method, sets up the players and game listeners.*/
 	private Game() {
 		playerManager = new PlayerManager();
@@ -64,7 +65,7 @@ public class Game {
 		obstacleManager = new ObstacleManager(map);
 		
 		state = GameState.NORMAL;
-
+		recorder = new Recorder(playerManager);
 		playerManager.subscribeTurnChanged(new TurnListener() {
 			@Override
 			public void changed() {

@@ -110,18 +110,18 @@ public class GameScreen extends ScreenAdapter {
 
 		rumble = obstacleController.getRumble();
 
-//		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
-//			@Override
-//			public void changed() {
-//				gameLogic.setState(GameState.ANIMATING);
-//				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
-//			}
-//		});
+		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
+		@Override
+			public void changed() {
+				gameLogic.setState(GameState.ANIMATING);
+				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+			}
+});
 
 		gameLogic.subscribeStateChanged(new GameStateListener() {
 			@Override
 			public void changed(GameState state){
-				if(gameLogic.getPlayerManager().getCurrentPlayer().getScore() >= gameLogic.TOTAL_POINTS) {
+				if(gameLogic.getPlayerManager().getCurrentPlayer().getScore() >= gameLogic.TOTAL_POINTS || gameLogic.getPlayerManager().getTurnNumber()>= gameLogic.MAX_TURNS) {
 					DialogEndGame dia = new DialogEndGame(GameScreen.this.game, gameLogic.getPlayerManager(), skin);
 					dia.show(stage);
 				}

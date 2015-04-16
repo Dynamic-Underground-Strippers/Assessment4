@@ -42,6 +42,7 @@ public class PlayerManager {
 	/**This method is called every time a turn is completed. currentTurn is updated, and both turnChanged and playerChanged are called.*/
 	public void turnOver() {
 		currentTurn = currentTurn == 1 ? 0 : 1;
+		Game.getInstance().getRecorder().saveReplay();
 		turnChanged();
 		playerChanged();
 	}
