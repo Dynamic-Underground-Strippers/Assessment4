@@ -149,7 +149,7 @@ public class JellyMoveController {
 
                 Random rand = new Random();
 
-                int ran = 4;
+                int ran = rand.nextInt(4);
 
                 Station nextStation = null;
 
