@@ -61,6 +61,8 @@ public class Recorder {
 
     public void saveReplay(){
        //Saves replay
+        Json json = new Json();
+        json.prettyPrint(2);
     }
 
     private class Turn{
