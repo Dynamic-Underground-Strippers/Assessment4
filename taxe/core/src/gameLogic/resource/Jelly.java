@@ -6,6 +6,7 @@ import fvs.taxe.actor.TrainActor;
 import fvs.taxe.controller.JellyController;
 import gameLogic.Game;
 import gameLogic.map.IPositionable;
+import gameLogic.map.Map;
 import gameLogic.map.Station;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class Jelly extends Resource {
         history = new ArrayList<Tuple<Station, Integer>>();
         route =  new ArrayList<Station>();
         //Old route implementation
-        Station randStation = Game.getInstance().getMap().getRandomStation();
+        /* Station randStation = Game.getInstance().getMap().getRandomStation();
         this.setPosition(randStation.getLocation());
         ArrayList<IPositionable> route = new ArrayList();
         Station nextStation = Game.getInstance().getMap().getConnectedStations(randStation, null).get(0);
@@ -64,7 +65,7 @@ public class Jelly extends Resource {
         route.add(randStation.getLocation());
         route.add(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getLocation());
         this.setFinalDestination(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1));
-        this.setRoute(Game.getInstance().getMap().createRoute(route));
+        this.setRoute(Game.getInstance().getMap().createRoute(route)); */
 
     }
 

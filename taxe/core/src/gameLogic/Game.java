@@ -2,6 +2,7 @@ package gameLogic;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import fvs.taxe.controller.Context;
 import gameLogic.goal.GoalManager;
 import gameLogic.map.Map;
 import gameLogic.obstacle.Obstacle;
@@ -20,6 +21,10 @@ import com.badlogic.gdx.math.MathUtils;
 public class Game {
 	/**The instance that the game is running in.*/
 	private static Game instance;
+
+	/** Context instance to draw jellies! **/
+
+	private Context context;
 	
 	/**The game's PlayerManager that handles both of the players.*/
 	private PlayerManager playerManager;
@@ -105,6 +110,15 @@ public class Game {
 	public PlayerManager getPlayerManager() {
 		return playerManager;
 	}
+
+	public void setContext(Context context){
+		this.context = context;
+	}
+
+	public Context getContext(){
+		return this.context;
+	}
+
 
 	/**@return The GoalManager instance for this game.*/
 	public GoalManager getGoalManager() {

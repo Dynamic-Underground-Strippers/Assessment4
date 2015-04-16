@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import fvs.taxe.GameScreen;
-import fvs.taxe.actor.TrainActor;
+import fvs.taxe.controller.JellyController;
+import fvs.taxe.controller.JellyMoveController;
+import fvs.taxe.controller.JellyRouteController;
 import gameLogic.Game;
 import gameLogic.JellyListener;
 import gameLogic.Player;
@@ -23,7 +25,9 @@ public class ResourceManager {
     /** Random instance for generating random resources*/
     private Random random = new Random();
 
-	private ArrayList<Jelly> jellies = new ArrayList<Jelly>();
+	private Jelly jelly;
+
+	private int j = 0;
 
 	private ArrayList<JellyListener> jellyListener = new ArrayList<JellyListener>();
     
@@ -139,25 +143,51 @@ public class ResourceManager {
     }
 
 	public void jelly(){
-		int rand = random.nextInt(2);
-		if (rand == 0) {
+		if (Game.getInstance().getPlayerManager().getTurnNumber() == 1 && j == 0) {
+			this.j = 1;
 			Jelly jelly = new Jelly("Jelly", "GreenTrain.png", "GreenTrainRight.png", 50);
 			Station randStation = Game.getInstance().getMap().getRandomStation();
 			jelly.setPosition(randStation.getLocation());
+			jelly.addHistory(randStation,0);
 			ArrayList<IPositionable> route = new ArrayList();
 			Station nextStation = Game.getInstance().getMap().getConnectedStations(randStation, null).get(0);
 			route.add(nextStation.getLocation());
-			Station nextStation1 = Game.getInstance().getMap().getConnectedStations(randStation, null).get(0);
-			route.add(nextStation1.getLocation());
-			route.add(nextStation.getLocation());
+			//Station nextStation1 = Game.getInstance().getMap().getConnectedStations(nextStation, null).get(0);
+			//route.add(nextStation1.getLocation());
+			/*route.add(nextStation.getLocation());
 			route.add(randStation.getLocation());
-			route.add(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getLocation());
-			jelly.setFinalDestination(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1));
+			route.add(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getLocation());*/
+			//jelly.setFinalDestination(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1));
 			jelly.setRoute(Game.getInstance().getMap().createRoute(route));
-			this.jellies.add(jelly);
 
+			JellyController jellycontroller = new JellyController(Game.getInstance().getContext());
+			jelly.setActor(jellycontroller.renderJelly(jelly));
+			jelly.getActor().setVisible(true);
 
+			JellyMoveController moveController = new JellyMoveController(Game.getInstance().getContext(), jelly);
+
+			this.jelly = jelly;
+			//System.out.println(randStation.getName() + " " + nextStation.getName() + " " + nextStation1.getName() + " " + Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getName());
 			System.out.println("new jelly in " + randStation.getName());
+		} else {
+			/*System.out.println("selecting additional nodes");
+			List<Station> route = this.jelly.getRoute();
+			System.out.println("route loaded");
+			System.out.println(route);
+			int index = route.indexOf(this.jelly.getLastStation());
+			System.out.println("adding after "+ this.jelly.getLastStation().getName() + " index " + index);
+			Station nextStation = Game.getInstance().getMap().getConnectedStations(this.jelly.getLastStation(), null).get(0);
+			this.jelly.setFinalDestination(null);
+			if (nextStation == this.jelly.getNextStation() || nextStation == this.jelly.getLastStation()){
+				return;
+			}
+			System.out.println("Selected " + nextStation.getName());
+			index = index + 1;
+			jelly.getRoute().add(index, nextStation);
+			System.out.println("Added " + nextStation.getName() + " at index " + index);
+			//JellyMoveController moveController = new JellyMoveController(Game.getInstance().getContext(), jelly);
+			this.jelly.setFinalDestination(null);
+*/
 		}
 	}
 

@@ -94,6 +94,7 @@ public class GameScreen extends ScreenAdapter {
 
 		gameLogic = Game.getInstance();
 		context = new Context(stage, skin, game, gameLogic);
+		this.gameLogic.setContext(context);
 		Gdx.input.setInputProcessor(stage);
 
 		mapTexture = new Texture(Gdx.files.internal("Map4.png"));

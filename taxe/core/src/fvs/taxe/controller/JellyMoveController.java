@@ -14,6 +14,7 @@ import gameLogic.resource.Jelly;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Util.InterruptableSequenceAction;
 
@@ -131,14 +132,61 @@ public class JellyMoveController {
     private RunnableAction afterAction() {
         return new RunnableAction() {
             public void run() {
-               // ArrayList<String> completedGoals = context.getGameLogic().getGoalManager().jellyArrived(jelly, jelly.getPlayer());
-               /** for(String message : completedGoals) {
+                //ArrayList<String> completedGoals = context.getGameLogic().getGoalManager().jellyArrived(jelly, jelly.getPlayer());
+                /**for(String message : completedGoals) {
                     context.getTopBarController().displayFlashMessage(message, Color.WHITE, 2);
-                }**/
+                }
                 System.out.println(jelly.getFinalDestination().getLocation().getX() + "," + jelly.getFinalDestination().getLocation().getY());
                 jelly.setPosition(jelly.getFinalDestination().getLocation());
                 jelly.getActor().setVisible(false);
-                jelly.setFinalDestination(null);
+                jelly.setFinalDestination(null); **/
+                System.out.println("selecting additional nodes");
+                List<Station> route = jelly.getRoute();
+                System.out.println("route loaded");
+                System.out.println(route);
+                int index = route.indexOf(jelly.getFinalDestination());
+                System.out.println("adding after "+ jelly.getFinalDestination().getName() + " index " + index);
+
+                Random rand = new Random();
+
+                int ran = rand.nextInt(4);
+
+                Station nextStation = null;
+
+                while(nextStation==null){
+
+                    try{
+                        nextStation = Game.getInstance().getMap().getConnectedStations(jelly.getFinalDestination(), null).get(ran);
+                        System.out.println("bad station: "+nextStation.getName());
+                    }
+
+                    catch (Exception e){System.out.println("bad number: "+ran);}
+                    try {
+                        if(Game.getInstance().getMap().isConnectionBlocked(nextStation, jelly.getFinalDestination())){
+                            nextStation = null;
+                        }
+                    } catch (Exception e){}
+                    try {
+                        if(Game.getInstance().getMap().doesConnectionExist(nextStation.getName(), jelly.getFinalDestination().getName())){
+                            break;
+                        }
+                    } catch (Exception e){}
+
+
+
+                    ran = ran -1;
+                }
+
+
+                System.out.println("Selected " + nextStation.getName());
+                index = index;
+                jelly.getRoute().remove(index);
+                index = index;
+                jelly.getRoute().add(index, nextStation);
+                jelly.setFinalDestination(nextStation);
+                System.out.println("Added " + nextStation.getName() + " at index " + index);
+                addMoveActions();
+
             }
         };
     }

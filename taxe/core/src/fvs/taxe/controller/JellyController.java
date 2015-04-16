@@ -25,7 +25,7 @@ public class JellyController {
      */
     public JellyActor renderJelly(Jelly jelly) {
         JellyActor jellyActor = new JellyActor(jelly,context);
-        jellyActor.addListener(new JellyClicked(context, jelly));
+       // jellyActor.addListener(new JellyClicked(context, jelly));
         jellyActor.setVisible(false);
         context.getStage().addActor(jellyActor);
 

@@ -205,6 +205,7 @@ public class JellyRouteController {
         JellyMoveController move = new JellyMoveController(context, jelly);
     }
 
+
     /**This method is called when the routing is finalised by the player or cancelled. The existing route is dropped and the RouteController is set up for the next Routing.*/
     private void endRouting() {
         context.getGameLogic().setState(GameState.NORMAL);
