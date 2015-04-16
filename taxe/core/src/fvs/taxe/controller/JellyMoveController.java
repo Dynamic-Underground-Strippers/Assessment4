@@ -120,7 +120,7 @@ public class JellyMoveController {
             boolean junctionFailed = MathUtils.randomBoolean(JUNCTION_FAILURE_CHANCE);
             if (junctionFailed && station != jelly.getRoute().get(0)) {
                 action.setInterrupt(true);
-                context.getTopBarController().displayObstacleMessage("Junction failed, " + jelly.getName() + " stopped!", Color.YELLOW);
+                context.getNotepadController().displayObstacleMessage("Junction failed, " + jelly.getName() + " stopped!", Color.YELLOW);
             }
         }
     }
@@ -149,7 +149,7 @@ public class JellyMoveController {
 
                 Random rand = new Random();
 
-                int ran = rand.nextInt(4);
+                int ran = 4;
 
                 Station nextStation = null;
 
@@ -244,7 +244,7 @@ public class JellyMoveController {
                 trainToDestroy.getPlayer().removeResource(trainToDestroy);
             }
 
-            context.getTopBarController().displayFlashMessage("Two trains collided at a Junction.  They were both destroyed.", Color.BLACK, Color.RED, 4);
+            context.getNotepadController().displayFlashMessage("Two trains collided at a Junction.  They were both destroyed.", Color.BLACK, Color.RED, 4);
         }
     }
 
@@ -254,7 +254,7 @@ public class JellyMoveController {
         if (station.hasObstacle() && MathUtils.randomBoolean(station.getObstacle().getDestructionChance())){
             jelly.getActor().remove();
             jelly.getPlayer().removeResource(jelly);
-            context.getTopBarController().displayFlashMessage("Your jelly was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
+            context.getNotepadController().displayFlashMessage("Your jelly was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
         }
     }
 
