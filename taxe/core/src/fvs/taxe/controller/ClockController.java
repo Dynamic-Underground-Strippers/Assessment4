@@ -28,7 +28,7 @@ public class ClockController {
         context.getStage().addActor(clock);
         int hour = 9;
         boolean halfPast = false;
-        for (int i = 0; i < context.getGameLogic().getPlayerManager().getTurnNumber() / 2; i++) {
+        for (int i = 0; i < context.getGameLogic().getPlayerManager().getTurnNumber(); i++) {
             if (!(halfPast = !halfPast)) hour++;
             if (hour == 24) hour = 0;
         }
