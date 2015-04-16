@@ -110,15 +110,20 @@ public class Player {
      */
     public void updateGoals(GoalManager sender)
     {
+        ArrayList<Goal> goalsToRemove = new ArrayList<Goal>();
     	for(Goal goal : activeGoals)
     	{
     		if(goal.isFailed())
     		{
-    			activeGoals.remove(goal);
+    			goalsToRemove.add(goal);
     		}
     	}
-       addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
 
+        for(Goal goal: goalsToRemove){
+            activeGoals.remove(goal);
+        }
+
+       addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
     }
     
     /**This method completes a goal, giving the player the reward score and setting the goal to complete.*/
