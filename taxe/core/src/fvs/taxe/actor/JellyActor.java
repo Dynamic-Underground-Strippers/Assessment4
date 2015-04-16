@@ -141,7 +141,7 @@ public class JellyActor extends Image {
     public Train collided() {
         //The aim of this function is to check whether the train represented by the actor has collided with any other trains on the board
         Station last = jelly.getLastStation();
-        Station next = jelly.getNextStation();
+        Station next = jelly.getFinalDestination();
         if (jelly.getPosition().getX() == -1 && !paused) {
             //if this train is moving;
             for (Player player : Game.getInstance().getPlayerManager().getAllPlayers()) {
