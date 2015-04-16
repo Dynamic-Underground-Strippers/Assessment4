@@ -105,22 +105,14 @@ public class ResourceManager {
 		//Uses a random number generator to pick a random train and return the complete train class for that train.
 		int index = random.nextInt(trains.size());
 		Tuple<String, Integer> train = trains.get(index);
-		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond());
+		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index);
 	}
 
 	public Train getTrainByIndex(int index){
 		Tuple<String, Integer> train = trains.get(index);
-		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond());
+		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index);
 	}
 
-	public int indexOfTrain(Train train){
-		for (Tuple<String,Integer> compareTrain :trains){
-			if (compareTrain.getFirst().equals(train.getName())){
-				return trains.indexOf(compareTrain);
-			}
-		}
-		return -1;
-	}
 
     /** Add one randomly generated Train to the given Player
      * @param player The player that will have a randomly generated resource added to it

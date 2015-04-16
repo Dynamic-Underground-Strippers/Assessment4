@@ -275,4 +275,8 @@ public class Goal {
 	public Station getDestination() {
 		return this.destination;
 	}
+
+	public List<Station> getIdealRoute() {
+		return idealRoute;
+	}
 }

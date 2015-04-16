@@ -38,19 +38,21 @@ public class Train extends Resource {
     private List<Tuple<Station, Integer>> history;
 
     private int id;
+    private int index;
     /** Constructor for train initialises the names, images, speed, history and route
      * @param name The string that represents this train
      * @param leftImage The file name in assets/trains that corresponds to the left image
      * @param rightImage The file name in assets/trains that corresponds to the right image
      * @param speed The number of pixels the train moves per turn
      */
-    public Train(String name, String leftImage, String rightImage, int speed) {
+    public Train(String name, String leftImage, String rightImage, int speed, int index) {
         this.name = name;
         this.leftImage = leftImage;
         this.rightImage = rightImage;
         this.speed = speed;
         history = new ArrayList<Tuple<Station, Integer>>();
         route =  new ArrayList<Station>();
+        this.index = index;
     }
     
     /** Get the name of the train
@@ -198,5 +200,9 @@ public class Train extends Resource {
 
     public int getID(){
         return this.id;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
