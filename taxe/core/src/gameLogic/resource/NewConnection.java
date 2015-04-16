@@ -107,6 +107,7 @@ public class NewConnection extends Resource {
         		train.getActor().toFront();
         	}
         }
+        Game.getInstance().getRecorder().placeConnection(connection);
         return true;
     }
 

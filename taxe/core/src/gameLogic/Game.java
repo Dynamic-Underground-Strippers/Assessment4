@@ -23,6 +23,8 @@ public class Game {
 	
 	/**The game's PlayerManager that handles both of the players.*/
 	private PlayerManager playerManager;
+
+	private Recorder recorder;
 	
 	/**The game's GoalManager that handles goals for the players.*/
 	private GoalManager goalManager;
@@ -202,6 +204,10 @@ public class Game {
 			}
 		}
 		
+	}
+
+	public Recorder getRecorder(){
+		return this.recorder;
 	}
 
 
