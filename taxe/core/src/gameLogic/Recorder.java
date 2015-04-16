@@ -60,12 +60,11 @@ public class Recorder {
     }
 
     public void saveReplay(){
-        Json json = new Json();
-        System.out.println(json.prettyPrint(turns));
+       //Saves replay
     }
 
     private class Turn{
-        ArrayList<Train> placedTrains=new ArrayList<Train>();
+        public ArrayList<Train> placedTrains=new ArrayList<Train>();
         ArrayList<Connection> placedConnections = new ArrayList<Connection>();
         ArrayList<Connection> removedConnections = new ArrayList<Connection>();
         ArrayList<Tuple<Integer,List<Station>>> setRoutes = new ArrayList<Tuple<Integer, List<Station>>>();
