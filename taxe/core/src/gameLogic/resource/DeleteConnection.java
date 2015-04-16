@@ -71,6 +71,7 @@ public class DeleteConnection extends Resource {
             return false;
         } else {
             tempDeleted.getActor().remove();
+            Game.getInstance().getRecorder().removeConnection(tempDeleted);
             return true;
         }
 
