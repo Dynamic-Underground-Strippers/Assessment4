@@ -110,13 +110,13 @@ public class GameScreen extends ScreenAdapter {
 
 		rumble = obstacleController.getRumble();
 
-//		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
-//			@Override
-//			public void changed() {
-//				gameLogic.setState(GameState.ANIMATING);
-//				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
-//			}
-//		});
+		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
+		@Override
+			public void changed() {
+				gameLogic.setState(GameState.ANIMATING);
+				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+			}
+});
 
 		gameLogic.subscribeStateChanged(new GameStateListener() {
 			@Override
