@@ -65,12 +65,12 @@ public class Recorder {
 
     public void saveReplay(){
        //Saves replay
-      /* if (turns.size()>0) {
+      if (turns.size()>0) {
             Json json = new Json();
            String jsonText = json.prettyPrint(this);
             FileHandle file = Gdx.files.local("replay.json");
             file.writeString(jsonText, false);
-        }*/
+        }
     }
 
     private void printContents(){
@@ -79,7 +79,6 @@ public class Recorder {
     }
 
     public void loadReplay(){
-        turns = new ArrayList<Turn>();
         FileHandle file = Gdx.files.local("replay.json");
         String text = file.readString();
         Json json = new Json();
