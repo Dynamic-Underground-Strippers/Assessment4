@@ -118,7 +118,7 @@ public class JellyRouteController {
                         //Sets the relevant boolean checking if the last node on the route is a junction or not
                         canEndRouting = !(station instanceof CollisionStation);
                     }else {
-                        context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+                        context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
                     }
                 }else {
                     Station lastStation = jelly.getLastStation();
@@ -129,7 +129,7 @@ public class JellyRouteController {
                         //Sets the relevant boolean checking if the last node on the route is a junction or not
                         canEndRouting = !(station instanceof CollisionStation);
                     } else {
-                        context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+                        context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
                     }
                 }
             }else{
@@ -146,13 +146,13 @@ public class JellyRouteController {
 
             if (!hasConnection) {
                 //If the connection doesn't exist then this informs the user
-                context.getTopBarController().displayFlashMessage("This connection doesn't exist", Color.RED);
+                context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
 
             } else {
                 distance+= context.getGameLogic().getMap().getDistance(lastStation, station);
                 DecimalFormat integer = new DecimalFormat("0");
 
-                context.getTopBarController().displayMessage("Total Distance: " + integer.format(distance) + ". Will take " + integer.format(Math.ceil(distance / jelly.getSpeed() / 2)) + " turns.", Color.BLACK);
+                //context.getNotepadController().displayMessage("Total Distance: " + integer.format(distance) + ". Will take " + integer.format(Math.ceil(distance / jelly.getSpeed() / 2)) + " turns.", Color.BLACK);
                 //If the connection exists then the station passed to the method is added to the route
                 positions.add(station.getLocation());
                 connections.add(context.getGameLogic().getMap().getConnection(lastStation.getName(), station.getName()));
@@ -181,7 +181,7 @@ public class JellyRouteController {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 if(!canEndRouting) {
-                    context.getTopBarController().displayFlashMessage("Your route must end at a station", Color.RED);
+                    context.getNotepadController().displayFlashMessage("Your route must end at a station", Color.RED);
                     return;
                 }
 
