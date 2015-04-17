@@ -141,9 +141,9 @@ public class JellyMoveController {
                 jelly.getActor().setVisible(false);
                 jelly.setFinalDestination(null); **/
                 System.out.println("selecting additional nodes");
+                System.out.println("last station was: "+jelly.getLastStation().getName());
                 List<Station> route = jelly.getRoute();
-                System.out.println("route loaded");
-                System.out.println(route);
+                //System.out.println(route);
                 int index = route.indexOf(jelly.getFinalDestination());
                 System.out.println("adding after "+ jelly.getFinalDestination().getName() + " index " + index);
 
