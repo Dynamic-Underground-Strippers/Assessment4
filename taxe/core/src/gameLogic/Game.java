@@ -55,7 +55,9 @@ public class Game {
 
 	public final int MAX_TURNS = 30;
 
-	private final boolean replay = true;
+	private final boolean replay = false;
+
+	private int animationFactor;
 
 	/**The Instantiation method, sets up the players and game listeners.*/
 	private Game() {
@@ -66,26 +68,31 @@ public class Game {
 		goalManager = new GoalManager(resourceManager);
 		map = new Map();
 		obstacleManager = new ObstacleManager(map);
-		
+
 		if (replay) {
 			state = GameState.REPLAY_SETUP;
 		} else {
 			state = GameState.NORMAL;
 		}
 
-
-
 		recorder = new Recorder(playerManager);
 
 		if (replay) {
 
+			animationFactor = 2;
+
+			//playerManager.turnOver();
+
 			playerManager.subscribeTurnChanged(new TurnListener() {
 				@Override
 				public void changed() {
-					setUpForReplay(playerManager.getCurrentPlayer());
+					//setUpForReplay(playerManager.getCurrentPlayer());
 				}
 			});
 		} else {
+
+			animationFactor = 1;
+
 			playerManager.subscribeTurnChanged(new TurnListener() {
 				@Override
 				public void changed() {
@@ -104,9 +111,9 @@ public class Game {
 		}
 
 
-
-
 	}
+
+
 
 	/**Returns the main game instance.*/
 	public static Game getInstance() {
@@ -122,10 +129,14 @@ public class Game {
 
 	/**Sets up the players. Only the first player is given goals and resources initially.*/
 	private void initialisePlayers() {
-		Player player = playerManager.getAllPlayers().get(0);
-		goalManager.updatePlayerGoals(player);
-		resourceManager.addRandomResourceToPlayer(player);
-		resourceManager.addRandomResourceToPlayer(player);
+		if (!replay) {
+			Player player = playerManager.getAllPlayers().get(0);
+			goalManager.updatePlayerGoals(player);
+			resourceManager.addRandomResourceToPlayer(player);
+			resourceManager.addRandomResourceToPlayer(player);
+		} else {
+			//TODO: LOAD IN PLAYER 1'S GOALS/RESOURCES FROM FILE
+		}
 	}
 
 	/**@return The PlayerManager instance for this game.*/
@@ -161,6 +172,8 @@ public class Game {
 			this.state = GameState.ANIMATING;
 		} else {
 			this.state = GameState.REPLAY_SETUP;
+			setUpForReplay(playerManager.getCurrentPlayer());
+			playerManager.turnOver();
 		}
 		stateChanged();
 	}
@@ -277,8 +290,14 @@ public class Game {
 		calculateObstacles();
 		decreaseObstacleTime();
 
-		playerManager.turnOver();
 	}
 
+	public boolean getReplay(){
+		return replay;
+	}
+
+	public int getAnimationFactor(){
+		return animationFactor;
+	}
 
 }

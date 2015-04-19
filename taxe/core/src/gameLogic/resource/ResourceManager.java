@@ -136,7 +136,8 @@ public class ResourceManager {
 
 	public void addTrainsToPlayer(Player player, ArrayList<Train> placedTrains){
 		for (Train train : placedTrains) {
-			addTrainToPlayer(player, train.getID(), train.getType());
+			//addTrainToPlayer(player, train.getID(), train.getType());
+			//TODO: ADD THIS BACK IN
 		}
 	}
 
