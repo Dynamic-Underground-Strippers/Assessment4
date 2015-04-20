@@ -13,7 +13,8 @@ import java.util.Random;
 public class ResourceManager {
 	/** The maximum number of resources a Player can own */
     public final int CONFIG_MAX_RESOURCES = 7;
-    
+
+	private int nextAvailableID;
     /** Random instance for generating random resources*/
     private Random random = new Random();
     
@@ -22,7 +23,8 @@ public class ResourceManager {
     
     /** Constructor to initialise trains */
     public ResourceManager() {
-    	initialise();
+    	nextAvailableID = -1;
+		initialise();
     }
     
     /** Get the trains from trains.json and store them as name, speed pairs */
@@ -105,8 +107,16 @@ public class ResourceManager {
 		//Uses a random number generator to pick a random train and return the complete train class for that train.
 		int index = random.nextInt(trains.size());
 		Tuple<String, Integer> train = trains.get(index);
-		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond());
+		nextAvailableID++;
+		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index,nextAvailableID);
 	}
+
+	public Train getTrainByIndex(int index){
+		Tuple<String, Integer> train = trains.get(index);
+		nextAvailableID++;
+		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index,nextAvailableID);
+	}
+
 
     /** Add one randomly generated Train to the given Player
      * @param player The player that will have a randomly generated resource added to it

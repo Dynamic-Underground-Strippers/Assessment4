@@ -229,7 +229,7 @@ public class Map {
 		ArrayList<Station> connectedStations = new ArrayList<Station>();
 		for(Connection c : getConnectionsFromStation(station))
 		{
-            System.out.println(c + ", " + (c.getStation1() == null ? "null" : c.getStation1().getName()) + ", " + (c.getStation2() == null ? "null" : c.getStation2().getName()));
+
 			//Establish which end of the connection is the discovered station
 			Station discoveredStation;
 			if(c.getStation1().equals(station))
