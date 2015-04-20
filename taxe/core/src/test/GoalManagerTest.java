@@ -52,8 +52,8 @@ public class GoalManagerTest extends LibGdxTest {
 
         train.addHistory(station1, 0);
 
-        pm.turnOver();
-        pm.turnOver();
+        //pm.turnOver();
+       //pm.turnOver();
         train.addHistory(station2, 1);
 
         ArrayList<String> completedStrings = gm.trainArrived(train, player1);

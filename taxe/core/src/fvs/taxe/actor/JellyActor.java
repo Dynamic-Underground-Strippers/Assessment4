@@ -81,13 +81,19 @@ public class JellyActor extends Image {
             Train collision = collided();
             if (collision != null) {
                 //If there is a collision then the user is informed, the two trains destroyed and the connection that they collided on is blocked for 5 turns.
-                context.getNotepadController().displayFlashMessage("Two trains collided. They were both destroyed", Color.BLACK, Color.RED, 4);
-                Game.getInstance().getMap().blockConnection(jelly.getLastStation(), jelly.getNextStation(), 5);
+                context.getNotepadController().displayFlashMessage("Insert relevant message here", Color.BLACK, Color.RED, 4);
+                System.out.println("collision");
+                //no need to block connection
+                //Game.getInstance().getMap().blockConnection(jelly.getLastStation(), jelly.getFinalDestination(), 5);
 
-                collision.getActor().remove();
-                collision.getPlayer().removeResource(collision);
-                jelly.getPlayer().removeResource(jelly);
-                this.remove();
+                //no need to remove the other train, no need to remove jelly
+                //collision.getActor().remove();
+                //collision.getPlayer().removeResource(collision);
+                //jelly.getPlayer().removeResource(jelly);
+                //this.remove();
+                collision.getPlayer().setSkip(true);
+
+
             }
 
         } else if (this.paused) {

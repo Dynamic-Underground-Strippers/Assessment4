@@ -178,7 +178,6 @@ public class Player {
 
     public boolean getSkip(){
         return skip;
-
     }
 
     public ArrayList<String> getMessages(){
