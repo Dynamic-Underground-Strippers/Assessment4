@@ -1,8 +1,8 @@
 package gameLogic.replay;
 
 public class JsonConnection{
-    String start;
-    String end;
+    private String start;
+    private String end;
     public JsonConnection(){}
     public JsonConnection(String start,String end){
         this.start = start;
@@ -11,8 +11,16 @@ public class JsonConnection{
     public boolean equals(Object obj) {
         if (!(obj instanceof JsonConnection))
             return false;
-        if ((((JsonConnection) obj).start == this.start)&&(((JsonConnection) obj).end== this.end))
+        if ((((JsonConnection) obj).getStart() == this.getStart())&&(((JsonConnection) obj).getEnd() == this.getEnd()))
             return true;
         return false;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public String getEnd() {
+        return end;
     }
 }

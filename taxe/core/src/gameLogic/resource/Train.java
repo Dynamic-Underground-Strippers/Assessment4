@@ -45,7 +45,7 @@ public class Train extends Resource {
      * @param rightImage The file name in assets/trains that corresponds to the right image
      * @param speed The number of pixels the train moves per turn
      */
-    public Train(String name, String leftImage, String rightImage, int speed, int index) {
+    public Train(String name, String leftImage, String rightImage, int speed, int index,int id) {
         this.name = name;
         this.leftImage = leftImage;
         this.rightImage = rightImage;
@@ -53,6 +53,7 @@ public class Train extends Resource {
         history = new ArrayList<Tuple<Station, Integer>>();
         route =  new ArrayList<Station>();
         this.index = index;
+        this.id = id;
     }
     
     /** Get the name of the train

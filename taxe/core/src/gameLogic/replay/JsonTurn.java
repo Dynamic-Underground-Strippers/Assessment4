@@ -9,20 +9,19 @@ import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Turn{
-    public ArrayList<JsonTrain> placedTrains=new ArrayList<JsonTrain>();
-    ArrayList<JsonConnection> placedConnections = new ArrayList<JsonConnection>();
-    ArrayList<JsonConnection> removedConnections = new ArrayList<JsonConnection>();
-    ArrayList<Tuple<Integer,ArrayList<String>>> setRoutes = new ArrayList<Tuple<Integer, ArrayList<String>>>();
-    ArrayList<JsonGoal> givenGoals = new ArrayList<JsonGoal>();
-    ArrayList<JsonGoal> removedGoals = new ArrayList<JsonGoal>();
-    ArrayList<JsonResource> givenResources = new ArrayList<JsonResource>();
-    ArrayList<JsonResource> removedResources = new ArrayList<JsonResource>();
-    ArrayList<JsonConnection> connectionsBlocked = new ArrayList<JsonConnection>();
+public class JsonTurn {
+    private ArrayList<JsonTrain> placedTrains=new ArrayList<JsonTrain>();
+    private ArrayList<JsonConnection> placedConnections = new ArrayList<JsonConnection>();
+    private ArrayList<JsonConnection> removedConnections = new ArrayList<JsonConnection>();
+    private ArrayList<Tuple<Integer,ArrayList<String>>> setRoutes = new ArrayList<Tuple<Integer, ArrayList<String>>>();
+    private JsonGoal givenGoal = new JsonGoal();
+    private ArrayList<JsonGoal> removedGoals = new ArrayList<JsonGoal>();
+    private ArrayList<JsonResource> givenResources = new ArrayList<JsonResource>();
+    private ArrayList<JsonResource> removedResources = new ArrayList<JsonResource>();
+    private ArrayList<JsonConnection> connectionsBlocked = new ArrayList<JsonConnection>();
 
-    public Turn(){
+    public JsonTurn(){
 
     }
 
@@ -33,24 +32,24 @@ public class Turn{
 
     public void placeTrain(Train train){
         JsonTrain jsonTrain = new JsonTrain(train.getID(),train.getIndex());
-        placedTrains.add(jsonTrain);
+        getPlacedTrains().add(jsonTrain);
     }
 
     public void placeConnection(Connection connection){
         JsonConnection jsonConnection = new JsonConnection(connection.getStation1().getName(),connection.getStation2().getName());
-        if (removedConnections.contains(jsonConnection)){
-            removedConnections.remove(jsonConnection);
+        if (getRemovedConnections().contains(jsonConnection)){
+            getRemovedConnections().remove(jsonConnection);
         }else{
-            placedConnections.add(jsonConnection);
+            getPlacedConnections().add(jsonConnection);
         }
     }
 
     public void removeConnection(Connection connection){
         JsonConnection jsonConnection = new JsonConnection(connection.getStation1().getName(),connection.getStation2().getName());
-        if (placedConnections.contains(jsonConnection)){
-            placedConnections.remove(jsonConnection);
+        if (getPlacedConnections().contains(jsonConnection)){
+            getPlacedConnections().remove(jsonConnection);
         } else{
-            removedConnections.add(jsonConnection);
+            getRemovedConnections().add(jsonConnection);
         }
     }
 
@@ -59,21 +58,17 @@ public class Turn{
         for (Station station: train.getRoute()){
             jsonRoute.add(station.getName());
         }
-        setRoutes.add(new Tuple<Integer,ArrayList<String>>(train.getID(),jsonRoute));
+        getSetRoutes().add(new Tuple<Integer, ArrayList<String>>(train.getID(), jsonRoute));
     }
 
     public void addGoal(Goal goal){
         JsonGoal jsonGoal = new JsonGoal(goal.getOrigin().getName(),goal.getDestination().getName(),goal.getIdealRoute());
-        givenGoals.add(jsonGoal);
+        givenGoal = jsonGoal;
     }
 
     public void removeGoal(Goal goal){
         JsonGoal jsonGoal = new JsonGoal(goal.getOrigin().getName(),goal.getDestination().getName(),goal.getIdealRoute());
-        if (givenGoals.contains(jsonGoal)) {
-            givenGoals.remove(jsonGoal);
-        }else{
-            removedGoals.add(jsonGoal);
-        }
+       getRemovedGoals().add(jsonGoal);
     }
 
     public void addResource(Resource resource){
@@ -87,7 +82,7 @@ public class Turn{
             //-1 is new connection
             jsonResource = new JsonResource(-1);
         }
-        givenResources.add(jsonResource);
+        getGivenResources().add(jsonResource);
     }
 
     public void removeResource(Resource resource){
@@ -101,6 +96,42 @@ public class Turn{
             //-1 is new connection
             jsonResource = new JsonResource(-1);
         }
-        removedResources.add(jsonResource);
+        getRemovedResources().add(jsonResource);
+    }
+
+    public ArrayList<JsonTrain> getPlacedTrains() {
+        return placedTrains;
+    }
+
+    public ArrayList<JsonConnection> getPlacedConnections() {
+        return placedConnections;
+    }
+
+    public ArrayList<JsonConnection> getRemovedConnections() {
+        return removedConnections;
+    }
+
+    public ArrayList<Tuple<Integer, ArrayList<String>>> getSetRoutes() {
+        return setRoutes;
+    }
+
+    public JsonGoal getGivenGoal() {
+        return givenGoal;
+    }
+
+    public ArrayList<JsonGoal> getRemovedGoals() {
+        return removedGoals;
+    }
+
+    public ArrayList<JsonResource> getGivenResources() {
+        return givenResources;
+    }
+
+    public ArrayList<JsonResource> getRemovedResources() {
+        return removedResources;
+    }
+
+    public ArrayList<JsonConnection> getConnectionsBlocked() {
+        return connectionsBlocked;
     }
 }

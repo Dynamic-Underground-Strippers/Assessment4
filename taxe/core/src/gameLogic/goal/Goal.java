@@ -6,6 +6,7 @@ import java.util.List;
 import Util.Tuple;
 import gameLogic.Game;
 import gameLogic.map.Station;
+import gameLogic.replay.JsonGoal;
 import gameLogic.resource.ResourceManager;
 import gameLogic.resource.Train;
 
@@ -64,7 +65,7 @@ public class Goal {
 		this.idealRoute = idealRoute;
 		setRewardScore();
 	}
-	
+
 	/**This method adds a constraint to the goal. If there is a conflict (e.g. TrainType vs. TurnCount) then the constraints are adjusted. 
 	 * @param resourceManager The game ResourceManager.
 	 * @param name The name of the constraint to be added.

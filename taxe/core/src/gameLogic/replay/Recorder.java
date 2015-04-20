@@ -14,58 +14,61 @@ import java.util.ArrayList;
 
 public class Recorder {
     //Writes to file at end of turn then resets
-    ArrayList<Turn> turns;
+    private ArrayList<JsonTurn> jsonTurns;
     public Recorder(){
 
     }
     public Recorder(PlayerManager pm){
-        turns = new ArrayList<Turn>();
-        turns.add(new Turn());
+        jsonTurns = new ArrayList<JsonTurn>();
+        jsonTurns.add(new JsonTurn());
         pm.subscribeTurnChanged(new TurnListener() {
             @Override
             public void changed() {
                 //Write to file
-                turns.add(new Turn());
+                jsonTurns.add(new JsonTurn());
             }
         });
-        loadReplay();
     }
 
     public void placeTrain(Train train){
-        turns.get(turns.size()-1).placeTrain(train);
+        jsonTurns.get(jsonTurns.size()-1).placeTrain(train);
     }
 
     public void placeConnection(Connection connection){
-        turns.get(turns.size()-1).placeConnection(connection);
+        jsonTurns.get(jsonTurns.size()-1).placeConnection(connection);
     }
 
     public void removeConnection(Connection connection){
-        turns.get(turns.size()-1).removeConnection(connection);
+        jsonTurns.get(jsonTurns.size()-1).removeConnection(connection);
     }
 
     public void addRoute(Train train){
-        turns.get(turns.size()-1).addRoute(train);
+        jsonTurns.get(jsonTurns.size()-1).addRoute(train);
     }
 
     public void addGoal(Goal goal){
-        turns.get(turns.size()-1).addGoal(goal);
+        jsonTurns.get(jsonTurns.size()-1).addGoal(goal);
     }
 
     public void removeGoal(Goal goal){
-        turns.get(turns.size()-1).removeGoal(goal);
+        jsonTurns.get(jsonTurns.size()-1).removeGoal(goal);
     }
 
     public void addResource(Resource resource){
-        turns.get(turns.size()-1).addResource(resource);
+        jsonTurns.get(jsonTurns.size()-1).addResource(resource);
     }
 
     public void removeResource(Resource resource){
-        turns.get(turns.size()-1).removeResource(resource);
+        jsonTurns.get(jsonTurns.size()-1).removeResource(resource);
+    }
+
+    public ArrayList<JsonTurn> getJsonTurns(){
+        return this.jsonTurns;
     }
 
     public void saveReplay(){
        //Saves replay
-      if (turns.size()>0) {
+      if (jsonTurns.size()>0) {
             Json json = new Json();
            String jsonText = json.prettyPrint(this);
             FileHandle file = Gdx.files.local("replay.json");
@@ -78,12 +81,14 @@ public class Recorder {
         System.out.println(json.prettyPrint(this));
     }
 
-    public void loadReplay(){
+    public Replay loadReplay(){
         FileHandle file = Gdx.files.local("replay.json");
         String text = file.readString();
         Json json = new Json();
         Recorder loadRecorder = json.fromJson(Recorder.class, text);
         loadRecorder.printContents();
+        Replay replay = new Replay(this);
+        return replay;
     }
 
 
