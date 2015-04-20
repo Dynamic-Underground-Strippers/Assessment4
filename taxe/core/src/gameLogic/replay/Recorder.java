@@ -7,24 +7,27 @@ import gameLogic.PlayerManager;
 import gameLogic.TurnListener;
 import gameLogic.goal.Goal;
 import gameLogic.map.Connection;
+import gameLogic.map.Station;
 import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Recorder {
     //Writes to file at end of turn then resets
-    private ArrayList<JsonTurn> jsonTurns;
+    private List<JsonTurn> jsonTurns;
     public Recorder(){
 
     }
     public Recorder(PlayerManager pm){
-        jsonTurns = new ArrayList<JsonTurn>();
+      jsonTurns = new ArrayList<JsonTurn>();
         jsonTurns.add(new JsonTurn());
         pm.subscribeTurnChanged(new TurnListener() {
             @Override
             public void changed() {
                 //Write to file
+                saveReplay();
                 jsonTurns.add(new JsonTurn());
             }
         });
@@ -62,7 +65,7 @@ public class Recorder {
         jsonTurns.get(jsonTurns.size()-1).removeResource(resource);
     }
 
-    public ArrayList<JsonTurn> getJsonTurns(){
+    public List<JsonTurn> getJsonTurns(){
         return this.jsonTurns;
     }
 
@@ -86,9 +89,7 @@ public class Recorder {
         String text = file.readString();
         Json json = new Json();
         Recorder loadRecorder = json.fromJson(Recorder.class, text);
-        loadRecorder.printContents();
-        Replay replay = new Replay(this);
-        return replay;
+        return new Replay(loadRecorder);
     }
 
 

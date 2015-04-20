@@ -130,8 +130,8 @@ public class Map {
             String s1 = connection.getStation1().getName();
             String s2 = connection.getStation2().getName();
 
-            if (s1.equals(stationName) && s2.equals(anotherStationName)
-                || s1.equals(anotherStationName) && s2.equals(stationName)) {
+            if ((s1.equals(stationName) && s2.equals(anotherStationName))
+                ||( s1.equals(anotherStationName) && s2.equals(stationName))) {
                 return connection;
             }
         }

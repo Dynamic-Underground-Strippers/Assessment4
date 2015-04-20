@@ -10,10 +10,12 @@ import gameLogic.map.Station;
 import gameLogic.resource.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Replay {
     private ArrayList<Turn> turns;
     public Replay(Recorder loadedRecorder){
+        turns = new ArrayList<Turn>();
         for (JsonTurn turn: loadedRecorder.getJsonTurns()){
             //Declared to allow the game to convert the station names into actual objects
            Map map = Game.getInstance().getMap();
@@ -40,35 +42,37 @@ public class Replay {
             }
 
             //Loads in placed trains from Json
-            ArrayList<Train> placedTrains=  new ArrayList<Train>();
+            ArrayList<Tuple<Integer,Station>> placedTrains=  new ArrayList<Tuple<Integer,Station>>();
             for (JsonTrain jsonTrain:turn.getPlacedTrains()){
                 //THIS WON'T WORK THE WAY IT IS INTENDED
                 Train placedTrain = rm.getTrainByIndex(jsonTrain.getIndex());
+                placedTrains.add(new Tuple<Integer,Station>(placedTrain.getID(),map.getStationByName(jsonTrain.getPlacedStation())));
             }
 
             //Reads in all of the placed connections from the Json
             ArrayList<Connection> placedConnections = new ArrayList<Connection>();
             for (JsonConnection jsonConnection: turn.getPlacedConnections()){
-                Connection placedConnection = map.getConnection(jsonConnection.getStart(),jsonConnection.getEnd());
+                Connection placedConnection = new Connection(map.getStationByName(jsonConnection.getStart()),map.getStationByName(jsonConnection.getEnd()));
                 placedConnections.add(placedConnection);
             }
 
             //Reads in all of the removed connections from the Json
             ArrayList<Connection> removedConnections = new ArrayList<Connection>();
             for (JsonConnection jsonConnection: turn.getRemovedConnections()){
-                Connection removedConnection = map.getConnection(jsonConnection.getStart(),jsonConnection.getEnd());
+                Connection removedConnection = new Connection(map.getStationByName(jsonConnection.getStart()),map.getStationByName(jsonConnection.getEnd()));
                 removedConnections.add(removedConnection);
             }
 
             //Reads in all of the routes from the Json
-            ArrayList<Tuple<Integer,ArrayList<Station>>> routes = new ArrayList<Tuple<Integer,ArrayList<Station>>>();
-            for (Tuple<Integer,ArrayList<String>> jsonRoute: turn.getSetRoutes()){
+            /*ArrayList<Tuple<Integer,ArrayList<Station>>> routes = new ArrayList<Tuple<Integer,ArrayList<Station>>>();
+            for (Tuple<Integer, String[]> jsonRoute: turn.getSetRoutes()){
                 ArrayList<Station> route = new ArrayList<Station>();
-                for (String station : jsonRoute.getSecond()){
+                String[] stationNames = jsonRoute.getSecond();
+                for (String station : stationNames){
                     route.add(map.getStationByName(station));
                 }
                 routes.add(new Tuple<Integer,ArrayList<Station>>(jsonRoute.getFirst(),route));
-            }
+            }*/
 
             //Reads in all of the blocked connections from the Json
             ArrayList<Connection> blockedConnections = new ArrayList<Connection>();
@@ -107,14 +111,15 @@ public class Replay {
                 }
             }
             //Creates a new turn data structure based on the data read in from the json
-            turns.add(new Turn(givenGoal,removedGoals,placedConnections,removedConnections,blockedConnections,routes,givenResources,removedResources,placedTrains));
+            turns.add(new Turn(givenGoal,removedGoals,placedConnections,removedConnections,blockedConnections,givenResources,removedResources,placedTrains));
         }
+        System.out.println(turns);
     }
 
     private class Turn{
         private Goal givenGoal;
         private ArrayList<Goal> removedGoals;
-        private ArrayList<Train> placedTrains;
+        private ArrayList<Tuple<Integer,Station>> placedTrains;
         private ArrayList<Connection> placedConnections;
         private ArrayList<Connection> removedConnections;
         private ArrayList<Connection> blockedConnections;
@@ -122,7 +127,7 @@ public class Replay {
         private ArrayList<Resource> givenResources;
         private ArrayList<Resource> removedResources;
 
-        public Turn(Goal givenGoal,ArrayList<Goal> removedGoals,ArrayList<Connection> placedConnections,ArrayList<Connection> removedConnections, ArrayList<Connection> blockedConnections, ArrayList<Tuple<Integer,ArrayList<Station>>> setRoutes,ArrayList<Resource> givenResources,ArrayList<Resource> removedResources,ArrayList<Train> placedTrains){
+        public Turn(Goal givenGoal,ArrayList<Goal> removedGoals,ArrayList<Connection> placedConnections,ArrayList<Connection> removedConnections, ArrayList<Connection> blockedConnections,ArrayList<Resource> givenResources,ArrayList<Resource> removedResources,ArrayList<Tuple<Integer,Station>> placedTrains){
             this.givenGoal = givenGoal;
             this.removedGoals = removedGoals;
             this.placedConnections = placedConnections;
@@ -150,7 +155,7 @@ public class Replay {
             return removedGoals;
         }
 
-        public ArrayList<Train> getPlacedTrains() {
+        public ArrayList<Tuple<Integer,Station>> getPlacedTrains() {
             return placedTrains;
         }
 
