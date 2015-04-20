@@ -122,7 +122,7 @@ public class Replay {
         return turns;
     }
 
-    private class Turn{
+    public class Turn{
         //This class stores everything has happened in this turn, each can be accessed individually by using the getters
         private Goal givenGoal;
         private ArrayList<Goal> removedGoals;

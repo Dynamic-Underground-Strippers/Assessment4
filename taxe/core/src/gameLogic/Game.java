@@ -1,11 +1,15 @@
 package gameLogic;
 
+import fvs.taxe.ReplayManager;
 import gameLogic.goal.GoalManager;
+import gameLogic.map.Connection;
 import gameLogic.map.Map;
 import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleManager;
 import gameLogic.replay.Recorder;
+import gameLogic.replay.Replay;
+import gameLogic.resource.NewConnection;
 import gameLogic.resource.ResourceManager;
 
 import java.util.ArrayList;
@@ -58,6 +62,10 @@ public class Game {
 
 	private int animationFactor;
 
+	private Replay savedReplay;
+
+	private ReplayManager replayManager;
+
 
 	/**The Instantiation method, sets up the players and game listeners.*/
 	private Game() {
@@ -76,7 +84,7 @@ public class Game {
 			playerManager.subscribeTurnChanged(new TurnListener() {
 				@Override
 				public void changed() {
-					recorder.loadReplay();
+					savedReplay = recorder.loadReplay();
 					//setUpForReplay(playerManager.getCurrentPlayer());
 				}
 			});
@@ -270,6 +278,16 @@ public class Game {
 		calculateObstacles();
 		decreaseObstacleTime();
 		*/
+
+		Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()-1);
+		replayManager.setUpForReplay(currentPlayer, replayData);
+		/*
+		resourceManager.getTrains().get(0).
+		map.addConnections(savedTurn.getPlacedConnections());
+		//map.addConnections(savedReplay.getTurns().get(playerManager.getTurnNumber()).getPlacedConnections());
+		System.out.print("PLACED CONNECTIONS: " + savedReplay.getTurns().get(playerManager.getTurnNumber()).getPlacedConnections());
+		*/
+
 	}
 
 	public int getAnimationFactor(){
@@ -277,6 +295,10 @@ public class Game {
 	}
 
 	public boolean getReplay() { return this.replay; }
+
+	public void setReplayManager(ReplayManager rm){
+		this.replayManager = rm;
+	}
 
 
 }

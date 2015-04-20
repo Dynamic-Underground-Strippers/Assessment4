@@ -21,6 +21,12 @@ jsonTurns: [
 				]
 			}
 		],
+        givenResources: [
+			{
+				index: 1
+			},
+			{}
+		],
 		givenGoal: {
 			origin: "Sport Village",
 			destination: "Computer Science",

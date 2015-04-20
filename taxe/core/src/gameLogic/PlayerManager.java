@@ -79,4 +79,8 @@ public class PlayerManager {
 	public int getTurnNumber() {
 		return turnNumber;
 	}
+
+	public void setCurrentTurn(int player) {
+		currentTurn = player;
+	}
 }

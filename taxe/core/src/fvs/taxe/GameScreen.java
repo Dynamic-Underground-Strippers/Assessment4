@@ -79,6 +79,8 @@ public class GameScreen extends ScreenAdapter {
     private ClockController clockController;
 
 	private int animationFactor;
+
+	private ReplayManager replayManager;
 	
 	/**Instantiation method. Sets up the game using the passed TaxeGame argument. 
 	 *@param game The instance of TaxeGame to be passed to the GameScreen to display.
@@ -106,6 +108,10 @@ public class GameScreen extends ScreenAdapter {
 		obstacleController = new ObstacleController(context);
 		scoreController = new ScoreController(context);
         clockController = new ClockController(context);
+
+		replayManager = new ReplayManager(context);
+		Game.getInstance().setReplayManager(replayManager);
+
 
 		context.setRouteController(routeController);
 		context.setNotepadController(notepadController);
@@ -221,5 +227,6 @@ public class GameScreen extends ScreenAdapter {
 		}
 		currentPlayer.clearBuffer();
 	}
+
 
 }

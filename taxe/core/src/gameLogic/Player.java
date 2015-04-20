@@ -127,7 +127,9 @@ public class Player {
             activeGoals.remove(goal);
         }
 
-       addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
+        if (!Game.getInstance().getReplay()) {
+            addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
+        }
     }
     
     /**This method completes a goal, giving the player the reward score and setting the goal to complete.*/

@@ -4,6 +4,7 @@ import Util.Tuple;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import gameLogic.Game;
 import gameLogic.Player;
 
 import java.util.ArrayList;
@@ -129,14 +130,21 @@ public class ResourceManager {
      * @param player The player with which to add the resource
      * @param resource The resource that will be added to the player
      */
-    private void addResourceToPlayer(Player player, Resource resource) {
+    public void addResourceToPlayer(Player player, Resource resource) {
         if (player.getResources().size() >= CONFIG_MAX_RESOURCES || player.getSkip()) {
 			return;
         }
 
         resource.setPlayer(player);
         player.addResource(resource);
+		Game.getInstance().getRecorder().addResource(resource);
     }
+
+	public void removeResourceFromPlayer(Player player, Resource resource){
+		if (player.getResources().contains(resource)) {
+			player.getResources().remove(resource);
+		}
+	}
 
 
 }

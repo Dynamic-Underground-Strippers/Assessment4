@@ -165,7 +165,7 @@ public class TrainMoveController {
 		};
 	}
 
-	/**This method uses the current's train's routes to create a set of move actions for the train.*/
+	/**This method uses the current train's routes to create a set of move actions for the train.*/
 	public void addMoveActions() {
 		action = new InterruptableSequenceAction();
 		IPositionable current = train.getPosition();
