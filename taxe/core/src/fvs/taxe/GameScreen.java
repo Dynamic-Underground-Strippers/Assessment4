@@ -77,6 +77,8 @@ public class GameScreen extends ScreenAdapter {
 	private Rumble rumble;
 
     private ClockController clockController;
+
+	private int animationFactor;
 	
 	/**Instantiation method. Sets up the game using the passed TaxeGame argument. 
 	 *@param game The instance of TaxeGame to be passed to the GameScreen to display.
@@ -110,12 +112,16 @@ public class GameScreen extends ScreenAdapter {
 
 		rumble = obstacleController.getRumble();
 
+		animationFactor = Game.getInstance().getAnimationFactor();
+
 		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
 		@Override
 			public void changed() {
 				gameLogic.setState(GameState.ANIMATING);
-				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
-			}
+				if (!Game.getInstance().getReplay()) {
+					notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+				}
+		}
 });
 
 		gameLogic.subscribeStateChanged(new GameStateListener() {
@@ -164,7 +170,7 @@ public class GameScreen extends ScreenAdapter {
 
 		if(gameLogic.getState() == GameState.ANIMATING) {
 			timeAnimated += delta;
-			if (timeAnimated >= ANIMATION_TIME) {
+			if (timeAnimated >= ANIMATION_TIME / animationFactor) {
 				gameLogic.setState(GameState.NORMAL);
 				timeAnimated = 0;
 				displayMessagesInBuffer();

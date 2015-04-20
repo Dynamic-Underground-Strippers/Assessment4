@@ -3,6 +3,7 @@ package gameLogic.replay;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import gameLogic.Game;
 import gameLogic.PlayerManager;
 import gameLogic.TurnListener;
 import gameLogic.goal.Goal;
@@ -71,11 +72,13 @@ public class Recorder {
 
     public void saveReplay(){
        //Saves replay
-      if (jsonTurns.size()>0) {
-            Json json = new Json();
-           String jsonText = json.prettyPrint(this);
-            FileHandle file = Gdx.files.local("replay.json");
-            file.writeString(jsonText, false);
+        if (!Game.getInstance().getReplay()) {
+            if (jsonTurns.size() > 0) {
+                Json json = new Json();
+                String jsonText = json.prettyPrint(this);
+                FileHandle file = Gdx.files.local("replay.json");
+                file.writeString(jsonText, false);
+            }
         }
     }
 

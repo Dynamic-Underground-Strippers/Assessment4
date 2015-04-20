@@ -34,7 +34,7 @@ public class GoalManagerTest extends LibGdxTest {
         pm.createPlayers(2);
         Player player1 = pm.getCurrentPlayer();
 
-        Train train = new Train("Green", "", "", 100);
+        Train train = new Train("Green", "", "", 100, 1, 1);
 
         Station station1 = new Station("station1", new Position(5, 5));
         Station station2 = new Station("station2", new Position(2, 2));

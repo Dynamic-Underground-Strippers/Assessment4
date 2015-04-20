@@ -137,4 +137,6 @@ public class ResourceManager {
         resource.setPlayer(player);
         player.addResource(resource);
     }
+
+
 }

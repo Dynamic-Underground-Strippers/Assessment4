@@ -53,6 +53,12 @@ public class Game {
 	public final int TOTAL_POINTS = 200;
 
 	public final int MAX_TURNS = 30;
+
+	private final boolean replay = true;
+
+	private int animationFactor;
+
+
 	/**The Instantiation method, sets up the players and game listeners.*/
 	private Game() {
 		playerManager = new PlayerManager();
@@ -62,25 +68,43 @@ public class Game {
 		goalManager = new GoalManager(resourceManager);
 		map = new Map();
 		obstacleManager = new ObstacleManager(map);
-		
-		state = GameState.NORMAL;
+
+		if (replay) {
+			state = GameState.REPLAY_SETUP;
+			animationFactor = 2;
+
+			playerManager.subscribeTurnChanged(new TurnListener() {
+				@Override
+				public void changed() {
+					recorder.loadReplay();
+					//setUpForReplay(playerManager.getCurrentPlayer());
+				}
+			});
+
+		} else {
+			state = GameState.NORMAL;
+			animationFactor = 1;
+
+			playerManager.subscribeTurnChanged(new TurnListener() {
+				@Override
+				public void changed() {
+					Player currentPlayer = playerManager.getCurrentPlayer();
+					goalManager.updatePlayerGoals(currentPlayer);
+					resourceManager.addRandomResourceToPlayer(currentPlayer);
+					resourceManager.addRandomResourceToPlayer(currentPlayer);
+					map.decrementBlockedConnections();
+					map.blockRandomConnection();
+					calculateObstacles();
+					decreaseObstacleTime();
+					//displayMessages(currentPlayer.getMessages());
+					//COMMENT THE LINE BELOW OUT WHEN YOU WISH TO SAVE A REPLAY
+
+				}
+			});
+		}
+
 		recorder = new Recorder(playerManager);
-		playerManager.subscribeTurnChanged(new TurnListener() {
-			@Override
-			public void changed() {
-				Player currentPlayer = playerManager.getCurrentPlayer();
-				goalManager.updatePlayerGoals(currentPlayer);
-				resourceManager.addRandomResourceToPlayer(currentPlayer);
-				resourceManager.addRandomResourceToPlayer(currentPlayer);
-				map.decrementBlockedConnections();
-				map.blockRandomConnection();
-				calculateObstacles();
-				decreaseObstacleTime();
-				//displayMessages(currentPlayer.getMessages());
-				//COMMENT THE LINE BELOW OUT WHEN YOU WISH TO SAVE A REPLAY
-				recorder.loadReplay();
-			}
-		});
+
 	}
 
 	/**Returns the main game instance.*/
@@ -97,10 +121,14 @@ public class Game {
 
 	/**Sets up the players. Only the first player is given goals and resources initially.*/
 	private void initialisePlayers() {
-		Player player = playerManager.getAllPlayers().get(0);
-		goalManager.updatePlayerGoals(player);
-		resourceManager.addRandomResourceToPlayer(player);
-		resourceManager.addRandomResourceToPlayer(player);
+		if (!replay) {
+			Player player = playerManager.getAllPlayers().get(0);
+			goalManager.updatePlayerGoals(player);
+			resourceManager.addRandomResourceToPlayer(player);
+			resourceManager.addRandomResourceToPlayer(player);
+		} else {
+			//TODO: LOAD IN PLAYER 1'S GOALS AND RESOURCES
+		}
 	}
 
 	/**@return The PlayerManager instance for this game.*/
@@ -130,7 +158,16 @@ public class Game {
 
 	/**Sets the GameState of the Game. Listeners are notified using stateChanged().*/
 	public void setState(GameState state) {
-		this.state = state;
+		if (!replay) {
+			this.state = state;
+		} else if (state == GameState.ANIMATING) {
+			this.state = GameState.ANIMATING;
+		} else {
+			this.state = GameState.REPLAY_SETUP;
+			setUpForReplay(playerManager.getCurrentPlayer());
+			playerManager.turnOver();
+		}
+
 		stateChanged();
 	}
 
@@ -211,6 +248,35 @@ public class Game {
 	public Recorder getRecorder(){
 		return this.recorder;
 	}
+
+	public boolean isReplay(){
+		return this.replay;
+	}
+
+	public void setUpForReplay(Player currentPlayer) {
+		//TODO:
+		//remove Goals in some way
+		//add Goals in some way
+		/*
+		resourceManager.addTrainsToPlayer(currentPlayer, placedTrains);
+		map.addConnections(placedConnections);
+		map.removeConnections(removedConnections);
+		currentPlayer.setTrainsRoutes(routes);
+		resourceManager.addResourcesToPlayer(currentPlayer, addedResources);
+		resourceManager.removeResourcesFromPlayer(currentPlayer, removedResources);
+		map.blockConnections(blockedConnections);
+
+		map.decrementBlockedConnections();
+		calculateObstacles();
+		decreaseObstacleTime();
+		*/
+	}
+
+	public int getAnimationFactor(){
+		return this.animationFactor;
+	}
+
+	public boolean getReplay() { return this.replay; }
 
 
 }

@@ -533,4 +533,33 @@ public class Map {
         System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "NOT deleted");
     }
 
-}
+    public void removeConnection(Connection connection){
+        Station station1 = connection.getStation1();
+        Station station2 = connection.getStation2();
+        removeConnection(station1, station2);
+    }
+
+    public void removeConnections(ArrayList<Connection> removedConnections){
+        for (Connection connection : removedConnections){
+            removeConnection(connection);
+        }
+    }
+
+    public void addConnections(ArrayList<Connection> placedConnections){
+        for (Connection connection : placedConnections){
+            addConnection(connection);
+        }
+    }
+
+    public void blockConnection(Connection c, int turnsBlocked){
+        blockConnection(c.getStation1(),c.getStation2(),turnsBlocked);
+    }
+
+    public void blockConnections(ArrayList<Connection> blockedConnections){
+        for (Connection connection : blockedConnections){
+            blockConnection(connection,5);
+        }
+    }
+
+
+    }

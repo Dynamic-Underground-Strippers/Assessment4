@@ -181,5 +181,6 @@ public class Replay {
         public ArrayList<Tuple<Integer, ArrayList<Station>>> getSetRoutes() {
             return setRoutes;
         }
+
     }
 }
