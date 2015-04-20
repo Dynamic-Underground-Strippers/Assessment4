@@ -31,10 +31,10 @@ public class Station{
 		aliases = new ArrayList<Station>();
 	}
 
-	public Station(String name, IPositionable location,NodeType type) {
+	public Station(String name, IPositionable location,NodeType type, ArrayList<Pair<String, NodeType>> aliases) {
 		this.name = name;
 		this.location = location;
-		aliases = new ArrayList<Station>();
+		aliases = aliases;
 		this.type = type;
 	}
 	
@@ -99,4 +99,7 @@ public class Station{
 	}
 
 	public void addAlias(Station station){this.aliases.add(station);}
+
+	public NodeType getType () {return type;}
 }
+

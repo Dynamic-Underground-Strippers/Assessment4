@@ -1,12 +1,6 @@
 package gameLogic.map;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
-import com.badlogic.gdx.math.Vector2;
 import Util.Node;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -75,10 +69,16 @@ public class Map {
     private void parseStations(JsonValue jsonVal) {
         for(JsonValue station = jsonVal.getChild("stations"); station != null; station = station.next) {
             String name = "";
+            NodeType type = null;
             int x = 0;
             int y = 0;
             boolean isJunction = false;
-            ArrayList<String> aliases = new ArrayList<String>();
+            ArrayList<Pair<String, NodeType>> aliases = new ArrayList<Pair<String,NodeType>>();
+//            String[] aliases2;
+//            String[] aliases3;
+            String[] a = null;
+            String[] b = null;
+
             for(JsonValue val = station.child; val != null; val = val.next) {
                 if(val.name.equalsIgnoreCase("name")) {
                     name = val.asString();
@@ -88,15 +88,36 @@ public class Map {
                     y = val.asInt();
                 } else if(val.name.equalsIgnoreCase("junction")) {
                     isJunction = val.asBoolean();
-                } else{
-                    //Add in loading of aliases
+                }else if (val.name.equalsIgnoreCase("type")){
+                    type= NodeType.valueOf(val.asString());
+                } else if (val.name.equalsIgnoreCase("aliases")) {
+                    a = val.asStringArray();
+                } else if (val.name.equalsIgnoreCase("types")) {
+                    b = val.asStringArray();
                 }
+                if (a != null && b != null) {
+                    for (int i = 0; i < a.length; i++) {
+                        aliases.add(new Pair<String, NodeType>(a[i], NodeType.valueOf(b[i])));
+                    }
+                    a = null;
+                    b = null;
+                }
+//                else {
+//                    //save the aliases. String will look like "Goodricke:college, Glasshouse:bar"
+//                    aliases2 = val.asString().split(","); //split it into tokens of name:type
+//                    if (aliases2.length > 0) {
+//                        for (int i = 0; i < aliases2.length; i++) //for each token
+//                            aliases3 = aliases2[i].split(":"); //split it
+//                        Pair pair = new Pair(aliases3[0], aliases3[1]);
+//                        aliases.add(pair);//add the pair to aliases
+//                    }
+//                }
             }
 
             if (isJunction) {
                 addJunction(name, new Position(x,y));
             } else {
-                addStation(name, new Position(x, y));
+                addStation(name, new Position(x, y), type ,aliases);
             }
         }
     }
@@ -149,8 +170,8 @@ public class Map {
      * @param location The position of the new station in the game.
      * @return The newly added station.
      */
-    public Station addStation(String name, Position location) {
-        Station newStation = new Station(name, location);
+    public Station addStation(String name, Position location, NodeType type, ArrayList<Pair<String, NodeType>> aliases) {
+        Station newStation = new Station(name, location, type, aliases);
         stations.add(newStation);
         return newStation;
     }
@@ -533,4 +554,27 @@ public class Map {
         System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "NOT deleted");
     }
 
+    public NodeType getRandomType() {
+        Random random = new Random();
+        int x = random.nextInt(4);
+        if (x==0) return NodeType.COLLEGE;
+        else if (x==1) return  NodeType.DEPARTMENT;
+        else if (x==2) return NodeType.PUB;
+        else return NodeType.SPORTS;
+    }
+
+    public Station getRandomStationOfType (NodeType type){
+        ArrayList<Station> ofThisType = new ArrayList<Station>();
+        for (Station s : stations) {
+            if(s.getType() == type) ofThisType.add(s);
+            System.out.println(s.getName() + ", " + s.getType());
+        }
+        Random random = new Random();
+        int i = random.nextInt(ofThisType.size()+1);
+        return ofThisType.get(i);
+
+    }
+
 }
+
+
