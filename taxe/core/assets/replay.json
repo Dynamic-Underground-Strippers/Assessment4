@@ -1,0 +1,91 @@
+{
+jsonTurns: [
+	{
+		placedTrains: [
+			{
+				index: 1,
+				placedStation: Halifax
+			}
+		],
+		setRoutes: [
+			{
+				val1: {
+					class: java.lang.Integer,
+					value: 0
+				},
+				val2: [
+					Halifax,
+					"Random Node",
+					"Sports Centre",
+					James
+				]
+			}
+		],
+		givenGoal: {
+			origin: "Sport Village",
+			destination: "Computer Science",
+			idealRoute: [
+				"Computer Science",
+				Langwith,
+				Constantine,
+				"Sport Village"
+			]
+		},
+		placedConnections: [
+			{
+				start: Halifax,
+				end: "Computer Science"
+			}
+		]
+	},
+	{
+		placedTrains: [
+			{
+				index: 7,
+				placedStation: "Heslington Hall",
+				id: 1
+			}
+		],
+		setRoutes: [
+			{
+				val1: {
+					class: java.lang.Integer,
+					value: 1
+				},
+				val2: [
+					"Heslington Hall",
+					Derwent,
+					Chemistry
+				]
+			}
+		],
+		givenGoal: {
+			origin: "Sports Centre",
+			destination: "Taxi Rank",
+			idealRoute: [
+				"Taxi Rank",
+				Library,
+				Vanbrugh,
+				"Central Hall",
+				Physics,
+				James,
+				"Sports Centre"
+			]
+		}
+	},
+	{
+		givenGoal: {
+			origin: "Computer Science",
+			destination: Vanbrugh,
+			idealRoute: [
+				Vanbrugh,
+				"Central Hall",
+				Physics,
+				"Random Node",
+				Halifax,
+				"Computer Science"
+			]
+		}
+	}
+]
+}
