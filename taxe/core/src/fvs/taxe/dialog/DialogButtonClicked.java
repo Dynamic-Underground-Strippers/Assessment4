@@ -81,6 +81,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                 pixmap.dispose();
 
                 Game.getInstance().setState(GameState.PLACING);
+                Game.getInstance().getJelly().getActor().setVisible(false);
                 final TrainController trainController = new TrainController(context);
                 trainController.setTrainsVisible(null, false);
 
@@ -101,6 +102,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                         TrainActor trainActor = trainController.renderTrain(train);
                         trainController.setTrainsVisible(null, true);
                         train.setActor(trainActor);
+                        Game.getInstance().getJelly().getActor().setVisible(true);
 
                         StationController.unsubscribeStationClick(this);
                         Game.getInstance().setState(GameState.NORMAL);

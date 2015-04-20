@@ -8,6 +8,7 @@ import gameLogic.map.Map;
 import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleManager;
+import gameLogic.resource.Jelly;
 import gameLogic.resource.ResourceManager;
 
 import java.util.ArrayList;
@@ -25,7 +26,9 @@ public class Game {
 	/** Context instance to draw jellies! **/
 
 	private Context context;
-	
+
+	private Jelly jelly;
+
 	/**The game's PlayerManager that handles both of the players.*/
 	private PlayerManager playerManager;
 	
@@ -218,6 +221,14 @@ public class Game {
 			}
 		}
 		
+	}
+
+	public void setJelly(Jelly jelly){
+		this.jelly = jelly;
+	}
+
+	public Jelly getJelly(){
+		return this.jelly;
 	}
 
 

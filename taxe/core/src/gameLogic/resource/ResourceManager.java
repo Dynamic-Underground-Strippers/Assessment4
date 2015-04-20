@@ -167,6 +167,7 @@ public class ResourceManager {
 			JellyMoveController moveController = new JellyMoveController(Game.getInstance().getContext(), jelly);
 
 			this.jelly = jelly;
+			Game.getInstance().setJelly(jelly);
 			//System.out.println(randStation.getName() + " " + nextStation.getName() + " " + nextStation1.getName() + " " + Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getName());
 			System.out.println("new jelly in " + randStation.getName());
 		} else {

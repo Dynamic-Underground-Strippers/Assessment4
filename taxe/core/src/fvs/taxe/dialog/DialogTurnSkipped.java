@@ -14,7 +14,7 @@ public class DialogTurnSkipped extends Dialog {
         super("Miss a turn", skin);
         this.context = context;
         //Informs player that they have missed their turn.
-        text("Due to circumstances outside our control \n Network Rail would like to apologise for you missing your turn.");
+        text("Due to a YUSU candidate pestering your train\n You're going to miss this turn.");
         button("OK", "EXIT");
         align(Align.center);
     }
