@@ -77,6 +77,7 @@ public class Game {
 				calculateObstacles();
 				decreaseObstacleTime();
 				//displayMessages(currentPlayer.getMessages());
+				//COMMENT THE LINE BELOW OUT WHEN YOU WISH TO SAVE A REPLAY
 				recorder.loadReplay();
 			}
 		});

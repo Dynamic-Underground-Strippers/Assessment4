@@ -101,6 +101,7 @@ public class Player {
         }
 
         activeGoals.add(goal);
+        //COMMENT THE LINE BELOW WHEN YOU WISH TO LOAD A REPLAY FILE
        //Game.getInstance().getRecorder().addGoal(goal);
         changed();
     }
