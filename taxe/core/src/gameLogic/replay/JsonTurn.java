@@ -9,12 +9,13 @@ import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class JsonTurn {
     private ArrayList<JsonTrain> placedTrains=new ArrayList<JsonTrain>();
     private ArrayList<JsonConnection> placedConnections = new ArrayList<JsonConnection>();
     private ArrayList<JsonConnection> removedConnections = new ArrayList<JsonConnection>();
-    private ArrayList<Tuple<Integer,ArrayList<String>>> setRoutes = new ArrayList<Tuple<Integer, ArrayList<String>>>();
+    private ArrayList<Tuple<Integer,String[]>> setRoutes = new ArrayList<Tuple<Integer, String[]>>();
     private JsonGoal givenGoal = new JsonGoal();
     private ArrayList<JsonGoal> removedGoals = new ArrayList<JsonGoal>();
     private ArrayList<JsonResource> givenResources = new ArrayList<JsonResource>();
@@ -31,7 +32,8 @@ public class JsonTurn {
 
 
     public void placeTrain(Train train){
-        JsonTrain jsonTrain = new JsonTrain(train.getID(),train.getIndex());
+
+        JsonTrain jsonTrain = new JsonTrain(train.getID(),train.getIndex(),train.getHistory().get(0).getFirst().getName());
         getPlacedTrains().add(jsonTrain);
     }
 
@@ -54,11 +56,18 @@ public class JsonTurn {
     }
 
     public void addRoute(Train train){
-        ArrayList<String> jsonRoute = new ArrayList<String>();
+        List<String> jsonRoute = new ArrayList<String>();
         for (Station station: train.getRoute()){
             jsonRoute.add(station.getName());
         }
-        getSetRoutes().add(new Tuple<Integer, ArrayList<String>>(train.getID(), jsonRoute));
+        String[] jsonRouteArray = new String[jsonRoute.size()];
+        int index=0;
+        for (String stationName: jsonRoute){
+            jsonRouteArray[index] = stationName;
+            index++;
+        }
+
+        getSetRoutes().add(new Tuple<Integer,String[]>(train.getID(), jsonRouteArray));
     }
 
     public void addGoal(Goal goal){
@@ -111,7 +120,7 @@ public class JsonTurn {
         return removedConnections;
     }
 
-    public ArrayList<Tuple<Integer, ArrayList<String>>> getSetRoutes() {
+    public ArrayList<Tuple<Integer, String[]>> getSetRoutes() {
         return setRoutes;
     }
 

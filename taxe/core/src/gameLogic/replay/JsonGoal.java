@@ -13,6 +13,7 @@ public class JsonGoal{
     public JsonGoal(String origin, String destination,List<Station> idealRoute){
         this.origin=origin;
         this.destination = destination;
+        this.idealRoute = new ArrayList<String>();
         for (Station station: idealRoute){
             this.getIdealRoute().add(station.getName());
         }

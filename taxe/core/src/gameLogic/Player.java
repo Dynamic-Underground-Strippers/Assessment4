@@ -101,6 +101,7 @@ public class Player {
         }
 
         activeGoals.add(goal);
+       //Game.getInstance().getRecorder().addGoal(goal);
         changed();
     }
 
