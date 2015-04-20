@@ -51,8 +51,13 @@ public class NewConnection extends Resource {
         map.addConnection(station1, station2);
         Connection connection = map.getConnection(station1.getName(),station2.getName());
 
+        if (station1.getName() == station2.getName()) {
+            //if stations are the same
+            map.removeConnection(station1, station2);
+            return false;
+        }
+
         for (Connection c : map.getConnections()){
-            //TODO: Add check for the same station
             //if connection doesn't contain one of the stations involved in new connection
             //as this would register as an intersection
             if (!(c.getStation1().equals(station1)) && (!(c.getStation2().equals(station2))) &&
