@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Replay {
+    //This class stores a list of turns, each which store what occurs on each turn
     private ArrayList<Turn> turns;
     public Replay(Recorder loadedRecorder){
         turns = new ArrayList<Turn>();
@@ -117,7 +118,12 @@ public class Replay {
         System.out.println(turns);
     }
 
+    public ArrayList<Turn> getTurns() {
+        return turns;
+    }
+
     private class Turn{
+        //This class stores everything has happened in this turn, each can be accessed individually by using the getters
         private Goal givenGoal;
         private ArrayList<Goal> removedGoals;
         private ArrayList<Tuple<Integer,Station>> placedTrains;
