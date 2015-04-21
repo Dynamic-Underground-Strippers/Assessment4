@@ -5,5 +5,6 @@ public enum ObstacleType {
 	VOLCANO,
 	BLIZZARD,
 	FLOOD,
-	EARTHQUAKE
+	EARTHQUAKE,
+	FLU
 }

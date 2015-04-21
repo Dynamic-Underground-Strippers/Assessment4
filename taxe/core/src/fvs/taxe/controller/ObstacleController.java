@@ -55,7 +55,10 @@ public class ObstacleController {
 					effects.get("Blizzard").start(); 
 				} else if (obstacle.getType() == ObstacleType.FLOOD) {
 					effects.get("Flood").setPosition(obstacle.getPosition().getX()-10, obstacle.getPosition().getY() + 50);
-					effects.get("Flood").start(); 
+					effects.get("Flood").start();
+				} else if (obstacle.getType() == ObstacleType.FLU) {
+					effects.get("Blizzard").setPosition(obstacle.getPosition().getX()-10, obstacle.getPosition().getY() + 50);
+					effects.get("Blizzard").start();
 				} else if (obstacle.getType() == ObstacleType.VOLCANO) {
 					effects.get("Volcano").setPosition(obstacle.getPosition().getX(), obstacle.getPosition().getY()-10);
 					effects.get("Volcano").start(); 

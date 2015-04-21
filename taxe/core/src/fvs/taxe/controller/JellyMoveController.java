@@ -157,7 +157,7 @@ public class JellyMoveController {
 
                     try{
                         nextStation = Game.getInstance().getMap().getConnectedStations(jelly.getFinalDestination(), null).get(ran);
-                        System.out.println("bad station: "+nextStation.getName());
+                        System.out.println("selected station: "+nextStation.getName());
                     }
 
                     catch (Exception e){System.out.println("bad number: "+ran);}
@@ -171,10 +171,11 @@ public class JellyMoveController {
                             break;
                         }
                     } catch (Exception e){}
-
-
-
-                    ran = ran -1;
+                    if(ran==0){
+                        ran = 4;
+                    }else {
+                        ran = ran - 1;
+                    }
                 }
 
 

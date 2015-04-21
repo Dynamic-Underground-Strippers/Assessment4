@@ -41,6 +41,8 @@ public class ObstacleActor extends Image {
 			return new Texture(Gdx.files.internal("obstacles/flood.png"));
 		case EARTHQUAKE:
 			return new Texture(Gdx.files.internal("obstacles/earthquake.png"));
+		case FLU:
+			return new Texture(Gdx.files.internal("obstacles/blizzard.png"));
 		default:
 			return null;
 		}

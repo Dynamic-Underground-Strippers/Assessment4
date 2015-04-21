@@ -49,6 +49,8 @@ public class Obstacle {
 			return 0.6f;
 		case VOLCANO:
 			return 1f;
+		case FLU:
+			return 0.5f;
 		default:
 			return 0f;
 		}
@@ -119,6 +121,8 @@ public class Obstacle {
 			return 4;
 		} else if (type == ObstacleType.VOLCANO) {
 			return 8;
+		} else if(type == ObstacleType.FLU){
+			return 99;
 		} else {
 			return -1; // invalid obstacle type!
 		}
@@ -144,4 +148,5 @@ public class Obstacle {
 	public ObstacleActor getActor(){
 		return this.actor;
 	}
+
 }

@@ -2,21 +2,26 @@ package gameLogic;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import fvs.taxe.actor.ObstacleActor;
 import fvs.taxe.controller.Context;
 import gameLogic.goal.GoalManager;
 import gameLogic.map.Map;
+import gameLogic.map.Station;
 import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleManager;
+import gameLogic.obstacle.ObstacleType;
 import gameLogic.resource.Jelly;
 import gameLogic.resource.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Util.Tuple;
 
 import com.badlogic.gdx.math.MathUtils;
+import org.lwjgl.Sys;
 
 /**Main Game class of the Game. Handles all of the game logic.*/
 public class Game {
@@ -46,7 +51,9 @@ public class Game {
 	
 	/**The game state.*/
 	private GameState state;
-	
+
+	private List<Obstacle> flus = new ArrayList<Obstacle>();
+
 	/**List of listeners that listen to changes in game state.*/
 	private List<GameStateListener> gameStateListeners = new ArrayList<GameStateListener>();
 	
@@ -84,6 +91,8 @@ public class Game {
 				map.blockRandomConnection();
 				calculateObstacles();
 				decreaseObstacleTime();
+				flu();
+				spreadFlu();
 				//displayMessages(currentPlayer.getMessages());
 			}
 		});
@@ -230,6 +239,55 @@ public class Game {
 	public Jelly getJelly(){
 		return this.jelly;
 	}
+
+	public void flu(){
+		int rand = MathUtils.random(2);
+		if (rand == 0){
+			Station station = this.map.getRandomStation();
+			Obstacle obstacle = new Obstacle(ObstacleType.FLU, station );
+			obstacle.setActor(new ObstacleActor(obstacle));
+			obstacleStarted(obstacle);
+			obstacle.start();
+			flus.add(obstacle);
+			System.out.println("New flu in "+station.getName());
+		}
+	}
+
+	public void spreadFlu(){
+		int rand;
+		for (int i = 0; i<flus.size(); i++){
+			rand = MathUtils.random(2);
+			if(rand==0){
+				Obstacle obstacle = flus.get(i);
+				System.out.println("Killing the flu in "+obstacle.getStation().getName());
+				ObstacleActor a = obstacle.getActor();
+				if(a!= null){
+					System.out.println("actor present");
+				}
+				obstacleEnded(obstacle);
+				obstacle.end();
+				flus.remove(obstacle);
+				System.out.println("killed");
+			}else{
+				rand = MathUtils.random(10);
+				if(rand==0){
+					Obstacle obstacle = flus.get(i);
+					Station station = obstacle.getStation();
+
+					int randStation = MathUtils.random(map.getConnectedStations(station, null).size()-1);
+					Station station1 = map.getConnectedStations(station, null).get(randStation);
+					Obstacle newObstacle = new Obstacle(ObstacleType.FLU, station1);
+					obstacle.setActor(new ObstacleActor(obstacle));
+					obstacleStarted(obstacle);
+					obstacle.start();
+					flus.add(newObstacle);
+					System.out.println("New flu in "+station1.getName()+"from "+station.getName());
+				}
+			}
+		}
+
+	}
+
 
 
 }
