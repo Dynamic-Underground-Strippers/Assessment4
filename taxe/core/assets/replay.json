@@ -3,8 +3,13 @@ jsonTurns: [
 	{
 		placedTrains: [
 			{
-				index: 1,
-				placedStation: Halifax
+				index: 9,
+				placedStation: "Sports Centre"
+			},
+			{
+				index: 4,
+				placedStation: Langwith,
+				id: 1
 			}
 		],
 		setRoutes: [
@@ -14,84 +19,87 @@ jsonTurns: [
 					value: 0
 				},
 				val2: [
-					Halifax,
-					"Random Node",
 					"Sports Centre",
-					James
+					James,
+					Physics,
+					"Central Hall",
+					Derwent,
+					Chemistry,
+					Alcuin
 				]
-			}
-		],
-        givenResources: [
-			{
-				index: 1
 			},
-			{}
-		],
-		givenGoal: {
-			origin: "Sport Village",
-			destination: "Computer Science",
-			idealRoute: [
-				"Computer Science",
-				Langwith,
-				Constantine,
-				"Sport Village"
-			]
-		},
-		placedConnections: [
-			{
-				start: Halifax,
-				end: "Computer Science"
-			}
-		]
-	},
-	{
-		placedTrains: [
-			{
-				index: 7,
-				placedStation: "Heslington Hall",
-				id: 1
-			}
-		],
-		setRoutes: [
 			{
 				val1: {
 					class: java.lang.Integer,
 					value: 1
 				},
 				val2: [
+					Langwith,
+					"Yellow Brick Road",
 					"Heslington Hall",
-					Derwent,
-					Chemistry
+					Chemistry,
+					Alcuin,
+					Library,
+					"Taxi Rank"
 				]
 			}
 		],
 		givenGoal: {
-			origin: "Sports Centre",
+			origin: "Central Hall",
 			destination: "Taxi Rank",
 			idealRoute: [
 				"Taxi Rank",
 				Library,
 				Vanbrugh,
-				"Central Hall",
-				Physics,
-				James,
-				"Sports Centre"
+				"Central Hall"
 			]
-		}
+		},
+		givenResources: [
+			{
+				index: 9
+			},
+			{
+				index: 4
+			}
+		]
 	},
 	{
+		placedTrains: [
+			{
+				index: 1,
+				placedStation: Derwent,
+				id: 3
+			}
+		],
+		setRoutes: [
+			{
+				val1: {
+					class: java.lang.Integer,
+					value: 3
+				},
+				val2: [
+					Derwent,
+					"Heslington Hall",
+					"The Charles"
+				]
+			}
+		],
 		givenGoal: {
-			origin: "Computer Science",
-			destination: Vanbrugh,
+			origin: Langwith,
+			destination: Goodricke,
 			idealRoute: [
-				Vanbrugh,
-				"Central Hall",
-				Physics,
-				"Random Node",
-				Halifax,
-				"Computer Science"
+				Goodricke,
+				Langwith
 			]
-		}
+		},
+		givenResources: [
+			{
+				index: 7
+			},
+			{
+				index: 1
+			}
+		]
 	}
 ]
 }

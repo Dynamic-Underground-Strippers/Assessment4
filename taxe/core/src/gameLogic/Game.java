@@ -80,6 +80,7 @@ public class Game {
 		if (replay) {
 			state = GameState.REPLAY_SETUP;
 			animationFactor = 2;
+			playerManager.setCurrentTurn(1);
 
 			playerManager.subscribeTurnChanged(new TurnListener() {
 				@Override
@@ -136,6 +137,7 @@ public class Game {
 			resourceManager.addRandomResourceToPlayer(player);
 		} else {
 			//TODO: LOAD IN PLAYER 1'S GOALS AND RESOURCES
+
 		}
 	}
 
