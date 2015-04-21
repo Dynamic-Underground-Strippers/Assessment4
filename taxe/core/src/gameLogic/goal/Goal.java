@@ -231,7 +231,15 @@ public class Goal {
 		}
 		return false;
 	}
-	
+
+	public String byHour(){
+		int newTurn = turnCount+turnIssued;
+		int l = newTurn/2;
+		if (newTurn%2 ==1) return 9+l +":30";
+		else  return 9+l +":00";
+
+	}
+
 	/**Produces a String representation of the Goal.*/
 	public String toString() {
 		String trainString = "train";
@@ -241,7 +249,7 @@ public class Goal {
 		String turnString = "";
 		if(turnCount != -1)
 		{
-			turnString = " within " + turnCount + " turns";
+			turnString = " by" + byHour() + "within " + turnCount;
 		}
 		String trainCountString = "a ";
 		if(trainCount != -1)

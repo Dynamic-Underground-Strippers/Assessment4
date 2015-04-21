@@ -136,15 +136,16 @@ public class GoalManager {
 		Map map = Game.getInstance().getMap();
 		Station origin = map.getRandomStationOfType(NodeType.COLLEGE);
 		Random random = new Random();
-		int i = random.nextInt(2);
+		int i = random.nextInt(3);
 		Station destination;
 		if (i==0) {
 			destination = map.getRandomStationOfType(NodeType.DEPARTMENT);
 			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
 		}
-		else return new Goal (origin, null, NodeType.SPORTS, turn, getIdealRouteForType(origin, NodeType.SPORTS));
-
-
+		else if (i==2) return new Goal (origin, null, NodeType.SPORTS, turn, getIdealRouteForType(origin, NodeType.SPORTS));
+		else { destination=map.getRandomStationOfType(NodeType.COLLEGE);
+			return new Goal(origin, destination,null, turn, getIdealRoute(origin,destination) );
+		}
 
 		}
 
