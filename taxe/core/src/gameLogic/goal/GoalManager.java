@@ -139,11 +139,11 @@ public class GoalManager {
 		int i = random.nextInt(3);
 		Station destination;
 		if (i==0) {
-			destination = map.getRandomStationOfType(NodeType.DEPARTMENT);
+			destination = generateDestDifToOrigin(origin,NodeType.DEPARTMENT);
 			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
 		}
 		else if (i==2) return new Goal (origin, null, NodeType.SPORTS, turn, getIdealRouteForType(origin, NodeType.SPORTS));
-		else { destination=map.getRandomStationOfType(NodeType.COLLEGE);
+		else { destination=generateDestDifToOrigin(origin, NodeType.COLLEGE);
 			return new Goal(origin, destination,null, turn, getIdealRoute(origin,destination) );
 		}
 
@@ -159,14 +159,14 @@ public class GoalManager {
 
 		i=random.nextInt(2);
 		if (i==0) {
-			Station destination = Game.getInstance().getMap().getRandomStationOfType(NodeType.COLLEGE);
+			Station destination = generateDestDifToOrigin(origin, NodeType.COLLEGE);
 			return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
 		}
 
 		else { 	//go to a specific pub or to any, really
 			i = random.nextInt(2);
 			if (i==0) {
-				Station destination = Game.getInstance().getMap().getRandomStationOfType(NodeType.PUB);
+				Station destination = generateDestDifToOrigin(origin, NodeType.PUB);
 				return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
 			}
 			else return new Goal (origin, null, NodeType.PUB, turn, getIdealRouteForType(origin, NodeType.PUB));
@@ -181,13 +181,13 @@ public class GoalManager {
 		int i = random.nextInt(3);
 		Station destination;
 		if (i==0) {
-			destination = Game.getInstance().getMap().getRandomStationOfType(NodeType.COLLEGE);
+			destination = generateDestDifToOrigin(origin,NodeType.COLLEGE);
 		}
 		else if (i==1) {
-			 destination = Game.getInstance().getMap().getRandomStationOfType(NodeType.PUB);
+			 destination = generateDestDifToOrigin(origin,NodeType.PUB);
 		}
 		else {
-			destination = Game.getInstance().getMap().getRandomStationOfType(NodeType.PUB);
+			destination = generateDestDifToOrigin(origin,NodeType.TAXI);
 		}
 		return new Goal(origin, destination, null, turn,getIdealRoute(origin, destination));
 	}
@@ -212,6 +212,15 @@ public class GoalManager {
 
 		return ofThisType.toArray(new List[ofThisType.size()]);
 	}
+
+	public Station generateDestDifToOrigin (Station station, NodeType type){
+		Station dest = Game.getInstance().getMap().getRandomStationOfType(type);
+		while (dest.getName()==station.getName())
+			dest = Game.getInstance().getMap().getRandomStationOfType(type);
+	return dest;
+
+	}
+
 	}
 
 

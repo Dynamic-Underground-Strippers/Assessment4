@@ -235,8 +235,8 @@ public class Goal {
 	public String byHour(){
 		int newTurn = turnCount+turnIssued;
 		int l = newTurn/2;
-		if (newTurn%2 ==1) return 9+l +":30";
-		else  return 9+l +":00";
+		if (newTurn%2 ==1) return 9+l +":30 o'clock";
+		else  return 9+l +":00 o'clock";
 
 	}
 
@@ -249,7 +249,7 @@ public class Goal {
 		String turnString = "";
 		if(turnCount != -1)
 		{
-			turnString = " by" + byHour() + "within " + turnCount;
+			turnString = " by " + byHour(); //+ "within " + turnCount;
 		}
 		String trainCountString = "a ";
 		if(trainCount != -1)
@@ -269,9 +269,9 @@ public class Goal {
 		String dest = new String();
 		if (destination==null)
 		{
-			if (destinationType == NodeType.SPORTS) dest = "to any sports venue";
-			else if (destinationType==NodeType.COLLEGE) dest = "to any college";
-			else if (destinationType==NodeType.PUB) dest = "to any pub";
+			if (destinationType == NodeType.SPORTS) dest = "any sports venue";
+			else if (destinationType==NodeType.COLLEGE) dest =  "any college";
+			else if (destinationType==NodeType.PUB) dest = "any pub";
 		}
 		else dest = destination.getName();
 
