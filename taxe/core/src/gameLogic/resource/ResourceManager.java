@@ -100,7 +100,6 @@ public class ResourceManager {
 			//Otherwise randomly selects a train to give the player.
 			//We decided not to use the value of idx to choose the train as this allows us to change the number of trains in the system independently of this routine
 			//i.e we could have 30 trains, but still retain a 1 in 10 chance to get an engineer/skip/obstacle
-			nextAvailableID++;
 			return getRandomTrain();
 		}
 	}
@@ -109,11 +108,13 @@ public class ResourceManager {
 		//Uses a random number generator to pick a random train and return the complete train class for that train.
 		int index = random.nextInt(trains.size());
 		Tuple<String, Integer> train = trains.get(index);
+		nextAvailableID++;
 		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index,nextAvailableID);
 	}
 
 	public Train getTrainByIndex(int index){
 		Tuple<String, Integer> train = trains.get(index);
+		nextAvailableID++;
 		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index,nextAvailableID);
 	}
 
