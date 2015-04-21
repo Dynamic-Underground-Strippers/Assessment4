@@ -570,7 +570,7 @@ public class Map {
             System.out.println(s.getName() + ", " + s.getType());
         }
         Random random = new Random();
-        int i = random.nextInt(ofThisType.size()+1);
+        int i = random.nextInt(ofThisType.size());
         return ofThisType.get(i);
 
     }
