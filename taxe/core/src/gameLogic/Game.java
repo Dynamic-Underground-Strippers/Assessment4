@@ -80,13 +80,15 @@ public class Game {
 		if (replay) {
 			state = GameState.REPLAY_SETUP;
 			animationFactor = 2;
-			playerManager.setCurrentTurn(1);
+
 
 			playerManager.subscribeTurnChanged(new TurnListener() {
 				@Override
 				public void changed() {
 					savedReplay = recorder.loadReplay();
-					//setUpForReplay(playerManager.getCurrentPlayer());
+					if (state == GameState.REPLAY_SETUP) {
+						setUpForReplay(playerManager.getCurrentPlayer());
+					}
 				}
 			});
 
@@ -137,6 +139,7 @@ public class Game {
 			resourceManager.addRandomResourceToPlayer(player);
 		} else {
 			//TODO: LOAD IN PLAYER 1'S GOALS AND RESOURCES
+			playerManager.setReplay();
 
 		}
 	}
@@ -168,15 +171,15 @@ public class Game {
 
 	/**Sets the GameState of the Game. Listeners are notified using stateChanged().*/
 	public void setState(GameState state) {
-		if (!replay) {
+		//if (!replay) {
 			this.state = state;
-		} else if (state == GameState.ANIMATING) {
+		/*} else if (state == GameState.ANIMATING) {
 			this.state = GameState.ANIMATING;
 		} else {
 			this.state = GameState.REPLAY_SETUP;
 			setUpForReplay(playerManager.getCurrentPlayer());
 			playerManager.turnOver();
-		}
+		}*/
 
 		stateChanged();
 	}
@@ -280,9 +283,11 @@ public class Game {
 		calculateObstacles();
 		decreaseObstacleTime();
 		*/
+		if (playerManager.getTurnNumber() < savedReplay.getTurns().size()) {
+			Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber());
+			replayManager.setUpForReplay(currentPlayer, replayData);
+		}
 
-		Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()-1);
-		replayManager.setUpForReplay(currentPlayer, replayData);
 		/*
 		resourceManager.getTrains().get(0).
 		map.addConnections(savedTurn.getPlacedConnections());

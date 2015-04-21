@@ -80,7 +80,9 @@ public class PlayerManager {
 		return turnNumber;
 	}
 
-	public void setCurrentTurn(int player) {
-		currentTurn = player;
+	public void setReplay(){
+		//replays must change to player 0 on turn 1
+		currentTurn = 1;
+		turnNumber = -1;
 	}
 }

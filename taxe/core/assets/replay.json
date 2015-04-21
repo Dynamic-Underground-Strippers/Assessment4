@@ -3,12 +3,12 @@ jsonTurns: [
 	{
 		placedTrains: [
 			{
-				index: 9,
-				placedStation: "Sports Centre"
+				index: 4,
+				placedStation: James
 			},
 			{
-				index: 4,
-				placedStation: Langwith,
+				index: 3,
+				placedStation: "Sport Village",
 				id: 1
 			}
 		],
@@ -19,13 +19,12 @@ jsonTurns: [
 					value: 0
 				},
 				val2: [
-					"Sports Centre",
 					James,
 					Physics,
 					"Central Hall",
-					Derwent,
-					Chemistry,
-					Alcuin
+					Vanbrugh,
+					Wentworth,
+					"Taxi Rank"
 				]
 			},
 			{
@@ -34,40 +33,84 @@ jsonTurns: [
 					value: 1
 				},
 				val2: [
+					"Sport Village",
+					Constantine,
 					Langwith,
 					"Yellow Brick Road",
-					"Heslington Hall",
-					Chemistry,
-					Alcuin,
-					Library,
-					"Taxi Rank"
+					"Heslington Hall"
 				]
 			}
 		],
 		givenGoal: {
-			origin: "Central Hall",
-			destination: "Taxi Rank",
+			origin: Derwent,
+			destination: "Sports Centre",
 			idealRoute: [
-				"Taxi Rank",
-				Library,
-				Vanbrugh,
-				"Central Hall"
+				"Sports Centre",
+				James,
+				Physics,
+				"Central Hall",
+				Derwent
 			]
 		},
 		givenResources: [
 			{
-				index: 9
+				index: 4
 			},
 			{
-				index: 4
+				index: 3
 			}
 		]
 	},
 	{
 		placedTrains: [
 			{
-				index: 1,
-				placedStation: Derwent,
+				index: 2,
+				placedStation: "Science Park",
+				id: 2
+			}
+		],
+		setRoutes: [
+			{
+				val1: {
+					class: java.lang.Integer,
+					value: 2
+				},
+				val2: [
+					"Science Park",
+					Chemistry,
+					Derwent,
+					"Central Hall"
+				]
+			}
+		],
+		givenGoal: {
+			origin: Constantine,
+			destination: Langwith,
+			idealRoute: [
+				Langwith,
+				Constantine
+			]
+		},
+		removedConnections: [
+			{
+				start: "Heslington Hall",
+				end: "Random Node"
+			}
+		],
+		givenResources: [
+			{
+				index: 2
+			},
+			{
+				index: -2
+			}
+		]
+	},
+	{
+		placedTrains: [
+			{
+				index: 9,
+				placedStation: "Sports Centre",
 				id: 3
 			}
 		],
@@ -78,23 +121,132 @@ jsonTurns: [
 					value: 3
 				},
 				val2: [
-					Derwent,
-					"Heslington Hall",
-					"The Charles"
+					"Sports Centre",
+					James,
+					Physics,
+					"Random Node",
+					Halifax
 				]
 			}
 		],
 		givenGoal: {
-			origin: Langwith,
-			destination: Goodricke,
+			origin: Constantine,
+			destination: "Sport Village",
 			idealRoute: [
-				Goodricke,
-				Langwith
+				"Sport Village",
+				Constantine
 			]
 		},
 		givenResources: [
 			{
-				index: 7
+				index: 9
+			},
+			{
+				index: 6
+			}
+		]
+	},
+	{
+		placedTrains: [
+			{
+				placedStation: Derwent,
+				id: 6
+			}
+		],
+		setRoutes: [
+			{
+				val1: {
+					class: java.lang.Integer,
+					value: 2
+				},
+				val2: [
+					Chemistry,
+					"Science Park"
+				]
+			}
+		],
+		givenGoal: {
+			origin: "Sport Village",
+			destination: "Taxi Rank",
+			idealRoute: [
+				"Taxi Rank",
+				Library,
+				Vanbrugh,
+				Derwent,
+				"Heslington Hall",
+				"Yellow Brick Road",
+				"Sport Village"
+			]
+		},
+		givenResources: [
+			{
+				index: 4
+			},
+			{}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Library,
+			destination: Physics,
+			idealRoute: [
+				Physics,
+				"Central Hall",
+				Vanbrugh,
+				Library
+			]
+		},
+		placedConnections: [
+			{
+				start: "Science Park",
+				end: "Yellow Brick Road"
+			}
+		],
+		givenResources: [
+			{
+				index: 9
+			},
+			{
+				index: -1
+			}
+		]
+	},
+	{
+		placedTrains: [
+			{
+				index: 5,
+				placedStation: "Taxi Rank",
+				id: 8
+			}
+		],
+		setRoutes: [
+			{
+				val1: {
+					class: java.lang.Integer,
+					value: 8
+				},
+				val2: [
+					"Taxi Rank",
+					Wentworth,
+					Biology
+				]
+			}
+		],
+		givenGoal: {
+			origin: "The Charles",
+			destination: James,
+			idealRoute: [
+				James,
+				Physics,
+				"Central Hall",
+				Derwent,
+				"Heslington Hall",
+				"The Charles"
+			]
+		},
+		givenResources: [
+			{
+				index: 5
 			},
 			{
 				index: 1

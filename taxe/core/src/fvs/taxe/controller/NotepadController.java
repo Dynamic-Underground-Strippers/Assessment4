@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import fvs.taxe.TaxeGame;
 import fvs.taxe.actor.NotepadActor;
+import gameLogic.Game;
 import gameLogic.GameState;
 import gameLogic.GameStateListener;
 import gameLogic.obstacle.Obstacle;
