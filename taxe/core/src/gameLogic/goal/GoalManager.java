@@ -46,17 +46,18 @@ public class GoalManager {
 			goal = generateRandomMiddayGoal(turn);
 		else goal = generateRandomEveningGoal(turn);
 				
-//		//Check if we need to complicate the Goal with further constraints
-//
-//			//Generate a set of constraints to add to the goal
-//			ArrayList<Tuple<String, Object>> availableConstraints = generateExtraConstraints(idealRoute, map.getRouteLength(idealRoute));
-//
-//				//Pick one of our available constraints and add it to the goal
-//				Tuple<String, Object> goalConstraint = availableConstraints.get(new Random().nextInt(availableConstraints.size()));
-//				availableConstraints.remove(goalConstraint);
-//
-//				goal.addConstraint(resourceManager, goalConstraint.getFirst(), goalConstraint.getSecond());
+		//Check if we need to complicate the Goal with further constraints
 
+			//Generate a set of constraints to add to the goal
+			if (goal.getDestination()!=null) {
+				ArrayList<Tuple<String, Object>> availableConstraints = generateExtraConstraints(getIdealRoute(goal.getOrigin(), goal.getDestination()), map.getRouteLength(getIdealRoute(goal.getOrigin(), goal.getDestination())));
+
+				//Pick one of our available constraints and add it to the goal
+				Tuple<String, Object> goalConstraint = availableConstraints.get(new Random().nextInt(availableConstraints.size()));
+				availableConstraints.remove(goalConstraint);
+
+				goal.addConstraint(resourceManager, goalConstraint.getFirst(), goalConstraint.getSecond());
+			}
 		return goal;
 	}
 	
