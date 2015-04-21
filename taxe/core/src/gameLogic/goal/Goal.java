@@ -260,8 +260,12 @@ public class Goal {
 		}
 		String dest = new String();
 		if (destination==null)
-			dest = "something of the type " + this.destinationType.toString();
-		else dest = destination.toString();
+		{
+			if (destinationType == NodeType.SPORTS) dest = "to any sports venue";
+			else if (destinationType==NodeType.COLLEGE) dest = "to any college";
+			else if (destinationType==NodeType.PUB) dest = "to any pub";
+		}
+		else dest = destination.getName();
 
 		return "Send " + trainCountString + trainString + " from " + origin.getName() + " to " + dest + exclusionString + journeyString + turnString + " - " + rewardScore + " points";
 	}
