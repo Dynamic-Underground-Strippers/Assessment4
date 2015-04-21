@@ -132,38 +132,43 @@ public class GoalManager {
 		}
 	}
 
-	public Goal generateRandomMorningGoal(int turn){
+	public Goal generateRandomMorningGoal(int turn) {
 		Map map = Game.getInstance().getMap();
 		Station origin = map.getRandomStationOfType(NodeType.COLLEGE);
 		Random random = new Random();
-		int i = random.nextInt(3);
+		int i = random.nextInt(4);
 		Station destination;
-		if (i==0) {
-			destination = generateDestDifToOrigin(origin,NodeType.DEPARTMENT);
+		if (i == 0) {
+			destination = generateDestDifToOrigin(origin, NodeType.DEPARTMENT);
 			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
-		}
-		else if (i==2) return new Goal (origin, null, NodeType.SPORTS, turn, getIdealRouteForType(origin, NodeType.SPORTS));
-		else { destination=generateDestDifToOrigin(origin, NodeType.COLLEGE);
-			return new Goal(origin, destination,null, turn, getIdealRoute(origin,destination) );
-		}
+		} else if (i == 1)
+			return new Goal(origin, null, NodeType.SPORTS, turn, getIdealRouteForType(origin, NodeType.SPORTS));
+		else if (i == 2) {
+			destination = generateDestDifToOrigin(origin, NodeType.COLLEGE);
+			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
+		} else {
+			destination = generateDestDifToOrigin(origin, NodeType.RANDOM);
+			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
 
 		}
+	}
 
 	public Goal generateRandomMiddayGoal(int turn){
 		Station origin;
 		Random random = new Random();
-		int i =random.nextInt(3);
+		int i =random.nextInt(4);
 		if (i==0) origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.DEPARTMENT);
 		else if (i==1) origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.SPORTS);
-		else origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.COLLEGE);
+		else if (i==2) origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.COLLEGE);
+		else origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.RANDOM);
 
-		i=random.nextInt(2);
+		i=random.nextInt(3);
 		if (i==0) {
 			Station destination = generateDestDifToOrigin(origin, NodeType.COLLEGE);
 			return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
 		}
 
-		else { 	//go to a specific pub or to any, really
+		else if (i==1) { 	//go to a specific pub or to any, really
 			i = random.nextInt(2);
 			if (i==0) {
 				Station destination = generateDestDifToOrigin(origin, NodeType.PUB);
@@ -172,7 +177,10 @@ public class GoalManager {
 			else return new Goal (origin, null, NodeType.PUB, turn, getIdealRouteForType(origin, NodeType.PUB));
 
 		}
-
+		else {
+			Station destination = generateDestDifToOrigin(origin, NodeType.RANDOM);
+			return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
+		}
 	}
 
 	public Goal generateRandomEveningGoal (int turn){
