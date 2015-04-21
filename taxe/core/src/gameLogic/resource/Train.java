@@ -206,4 +206,8 @@ public class Train extends Resource {
     public int getIndex() {
         return index;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

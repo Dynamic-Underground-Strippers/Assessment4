@@ -47,8 +47,7 @@ public class Replay {
             ArrayList<Tuple<Integer,Station>> placedTrains=  new ArrayList<Tuple<Integer,Station>>();
             for (JsonTrain jsonTrain:turn.getPlacedTrains()){
                 //THIS WON'T WORK THE WAY IT IS INTENDED
-                Train placedTrain = rm.getTrainByIndex(jsonTrain.getIndex());
-                placedTrains.add(new Tuple<Integer,Station>(placedTrain.getID(),map.getStationByName(jsonTrain.getPlacedStation())));
+                placedTrains.add(new Tuple<Integer,Station>(jsonTrain.getId(),map.getStationByName(jsonTrain.getPlacedStation())));
             }
 
             //Reads in all of the placed connections from the Json
