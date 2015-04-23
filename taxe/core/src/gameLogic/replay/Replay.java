@@ -45,7 +45,7 @@ public class Replay {
             //Loads in placed trains from Json
             ArrayList<Tuple<Integer,Station>> placedTrains=  new ArrayList<Tuple<Integer,Station>>();
             for (JsonTrain jsonTrain:turn.getPlacedTrains()){
-                //THIS WON'T WORK THE WAY IT IS INTENDED
+            //THIS WON'T WORK THE WAY IT IS INTENDED
                 placedTrains.add(new Tuple<Integer,Station>(jsonTrain.getId(),map.getStationByName(jsonTrain.getPlacedStation())));
             }
 
