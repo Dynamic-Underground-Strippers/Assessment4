@@ -4,5 +4,8 @@ public enum NodeType {
     COLLEGE,
     SPORTS,
     DEPARTMENT,
-    PUB
+    PUB,
+    TAXI,
+    RANDOM
 }
+

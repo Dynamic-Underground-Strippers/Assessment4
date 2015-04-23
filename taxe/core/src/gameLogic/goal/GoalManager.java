@@ -1,9 +1,11 @@
 package gameLogic.goal;
 
+import Util.Node;
+import Util.Tuple;
 import gameLogic.Game;
 import gameLogic.Player;
-import gameLogic.map.CollisionStation;
 import gameLogic.map.Map;
+import gameLogic.map.NodeType;
 import gameLogic.map.Station;
 import gameLogic.resource.ResourceManager;
 import gameLogic.resource.Train;
@@ -11,9 +13,6 @@ import gameLogic.resource.Train;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import Util.Node;
-import Util.Tuple;
 
 /**This class manages goals for the game.*/
 public class GoalManager {
@@ -36,40 +35,29 @@ public class GoalManager {
 
 	/**This method generates a random goal with extra constraints. It chooses a random origin and destination, and adds extra constraints to it.
 	 * @param turn The turn in which the goal was created.
-	 * @param extraConstraints The number of extra constraints to add. Can be zero.
 	 * @return
 	 */
 	public Goal generateRandomGoal(int turn) {
 		Map map = Game.getInstance().getMap();
-		Station origin;
-		do {
-			origin = map.getRandomStation();
-		} while (origin instanceof CollisionStation);
-		Station destination;
-		do {
-			destination = map.getRandomStation();
-		} while (destination == origin || destination instanceof CollisionStation);
-
-		//Find the ideal solution to solving this objective
-		Node<Station> originNode = new Node<Station>();
-		originNode.setData(origin);
-		ArrayList<Node<Station>> searchFringe = new ArrayList<Node<Station>>();
-		searchFringe.add(originNode);
-		List<Station> idealRoute = map.getIdealRoute(destination, searchFringe, map.getStationsList());
-		
-		Goal goal = new Goal(origin, destination, turn, idealRoute);
+		Goal goal;
+		if (turn <6)
+			goal = generateRandomMorningGoal(turn);
+		else if (turn < 14)
+			goal = generateRandomMiddayGoal(turn);
+		else goal = generateRandomEveningGoal(turn);
 				
 		//Check if we need to complicate the Goal with further constraints
 
 			//Generate a set of constraints to add to the goal
-			ArrayList<Tuple<String, Object>> availableConstraints = generateExtraConstraints(idealRoute, map.getRouteLength(idealRoute));
+			if (goal.getDestination()!=null) {
+				ArrayList<Tuple<String, Object>> availableConstraints = generateExtraConstraints(getIdealRoute(goal.getOrigin(), goal.getDestination()), map.getRouteLength(getIdealRoute(goal.getOrigin(), goal.getDestination())));
 
 				//Pick one of our available constraints and add it to the goal
 				Tuple<String, Object> goalConstraint = availableConstraints.get(new Random().nextInt(availableConstraints.size()));
 				availableConstraints.remove(goalConstraint);
 
 				goal.addConstraint(resourceManager, goalConstraint.getFirst(), goalConstraint.getSecond());
-
+			}
 		return goal;
 	}
 	
@@ -145,4 +133,101 @@ public class GoalManager {
 	}
 
 
+	public Goal generateRandomMorningGoal(int turn) {
+		Map map = Game.getInstance().getMap();
+		Station origin = map.getRandomStationOfType(NodeType.COLLEGE);
+		Random random = new Random();
+		int i = random.nextInt(4);
+		Station destination;
+		if (i == 0) {
+			destination = generateDestDifToOrigin(origin, NodeType.DEPARTMENT);
+			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
+		} else if (i == 1)
+			return new Goal(origin, null, NodeType.SPORTS, turn, getIdealRouteForType(origin, NodeType.SPORTS));
+		else if (i == 2) {
+			destination = generateDestDifToOrigin(origin, NodeType.COLLEGE);
+			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
+		} else {
+			destination = generateDestDifToOrigin(origin, NodeType.RANDOM);
+			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
+
+		}
+	}
+
+	public Goal generateRandomMiddayGoal(int turn){
+		Station origin;
+		Random random = new Random();
+		int i =random.nextInt(4);
+		if (i==0) origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.DEPARTMENT);
+		else if (i==1) origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.SPORTS);
+		else if (i==2) origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.COLLEGE);
+		else origin = Game.getInstance().getMap().getRandomStationOfType(NodeType.RANDOM);
+
+		i=random.nextInt(3);
+		if (i==0) {
+			Station destination = generateDestDifToOrigin(origin, NodeType.COLLEGE);
+			return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
+		}
+
+		else if (i==1) { 	//go to a specific pub or to any, really
+			i = random.nextInt(2);
+			if (i==0) {
+				Station destination = generateDestDifToOrigin(origin, NodeType.PUB);
+				return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
+			}
+			else return new Goal (origin, null, NodeType.PUB, turn, getIdealRouteForType(origin, NodeType.PUB));
+
+		}
+		else {
+			Station destination = generateDestDifToOrigin(origin, NodeType.RANDOM);
+			return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
+		}
+	}
+
+	public Goal generateRandomEveningGoal (int turn){
+		Station origin = Game.getInstance().getMap().getRandomStation();
+		Random random = new Random();
+		int i = random.nextInt(3);
+		Station destination;
+		if (i==0) {
+			destination = generateDestDifToOrigin(origin,NodeType.COLLEGE);
+		}
+		else if (i==1) {
+			 destination = generateDestDifToOrigin(origin,NodeType.PUB);
+		}
+		else {
+			destination = generateDestDifToOrigin(origin,NodeType.TAXI);
+		}
+		return new Goal(origin, destination, null, turn,getIdealRoute(origin, destination));
+	}
+
+	public List<Station> getIdealRoute (Station origin, Station destination) {
+		Node<Station> originNode = new Node<Station>();
+		originNode.setData(origin);
+		ArrayList<Node<Station>> searchFringe = new ArrayList<Node<Station>>();
+		searchFringe.add(originNode);
+
+		return Game.getInstance().getMap().getIdealRoute(destination, searchFringe, Game.getInstance().getMap().getStationsList());
+	}
+
+	public List<Station>[] getIdealRouteForType(Station origin, NodeType type){
+		Game.getInstance().getMap();
+		ArrayList<List <Station>> ofThisType= new ArrayList<List<Station>>();
+		for (int i=0; i< Game.getInstance().getMap().getStations().size();i++)
+		{
+			if (Game.getInstance().getMap().getStations().get(i).getType() == type)
+				ofThisType.add(getIdealRoute(origin, Game.getInstance().getMap().getStations().get(i)));
+		}
+
+		return ofThisType.toArray(new List[ofThisType.size()]);
+	}
+
+	public Station generateDestDifToOrigin (Station station, NodeType type){
+		Station dest = Game.getInstance().getMap().getRandomStationOfType(type);
+		while (dest.getName()==station.getName())
+			dest = Game.getInstance().getMap().getRandomStationOfType(type);
+	return dest;
+
+	}
 }
+

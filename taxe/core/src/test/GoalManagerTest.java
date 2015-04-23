@@ -62,3 +62,4 @@ public class GoalManagerTest extends LibGdxTest {
 
     }
 }
+
