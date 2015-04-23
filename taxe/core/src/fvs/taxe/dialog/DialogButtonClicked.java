@@ -81,7 +81,11 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                 pixmap.dispose();
 
                 Game.getInstance().setState(GameState.PLACING);
-                Game.getInstance().getJelly().getActor().setVisible(false);
+               try {
+                   Game.getInstance().getJelly().getActor().setVisible(false);
+               }catch(Exception e){
+
+               }
                 final TrainController trainController = new TrainController(context);
                 trainController.setTrainsVisible(null, false);
 
