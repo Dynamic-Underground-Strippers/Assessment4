@@ -106,8 +106,11 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                         TrainActor trainActor = trainController.renderTrain(train);
                         trainController.setTrainsVisible(null, true);
                         train.setActor(trainActor);
-                        Game.getInstance().getJelly().getActor().setVisible(true);
+                        try {
+                            Game.getInstance().getJelly().getActor().setVisible(true);
+                        }catch(Exception e){
 
+                        }
                         StationController.unsubscribeStationClick(this);
                         Game.getInstance().setState(GameState.NORMAL);
                         Game.getInstance().getRecorder().placeTrain(train);
