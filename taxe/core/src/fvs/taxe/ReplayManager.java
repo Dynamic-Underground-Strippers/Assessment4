@@ -7,8 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import fvs.taxe.actor.TrainActor;
 import fvs.taxe.controller.Context;
 import fvs.taxe.controller.TrainController;
+import fvs.taxe.controller.TrainMoveController;
 import fvs.taxe.dialog.DialogButtonClicked;
 import gameLogic.Game;
+import gameLogic.GameState;
 import gameLogic.Player;
 import gameLogic.goal.Goal;
 import gameLogic.map.Connection;
@@ -76,15 +78,29 @@ public class ReplayManager {
             TrainController trainController = new TrainController(context);
             TrainActor trainActor = trainController.renderTrain(train);
             trainController.setTrainsVisible(null, true);
+            trainActor.setVisible(true);
             train.setActor(trainActor);
+
+
+            //temp set route
+            ArrayList<Station> route = new ArrayList<Station>();
+            route.add(Game.getInstance().getMap().getRandomStation());
+            route.add(Game.getInstance().getMap().getRandomStation());
+            route.add(Game.getInstance().getMap().getRandomStation());
+            train.setRoute(route);
+            TrainMoveController move = new TrainMoveController(context, train);
         }
 
+        //temp set train route
+
+
         //set train routes
+        /*
         for (Tuple<Integer, ArrayList<Station>> route : replayData.getSetRoutes()){
             Train t = currentPlayer.getTrainByID(route.getFirst());
             t.setRoute(route.getSecond());
-
-        }
+            TrainMoveController move = new TrainMoveController(context, t);
+        }*/
 
         //remove goals
         for (Goal g : replayData.getRemovedGoals()){
@@ -97,8 +113,8 @@ public class ReplayManager {
             currentPlayer.addGoal(replayData.getGivenGoal());
         }
 
-
-
+        //Finished Setup
+        Game.getInstance().setState(GameState.ANIMATING); //once finished setup, set into animating state to begin 1 second animation time
 
 
 

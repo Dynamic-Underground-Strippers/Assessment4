@@ -77,15 +77,19 @@ public class Game {
 		map = new Map();
 		obstacleManager = new ObstacleManager(map);
 
-		if (replay) {
+
+		if (replay) { //if game is in replay mode
 			state = GameState.REPLAY_SETUP;
-			animationFactor = 2;
+			animationFactor = 2; //set animationFactor (used to get train speed and turn time length
+
 
 			playerManager.subscribeTurnChanged(new TurnListener() {
 				@Override
 				public void changed() {
-					savedReplay = recorder.loadReplay();
-					//setUpForReplay(playerManager.getCurrentPlayer());
+					savedReplay = recorder.loadReplay(); //load replay from recorder
+					if (state == GameState.REPLAY_SETUP) {
+						setUpForReplay(playerManager.getCurrentPlayer()); //calls method to set up for turn which is about to happen
+					}
 				}
 			});
 
@@ -136,6 +140,8 @@ public class Game {
 			resourceManager.addRandomResourceToPlayer(player);
 		} else {
 			//TODO: LOAD IN PLAYER 1'S GOALS AND RESOURCES
+			playerManager.setReplay();
+
 		}
 	}
 
@@ -166,15 +172,15 @@ public class Game {
 
 	/**Sets the GameState of the Game. Listeners are notified using stateChanged().*/
 	public void setState(GameState state) {
-		if (!replay) {
+		//if (!replay) {
 			this.state = state;
-		} else if (state == GameState.ANIMATING) {
+		/*} else if (state == GameState.ANIMATING) {
 			this.state = GameState.ANIMATING;
 		} else {
 			this.state = GameState.REPLAY_SETUP;
 			setUpForReplay(playerManager.getCurrentPlayer());
 			playerManager.turnOver();
-		}
+		}*/
 
 		stateChanged();
 	}
@@ -263,30 +269,12 @@ public class Game {
 
 	public void setUpForReplay(Player currentPlayer) {
 		//TODO:
-		//remove Goals in some way
-		//add Goals in some way
-		/*
-		resourceManager.addTrainsToPlayer(currentPlayer, placedTrains);
-		map.addConnections(placedConnections);
-		map.removeConnections(removedConnections);
-		currentPlayer.setTrainsRoutes(routes);
-		resourceManager.addResourcesToPlayer(currentPlayer, addedResources);
-		resourceManager.removeResourcesFromPlayer(currentPlayer, removedResources);
-		map.blockConnections(blockedConnections);
 
-		map.decrementBlockedConnections();
-		calculateObstacles();
-		decreaseObstacleTime();
-		*/
+		if (playerManager.getTurnNumber() < savedReplay.getTurns().size()) { //condition to stop reading more turns than are stored in file
+			Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()); //get the replay data for this specific turn
+			replayManager.setUpForReplay(currentPlayer, replayData); //call replayManager object to handle setup
+		}
 
-		Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()-1);
-		replayManager.setUpForReplay(currentPlayer, replayData);
-		/*
-		resourceManager.getTrains().get(0).
-		map.addConnections(savedTurn.getPlacedConnections());
-		//map.addConnections(savedReplay.getTurns().get(playerManager.getTurnNumber()).getPlacedConnections());
-		System.out.print("PLACED CONNECTIONS: " + savedReplay.getTurns().get(playerManager.getTurnNumber()).getPlacedConnections());
-		*/
 
 	}
 

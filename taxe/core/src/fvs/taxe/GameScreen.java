@@ -123,9 +123,9 @@ public class GameScreen extends ScreenAdapter {
 		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
 		@Override
 			public void changed() {
-				gameLogic.setState(GameState.ANIMATING);
 				if (!Game.getInstance().getReplay()) {
 					notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+					gameLogic.setState(GameState.ANIMATING);
 				}
 		}
 });
@@ -177,7 +177,12 @@ public class GameScreen extends ScreenAdapter {
 		if(gameLogic.getState() == GameState.ANIMATING) {
 			timeAnimated += delta;
 			if (timeAnimated >= ANIMATION_TIME / animationFactor) {
-				gameLogic.setState(GameState.NORMAL);
+				if (Game.getInstance().getReplay()){
+					gameLogic.setState(GameState.REPLAY_SETUP);
+					Game.getInstance().getPlayerManager().turnOver();
+				} else {
+					gameLogic.setState(GameState.NORMAL);
+				}
 				timeAnimated = 0;
 				displayMessagesInBuffer();
 			}

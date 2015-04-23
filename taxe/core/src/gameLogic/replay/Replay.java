@@ -25,6 +25,7 @@ public class Replay {
             ResourceManager rm = Game.getInstance().getResourceManager();
 
             //Turns the information loaded from the Json into the given goal
+
             ArrayList<Station> idealRoute = new ArrayList<Station>();
             for (String stationName: turn.getGivenGoal().getIdealRoute()){
                 idealRoute.add(map.getStationByName(stationName));
