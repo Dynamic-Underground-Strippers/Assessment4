@@ -2,19 +2,20 @@
 jsonTurns: [
 	{
 		givenGoal: {
-			origin: "Sport Village",
-			destination: Constantine,
+			origin: Library,
+			destination: "Science Park",
 			idealRoute: [
-				Constantine,
-				"Sport Village"
+				"Science Park",
+				Alcuin,
+				Library
 			]
 		},
 		givenResources: [
 			{
-				index: 5
+				index: 9
 			},
 			{
-				index: 1
+				index: 8
 			}
 		]
 	}

@@ -121,6 +121,7 @@ public class Game {
 					goalManager.updatePlayerGoals(currentPlayer);
 					resourceManager.addRandomResourceToPlayer(currentPlayer);
 					resourceManager.addRandomResourceToPlayer(currentPlayer);
+					resourceManager.jelly();
 					map.decrementBlockedConnections();
 					map.blockRandomConnection();
 					calculateObstacles();
