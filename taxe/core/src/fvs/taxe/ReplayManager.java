@@ -114,7 +114,7 @@ public class ReplayManager {
         }
 
         //Finished Setup
-        Game.getInstance().setState(GameState.ANIMATING);
+        Game.getInstance().setState(GameState.ANIMATING); //once finished setup, set into animating state to begin 1 second animation time
 
 
 
