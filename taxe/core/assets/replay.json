@@ -1,213 +1,43 @@
 {
 jsonTurns: [
 	{
-		placedTrains: [
-			{
-				index: 8,
-				placedStation: Langwith
-			}
-		],
-		setRoutes: [
-			[
-				{
-					class: java.lang.Integer,
-					value: 0
-				},
-				{
-					class: java.lang.String,
-					value: Langwith
-				},
-				{
-					class: java.lang.String,
-					value: "Yellow Brick Road"
-				},
-				{
-					class: java.lang.String,
-					value: "Heslington Hall"
-				},
-				{
-					class: java.lang.String,
-					value: "Science Park"
-				},
-				{
-					class: java.lang.String,
-					value: Alcuin
-				},
-				{
-					class: java.lang.String,
-					value: Library
-				}
-			]
-		],
 		givenGoal: {
-			origin: Alcuin,
-			destination: "The Charles",
+			origin: Derwent,
+			destination: "Sports Centre",
 			idealRoute: [
-				"The Charles",
-				"Heslington Hall",
-				Chemistry,
-				Alcuin
-			]
-		},
-		givenResources: [
-			{
-				index: 8
-			},
-			{
-				index: 6
-			}
-		]
-	},
-	{
-		placedTrains: [
-			{
-				index: 3,
-				placedStation: "Sports Centre",
-				id: 2
-			}
-		],
-		setRoutes: [
-			[
-				{
-					class: java.lang.Integer,
-					value: 2
-				},
-				{
-					class: java.lang.String,
-					value: "Sports Centre"
-				},
-				{
-					class: java.lang.String,
-					value: "Random Node"
-				},
-				{
-					class: java.lang.String,
-					value: "Heslington Hall"
-				},
-				{
-					class: java.lang.String,
-					value: Derwent
-				}
-			]
-		],
-		givenGoal: {
-			origin: James,
-			destination: "Central Hall",
-			idealRoute: [
-				"Central Hall",
+				"Sports Centre",
+				James,
 				Physics,
-				James
+				"Central Hall",
+				Derwent
 			]
 		},
 		givenResources: [
 			{
-				index: 3
+				index: -2
 			},
-			{
-				index: 3
-			}
-		]
-	},
-	{
-		placedTrains: [
-			{
-				index: 5,
-				placedStation: Vanbrugh,
-				id: 4
-			}
-		],
-		setRoutes: [
-			[
-				{
-					class: java.lang.Integer,
-					value: 4
-				},
-				{
-					class: java.lang.String,
-					value: Vanbrugh
-				},
-				{
-					class: java.lang.String,
-					value: "Central Hall"
-				},
-				{
-					class: java.lang.String,
-					value: Physics
-				},
-				{
-					class: java.lang.String,
-					value: "Random Node"
-				},
-				{
-					class: java.lang.String,
-					value: "Heslington Hall"
-				}
-			]
-		],
-		givenGoal: {
-			origin: "Sport Village",
-			destination: "Science Park",
-			idealRoute: [
-				"Science Park",
-				"Heslington Hall",
-				"Yellow Brick Road",
-				"Sport Village"
-			]
-		},
-		connectionsBlocked: [
-			{
-				start: Derwent,
-				end: "Central Hall"
-			}
-		],
-		givenResources: [
 			{
 				index: 5
-			},
-			{
-				index: 2
 			}
 		]
 	},
 	{
-		setRoutes: [
-			[
-				{
-					class: java.lang.Integer,
-					value: 2
-				},
-				{
-					class: java.lang.String,
-					value: "Random Node"
-				},
-				{
-					class: java.lang.String,
-					value: Physics
-				},
-				{
-					class: java.lang.String,
-					value: James
-				}
-			]
-		],
 		givenGoal: {
-			origin: Vanbrugh,
-			destination: "Taxi Rank",
+			origin: "Taxi Rank",
+			destination: Halifax,
 			idealRoute: [
-				"Taxi Rank",
-				Library,
-				Vanbrugh
+				Halifax,
+				"Random Node",
+				Physics,
+				"Central Hall",
+				Vanbrugh,
+				Wentworth,
+				"Taxi Rank"
 			]
 		},
-		connectionsBlocked: [
-			{
-				start: James,
-				end: "Sports Centre"
-			}
-		],
 		givenResources: [
 			{
-				index: -1
+				index: 2
 			},
 			{
 				index: 9
@@ -216,45 +46,26 @@ jsonTurns: [
 	},
 	{
 		givenGoal: {
-			origin: Biology,
-			destination: "Central Hall",
+			origin: Physics,
+			destination: Derwent,
 			idealRoute: [
+				Derwent,
 				"Central Hall",
-				Vanbrugh,
-				Wentworth,
-				Biology
+				Physics
 			]
 		},
 		connectionsBlocked: [
 			{
-				start: James,
-				end: "Sports Centre"
+				start: "Heslington Hall",
+				end: "Random Node"
 			}
 		],
 		givenResources: [
 			{
-				index: -1
+				index: 8
 			},
 			{
-				index: 2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: "Heslington Hall",
-			destination: Chemistry,
-			idealRoute: [
-				Chemistry,
-				"Heslington Hall"
-			]
-		},
-		givenResources: [
-			{
-				index: 7
-			},
-			{
-				index: 5
+				index: 6
 			}
 		]
 	}

@@ -147,13 +147,6 @@ public class GameScreen extends ScreenAdapter {
 			}
 		});
 
-		gameLogic.getResourceManager().newJelly(new JellyListener(){
-			@Override
-			public void changed(){
-
-			}
-		});
-
 		gameLogic.getPlayerManager().subscribePlayerChanged(new PlayerChangedListener() {
 			@Override
 			public void changed() {
