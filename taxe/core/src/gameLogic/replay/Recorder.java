@@ -46,6 +46,9 @@ public class Recorder {
         jsonTurns.get(jsonTurns.size()-1).removeConnection(connection);
     }
 
+    public void blockConnection(Connection connection){
+        jsonTurns.get(jsonTurns.size()-1).blockConnection(connection);
+    }
     public void addRoute(Train train){
         jsonTurns.get(jsonTurns.size()-1).addRoute(train);
     }

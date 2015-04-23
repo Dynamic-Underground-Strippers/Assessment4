@@ -15,7 +15,7 @@ public class JsonTurn {
     private ArrayList<JsonTrain> placedTrains=new ArrayList<JsonTrain>();
     private ArrayList<JsonConnection> placedConnections = new ArrayList<JsonConnection>();
     private ArrayList<JsonConnection> removedConnections = new ArrayList<JsonConnection>();
-    private ArrayList<Tuple<Integer,String[]>> setRoutes = new ArrayList<Tuple<Integer, String[]>>();
+    private ArrayList<Object[]> setRoutes = new ArrayList<Object[]>();
     private JsonGoal givenGoal = new JsonGoal();
     private ArrayList<JsonGoal> removedGoals = new ArrayList<JsonGoal>();
     private ArrayList<JsonResource> givenResources = new ArrayList<JsonResource>();
@@ -25,11 +25,6 @@ public class JsonTurn {
     public JsonTurn(){
 
     }
-
-
-
-
-
 
     public void placeTrain(Train train){
 
@@ -60,14 +55,16 @@ public class JsonTurn {
         for (Station station: train.getRoute()){
             jsonRoute.add(station.getName());
         }
-        String[] jsonRouteArray = new String[jsonRoute.size()];
-        int index=0;
+        Object[] jsonRouteArray = new Object[jsonRoute.size()+1];
+        jsonRouteArray[0] = train.getID();
+        int index=1;
+
         for (String stationName: jsonRoute){
             jsonRouteArray[index] = stationName;
             index++;
         }
 
-        getSetRoutes().add(new Tuple<Integer,String[]>(train.getID(), jsonRouteArray));
+        getSetRoutes().add(jsonRouteArray);
     }
 
     public void addGoal(Goal goal){
@@ -108,6 +105,11 @@ public class JsonTurn {
         getRemovedResources().add(jsonResource);
     }
 
+    public void blockConnection(Connection connection){
+        JsonConnection jsonConnection = new JsonConnection(connection.getStation1().getName(),connection.getStation2().getName());
+        connectionsBlocked.add(jsonConnection);
+    }
+
     public ArrayList<JsonTrain> getPlacedTrains() {
         return placedTrains;
     }
@@ -120,7 +122,7 @@ public class JsonTurn {
         return removedConnections;
     }
 
-    public ArrayList<Tuple<Integer, String[]>> getSetRoutes() {
+    public ArrayList<Object[]> getSetRoutes() {
         return setRoutes;
     }
 

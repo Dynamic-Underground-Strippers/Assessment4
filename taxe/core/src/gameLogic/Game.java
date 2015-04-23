@@ -1,5 +1,6 @@
 package gameLogic;
 
+import com.badlogic.gdx.Gdx;
 import fvs.taxe.ReplayManager;
 import gameLogic.goal.GoalManager;
 import gameLogic.map.Connection;
@@ -58,17 +59,18 @@ public class Game {
 
 	public final int MAX_TURNS = 30;
 
-	private final boolean replay = true;
+	private boolean replay;
 
 	private int animationFactor;
 
-	private Replay savedReplay;
+	private Replay savedReplay=null;
 
 	private ReplayManager replayManager;
 
 
 	/**The Instantiation method, sets up the players and game listeners.*/
-	private Game() {
+	private Game(boolean replay) {
+		this.replay = replay;
 		playerManager = new PlayerManager();
 		playerManager.createPlayers(CONFIG_PLAYERS);
 
@@ -77,16 +79,18 @@ public class Game {
 		map = new Map();
 		obstacleManager = new ObstacleManager(map);
 
+		recorder = new Recorder(playerManager);
 
 		if (replay) { //if game is in replay mode
 			state = GameState.REPLAY_SETUP;
-			animationFactor = 2; //set animationFactor (used to get train speed and turn time length
 
-
+			animationFactor = 1;//set animationFactor (used to get train speed and turn time length
 			playerManager.subscribeTurnChanged(new TurnListener() {
 				@Override
 				public void changed() {
-					savedReplay = recorder.loadReplay(); //load replay from recorder
+					if (savedReplay==null){
+						savedReplay = recorder.loadReplay();
+					}
 					if (state == GameState.REPLAY_SETUP) {
 						setUpForReplay(playerManager.getCurrentPlayer()); //calls method to set up for turn which is about to happen
 					}
@@ -108,40 +112,33 @@ public class Game {
 					map.blockRandomConnection();
 					calculateObstacles();
 					decreaseObstacleTime();
-					//displayMessages(currentPlayer.getMessages());
-					//COMMENT THE LINE BELOW OUT WHEN YOU WISH TO SAVE A REPLAY
 
 				}
 			});
 		}
 
-		recorder = new Recorder(playerManager);
 
 	}
 
 	/**Returns the main game instance.*/
 	public static Game getInstance() {
-		if (instance == null) {
-			instance = new Game();
-			// initialisePlayers gives them a goal, and the GoalManager requires an instance of game to exist so this
-			// method can't be called in the constructor
-			instance.initialisePlayers();
-		}
-
+		return instance;
+	}
+	public static Game initialiseGame(boolean replay){
+		instance = new Game(replay);
+		instance.initialisePlayers();
 		return instance;
 	}
 
 	/**Sets up the players. Only the first player is given goals and resources initially.*/
 	private void initialisePlayers() {
-		if (!replay) {
+		if (replay){
+			playerManager.setReplay();
+		}else {
 			Player player = playerManager.getAllPlayers().get(0);
 			goalManager.updatePlayerGoals(player);
 			resourceManager.addRandomResourceToPlayer(player);
 			resourceManager.addRandomResourceToPlayer(player);
-		} else {
-			//TODO: LOAD IN PLAYER 1'S GOALS AND RESOURCES
-			playerManager.setReplay();
-
 		}
 	}
 
@@ -273,6 +270,8 @@ public class Game {
 		if (playerManager.getTurnNumber() < savedReplay.getTurns().size()) { //condition to stop reading more turns than are stored in file
 			Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()); //get the replay data for this specific turn
 			replayManager.setUpForReplay(currentPlayer, replayData); //call replayManager object to handle setup
+		}else{
+			Gdx.app.exit();
 		}
 
 

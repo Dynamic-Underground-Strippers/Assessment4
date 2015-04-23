@@ -14,6 +14,8 @@ import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleType;
 
+import java.awt.*;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 
@@ -201,7 +203,11 @@ public class NotepadController {
      * This method adds an End Turn button to the game that captures an on click event and notifies the game when the turn is over.
      */
     public void drawEndTurnButton() {
-        endTurnButton = new TextButton("End Turn", context.getSkin());
+        if (Game.getInstance().getReplay()){
+            endTurnButton = new TextButton("Start", context.getSkin());
+        }else {
+            endTurnButton = new TextButton("End Turn", context.getSkin());
+        }
         endTurnButton.setPosition(TaxeGame.WIDTH - 100.0f, TaxeGame.HEIGHT - 33.0f);
         endTurnButton.addListener(new ClickListener() {
             @Override
@@ -213,7 +219,9 @@ public class NotepadController {
         context.getGameLogic().subscribeStateChanged(new GameStateListener() {
             @Override
             public void changed(GameState state) {
-                if (state == GameState.NORMAL) {
+                if (state == GameState.NORMAL||state==GameState.REPLAY_SETUP) {
+                    endTurnButton.setText("Next Turn");
+                    endTurnButton.setSize(80,25);
                     endTurnButton.setVisible(true);
                 } else {
                     endTurnButton.setVisible(false);

@@ -74,7 +74,6 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
         switch (button) {
             case TRAIN_DELETE:
                 currentPlayer.removeResource(train);
-                Game.getInstance().getInstance().getRecorder().removeResource(train);
                 break;
             case TRAIN_PLACE:
                 Pixmap pixmap = new Pixmap(Gdx.files.internal(train.getCursorImage()));
@@ -240,7 +239,6 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
             case DELETECONNECTION_DROP:
                 //Removes the resource from the current player's inventory if they click the NEWCONNECTION_DROP button
                 currentPlayer.removeResource(deleteConnection);
-                Game.getInstance().getRecorder().removeResource(deleteConnection);
                 break;
 
 

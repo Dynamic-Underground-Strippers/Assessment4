@@ -85,6 +85,7 @@ public class Player {
     /**This method removes a resource from the player's resources.*/
     public void removeResource(Resource resource) {
         resources.remove(resource);
+        Game.getInstance().getRecorder().removeResource(resource);
         resource.dispose();
         changed();
     }

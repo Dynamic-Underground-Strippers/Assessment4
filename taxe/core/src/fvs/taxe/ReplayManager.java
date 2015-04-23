@@ -62,8 +62,8 @@ public class ReplayManager {
         }
 
         //remove resources from player
-        for (Resource r : replayData.getRemovedResources()){
-            Game.getInstance().getResourceManager().removeResourceFromPlayer(currentPlayer, r);
+        for (Integer index : replayData.getRemovedResources()){
+            Game.getInstance().getResourceManager().removeResourceFromPlayerByID(currentPlayer, index);
         }
 
         //place trains
@@ -80,27 +80,13 @@ public class ReplayManager {
             trainController.setTrainsVisible(null, true);
             trainActor.setVisible(true);
             train.setActor(trainActor);
-
-
-            //temp set route
-            ArrayList<Station> route = new ArrayList<Station>();
-            route.add(Game.getInstance().getMap().getRandomStation());
-            route.add(Game.getInstance().getMap().getRandomStation());
-            route.add(Game.getInstance().getMap().getRandomStation());
-            train.setRoute(route);
-            TrainMoveController move = new TrainMoveController(context, train);
         }
 
-        //temp set train route
-
-
-        //set train routes
-        /*
         for (Tuple<Integer, ArrayList<Station>> route : replayData.getSetRoutes()){
             Train t = currentPlayer.getTrainByID(route.getFirst());
             t.setRoute(route.getSecond());
             TrainMoveController move = new TrainMoveController(context, t);
-        }*/
+        }
 
         //remove goals
         for (Goal g : replayData.getRemovedGoals()){

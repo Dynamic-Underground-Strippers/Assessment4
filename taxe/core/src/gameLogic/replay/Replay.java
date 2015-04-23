@@ -66,15 +66,14 @@ public class Replay {
 
             //Reads in all of the routes from the Json
             //This is commented out because it currently doesn't work and may require an overhaul of the whole saving system
-            /*ArrayList<Tuple<Integer,ArrayList<Station>>> routes = new ArrayList<Tuple<Integer,ArrayList<Station>>>();
-            for (Tuple<Integer, String[]> jsonRoute: turn.getSetRoutes()){
+            ArrayList<Tuple<Integer,ArrayList<Station>>> routes = new ArrayList<Tuple<Integer,ArrayList<Station>>>();
+            for (Object[] jsonRoute: turn.getSetRoutes()){
                 ArrayList<Station> route = new ArrayList<Station>();
-                String[] stationNames = jsonRoute.getSecond();
-                for (String station : stationNames){
-                    route.add(map.getStationByName(station));
+               for (int i=1;i<jsonRoute.length;i++){
+                    route.add(map.getStationByName((String) jsonRoute[i]));
                 }
-                routes.add(new Tuple<Integer,ArrayList<Station>>(jsonRoute.getFirst(),route));
-            }*/
+                routes.add(new Tuple<Integer,ArrayList<Station>>((Integer) jsonRoute[0],route));
+            }
 
             //Reads in all of the blocked connections from the Json
             ArrayList<Connection> blockedConnections = new ArrayList<Connection>();
@@ -99,21 +98,16 @@ public class Replay {
             }
 
             //Reads in all of the removed resources from the Json
-            ArrayList<Resource> removedResources = new ArrayList<Resource>();
+            ArrayList<Integer> removedResources = new ArrayList<Integer>();
             for (JsonResource jsonResource: turn.getRemovedResources()){
-                if (jsonResource.getIndex()<0){
-                    if (jsonResource.getIndex()==-1){
-                        removedResources.add(new NewConnection());
-                    } else {
-                       removedResources.add(new DeleteConnection());
-                    }
-                }
-                else{
-                    removedResources.add(rm.getTrainByIndex(jsonResource.getIndex()));
+                if (jsonResource.getIndex()<0) {
+                    removedResources.add(jsonResource.getIndex());
+                }else{
+                    removedResources.add(((JsonTrain) jsonResource).getId());
                 }
             }
             //Creates a new turn data structure based on the data read in from the json
-            turns.add(new Turn(givenGoal,removedGoals,placedConnections,removedConnections,blockedConnections,givenResources,removedResources,placedTrains));
+            turns.add(new Turn(givenGoal,removedGoals,placedConnections,removedConnections,blockedConnections,givenResources,removedResources,placedTrains,routes));
         }
         System.out.println(turns);
     }
@@ -132,9 +126,9 @@ public class Replay {
         private ArrayList<Connection> blockedConnections;
         private ArrayList<Tuple<Integer,ArrayList<Station>>> setRoutes;
         private ArrayList<Resource> givenResources;
-        private ArrayList<Resource> removedResources;
+        private ArrayList<Integer> removedResources;
 
-        public Turn(Goal givenGoal,ArrayList<Goal> removedGoals,ArrayList<Connection> placedConnections,ArrayList<Connection> removedConnections, ArrayList<Connection> blockedConnections,ArrayList<Resource> givenResources,ArrayList<Resource> removedResources,ArrayList<Tuple<Integer,Station>> placedTrains){
+        public Turn(Goal givenGoal,ArrayList<Goal> removedGoals,ArrayList<Connection> placedConnections,ArrayList<Connection> removedConnections, ArrayList<Connection> blockedConnections,ArrayList<Resource> givenResources,ArrayList<Integer> removedResources,ArrayList<Tuple<Integer,Station>> placedTrains,ArrayList<Tuple<Integer,ArrayList<Station>>> setRoutes){
             this.givenGoal = givenGoal;
             this.removedGoals = removedGoals;
             this.placedConnections = placedConnections;
@@ -146,7 +140,7 @@ public class Replay {
             this.placedTrains = placedTrains;
         }
 
-        public ArrayList<Resource> getRemovedResources() {
+        public ArrayList<Integer> getRemovedResources() {
             return removedResources;
         }
 

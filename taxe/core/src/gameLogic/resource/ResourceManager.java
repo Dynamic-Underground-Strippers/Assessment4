@@ -137,12 +137,40 @@ public class ResourceManager {
 
         resource.setPlayer(player);
         player.addResource(resource);
-		Game.getInstance().getRecorder().addResource(resource);
+		if (!Game.getInstance().getReplay()) {
+			Game.getInstance().getRecorder().addResource(resource);
+		}
     }
 
 	public void removeResourceFromPlayer(Player player, Resource resource){
 		if (player.getResources().contains(resource)) {
 			player.getResources().remove(resource);
+		}
+	}
+
+	public void removeResourceFromPlayerByID(Player player,int index){
+		if (index <0){
+			if (index==-1){
+				for (Resource r:player.getResources()){
+					if (r instanceof  NewConnection){
+						player.getResources().remove(r);
+					}
+				}
+			}else{
+				for (Resource r:player.getResources()){
+					if (r instanceof  DeleteConnection){
+						player.getResources().remove(r);
+					}
+				}
+			}
+
+		}else{
+			for (Resource r:player.getResources()){
+				Train train = (Train) r;
+				if (train.getID()==index){
+					player.getResources().remove(r);
+				}
+			}
 		}
 	}
 

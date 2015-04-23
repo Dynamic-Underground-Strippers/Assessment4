@@ -42,7 +42,6 @@ public class PlayerManager {
 	/**This method is called every time a turn is completed. currentTurn is updated, and both turnChanged and playerChanged are called.*/
 	public void turnOver() {
 		currentTurn = currentTurn == 1 ? 0 : 1;
-		Game.getInstance().getRecorder().saveReplay();
 		turnChanged();
 		playerChanged();
 	}
@@ -59,7 +58,7 @@ public class PlayerManager {
 		turnNumber++;
 		// reverse iterate to give priority to calls from Game() (obstacles)
 		for(int i = 0; i< turnListeners.size(); i++) {
-			turnListeners.get(turnListeners.size()-1-i).changed();
+			turnListeners.get(i).changed();
 		}
 	}
 

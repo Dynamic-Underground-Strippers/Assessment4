@@ -487,7 +487,7 @@ public class Map {
             } while (!canBlock);
 
             toBlock.setBlocked(5);
-
+            Game.getInstance().getRecorder().blockConnection(toBlock);
         }
 
     }

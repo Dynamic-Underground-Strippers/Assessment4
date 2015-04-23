@@ -52,7 +52,7 @@ public class MainMenuScreen extends ScreenAdapter {
         if (Gdx.input.justTouched()) {
             camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game,false));
                 return;
             }
             if (exitBounds.contains(touchPoint.x, touchPoint.y)) {
@@ -60,6 +60,8 @@ public class MainMenuScreen extends ScreenAdapter {
             }
             if (replayBounds.contains(touchPoint.x, touchPoint.y)){
                 //Add replay start
+                game.setScreen(new GameScreen(game,true));
+                return;
             }
         }
     }

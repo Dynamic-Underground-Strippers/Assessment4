@@ -85,12 +85,12 @@ public class GameScreen extends ScreenAdapter {
 	/**Instantiation method. Sets up the game using the passed TaxeGame argument. 
 	 *@param game The instance of TaxeGame to be passed to the GameScreen to display.
 	*/
-	public GameScreen(TaxeGame game) {
+	public GameScreen(TaxeGame game,boolean replay) {
 		this.game = game;
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-		gameLogic = Game.getInstance();
+		gameLogic = Game.initialiseGame(replay);
 		context = new Context(stage, skin, game, gameLogic);
 		Gdx.input.setInputProcessor(stage);
 
@@ -179,7 +179,6 @@ public class GameScreen extends ScreenAdapter {
 			if (timeAnimated >= ANIMATION_TIME / animationFactor) {
 				if (Game.getInstance().getReplay()){
 					gameLogic.setState(GameState.REPLAY_SETUP);
-					Game.getInstance().getPlayerManager().turnOver();
 				} else {
 					gameLogic.setState(GameState.NORMAL);
 				}
