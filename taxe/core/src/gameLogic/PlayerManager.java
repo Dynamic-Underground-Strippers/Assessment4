@@ -2,6 +2,9 @@ package gameLogic;
 
 import java.util.ArrayList;
 import java.util.List;
+import fvs.taxe.dialog.DialogTurnSkipped;
+import fvs.taxe.controller.Context;
+
 
 /**This class creates and manages players.*/
 public class PlayerManager {
@@ -40,10 +43,18 @@ public class PlayerManager {
 	}
 	
 	/**This method is called every time a turn is completed. currentTurn is updated, and both turnChanged and playerChanged are called.*/
-	public void turnOver() {
+	public void turnOver(Context context) {
 		currentTurn = currentTurn == 1 ? 0 : 1;
 		turnChanged();
 		playerChanged();
+		System.out.println("turn changed" + this.getCurrentPlayer().getPlayerNumber());
+
+		//Checks whether or not the turn is being skipped, if it is then it informs the player
+		if (this.getCurrentPlayer().getSkip()) {
+			DialogTurnSkipped dia = new DialogTurnSkipped(context.getSkin(), context);
+			dia.show(context.getStage());
+			this.getCurrentPlayer().setSkip(false);
+		}
 	}
 
 	/**This method adds a new TurnListener to the game that will be updated each time the turn changes.

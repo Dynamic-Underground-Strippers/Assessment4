@@ -4,12 +4,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import fvs.taxe.controller.Context;
 import gameLogic.Game;
 
 public class DialogTurnSkipped extends Dialog {
 
-    public DialogTurnSkipped(Skin skin) {
+    Context context;
+    public DialogTurnSkipped(Skin skin, Context context) {
         super("Miss a turn", skin);
+        this.context = context;
         //Informs player that they have missed their turn.
         text("Due to circumstances outside our control \n Network Rail would like to apologise for you missing your turn.");
         button("OK", "EXIT");
@@ -33,7 +36,7 @@ public class DialogTurnSkipped extends Dialog {
     @Override
     protected void result(Object obj) {
         //When the button is clicked
-        Game.getInstance().getPlayerManager().turnOver();
+        Game.getInstance().getPlayerManager().turnOver(this.context);
         this.remove();
     }
 

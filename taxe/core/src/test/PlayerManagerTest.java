@@ -20,7 +20,7 @@ public class PlayerManagerTest {
     @Test
     public void testGetCurrentPlayer() throws Exception {
         Player p1 = pm.getCurrentPlayer();
-        pm.turnOver();
+        //pm.turnOver();
 
         // player should change after PlayerManager.turnOver() is called
         assertFalse(p1.equals(pm.getCurrentPlayer()));
@@ -29,7 +29,7 @@ public class PlayerManagerTest {
     @Test
     public void testTurnNumber() throws  Exception {
         int previous = pm.getTurnNumber();
-        pm.turnOver();
+        //pm.turnOver();
 
         assertTrue("Turn number did not change", previous < pm.getTurnNumber());
     }
