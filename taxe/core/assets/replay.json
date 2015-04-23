@@ -1,0 +1,73 @@
+{
+jsonTurns: [
+	{
+		givenGoal: {
+			origin: Derwent,
+			destination: "Sports Centre",
+			idealRoute: [
+				"Sports Centre",
+				James,
+				Physics,
+				"Central Hall",
+				Derwent
+			]
+		},
+		givenResources: [
+			{
+				index: -2
+			},
+			{
+				index: 5
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: "Taxi Rank",
+			destination: Halifax,
+			idealRoute: [
+				Halifax,
+				"Random Node",
+				Physics,
+				"Central Hall",
+				Vanbrugh,
+				Wentworth,
+				"Taxi Rank"
+			]
+		},
+		givenResources: [
+			{
+				index: 2
+			},
+			{
+				index: 9
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Physics,
+			destination: Derwent,
+			idealRoute: [
+				Derwent,
+				"Central Hall",
+				Physics
+			]
+		},
+		connectionsBlocked: [
+			{
+				start: "Heslington Hall",
+				end: "Random Node"
+			}
+		],
+		givenResources: [
+			{
+				index: 8
+			},
+			{
+				index: 6
+			}
+		]
+	}
+]
+}

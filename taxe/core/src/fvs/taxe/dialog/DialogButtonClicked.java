@@ -110,8 +110,10 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
 
                         StationController.unsubscribeStationClick(this);
                         Game.getInstance().setState(GameState.NORMAL);
+                        Game.getInstance().getRecorder().placeTrain(train);
                     }
                 });
+
 
                 break;
             case TRAIN_ROUTE:

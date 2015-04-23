@@ -11,7 +11,6 @@ public abstract class Resource implements Disposable {
 	
 	/**This variable stores the player that owns the given resource*/
 	private Player player;
-
 	/** Gets the player that is associated with the resource
 	 * @return The player that owns the resource
 	 */
@@ -46,4 +45,5 @@ public abstract class Resource implements Disposable {
 	public String toString() {
 		return name;
 	}
+
 }

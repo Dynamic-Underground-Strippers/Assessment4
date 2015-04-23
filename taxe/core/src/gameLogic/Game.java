@@ -1,14 +1,23 @@
 package gameLogic;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
+
+import com.badlogic.gdx.Gdx;
+import fvs.taxe.ReplayManager;
 import fvs.taxe.controller.Context;
+
 import gameLogic.goal.GoalManager;
+import gameLogic.map.Connection;
 import gameLogic.map.Map;
 import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleManager;
+
 import gameLogic.resource.Jelly;
+
+import gameLogic.replay.Recorder;
+import gameLogic.replay.Replay;
+import gameLogic.resource.NewConnection;
+
 import gameLogic.resource.ResourceManager;
 
 import java.util.ArrayList;
@@ -31,6 +40,8 @@ public class Game {
 
 	/**The game's PlayerManager that handles both of the players.*/
 	private PlayerManager playerManager;
+
+	private Recorder recorder;
 	
 	/**The game's GoalManager that handles goals for the players.*/
 	private GoalManager goalManager;
@@ -60,8 +71,19 @@ public class Game {
 	public final int TOTAL_POINTS = 200;
 
 	public final int MAX_TURNS = 30;
+
+	private boolean replay;
+
+	private int animationFactor;
+
+	private Replay savedReplay=null;
+
+	private ReplayManager replayManager;
+
+
 	/**The Instantiation method, sets up the players and game listeners.*/
-	private Game() {
+	private Game(boolean replay) {
+		this.replay = replay;
 		playerManager = new PlayerManager();
 		playerManager.createPlayers(CONFIG_PLAYERS);
 
@@ -69,44 +91,66 @@ public class Game {
 		goalManager = new GoalManager(resourceManager);
 		map = new Map();
 		obstacleManager = new ObstacleManager(map);
-		
-		state = GameState.NORMAL;
 
-		playerManager.subscribeTurnChanged(new TurnListener() {
-			@Override
-			public void changed() {
-				Player currentPlayer = playerManager.getCurrentPlayer();
-				goalManager.updatePlayerGoals(currentPlayer);
-				resourceManager.addRandomResourceToPlayer(currentPlayer);
-				resourceManager.addRandomResourceToPlayer(currentPlayer);
-				resourceManager.jelly();
-				map.decrementBlockedConnections();
-				map.blockRandomConnection();
-				calculateObstacles();
-				decreaseObstacleTime();
-				//displayMessages(currentPlayer.getMessages());
-			}
-		});
+		recorder = new Recorder(playerManager);
+
+		if (replay) { //if game is in replay mode
+			state = GameState.REPLAY_SETUP;
+
+			animationFactor = 1;//set animationFactor (used to get train speed and turn time length
+			playerManager.subscribeTurnChanged(new TurnListener() {
+				@Override
+				public void changed() {
+					if (savedReplay==null){
+						savedReplay = recorder.loadReplay();
+					}
+					if (state == GameState.REPLAY_SETUP) {
+						setUpForReplay(playerManager.getCurrentPlayer()); //calls method to set up for turn which is about to happen
+					}
+				}
+			});
+
+		} else {
+			state = GameState.NORMAL;
+			animationFactor = 1;
+
+			playerManager.subscribeTurnChanged(new TurnListener() {
+				@Override
+				public void changed() {
+					Player currentPlayer = playerManager.getCurrentPlayer();
+					goalManager.updatePlayerGoals(currentPlayer);
+					resourceManager.addRandomResourceToPlayer(currentPlayer);
+					resourceManager.addRandomResourceToPlayer(currentPlayer);
+					map.decrementBlockedConnections();
+					map.blockRandomConnection();
+					calculateObstacles();
+					decreaseObstacleTime();
+
+				}
+			});
+		}
 	}
 
 	/**Returns the main game instance.*/
 	public static Game getInstance() {
-		if (instance == null) {
-			instance = new Game();
-			// initialisePlayers gives them a goal, and the GoalManager requires an instance of game to exist so this
-			// method can't be called in the constructor
-			instance.initialisePlayers();
-		}
-
+		return instance;
+	}
+	public static Game initialiseGame(boolean replay){
+		instance = new Game(replay);
+		instance.initialisePlayers();
 		return instance;
 	}
 
 	/**Sets up the players. Only the first player is given goals and resources initially.*/
 	private void initialisePlayers() {
-		Player player = playerManager.getAllPlayers().get(0);
-		goalManager.updatePlayerGoals(player);
-		resourceManager.addRandomResourceToPlayer(player);
-		resourceManager.addRandomResourceToPlayer(player);
+		if (replay){
+			playerManager.setReplay();
+		}else {
+			Player player = playerManager.getAllPlayers().get(0);
+			goalManager.updatePlayerGoals(player);
+			resourceManager.addRandomResourceToPlayer(player);
+			resourceManager.addRandomResourceToPlayer(player);
+		}
 	}
 
 	/**@return The PlayerManager instance for this game.*/
@@ -145,7 +189,16 @@ public class Game {
 
 	/**Sets the GameState of the Game. Listeners are notified using stateChanged().*/
 	public void setState(GameState state) {
-		this.state = state;
+		//if (!replay) {
+			this.state = state;
+		/*} else if (state == GameState.ANIMATING) {
+			this.state = GameState.ANIMATING;
+		} else {
+			this.state = GameState.REPLAY_SETUP;
+			setUpForReplay(playerManager.getCurrentPlayer());
+			playerManager.turnOver();
+		}*/
+
 		stateChanged();
 	}
 
@@ -227,8 +280,39 @@ public class Game {
 		this.jelly = jelly;
 	}
 
-	public Jelly getJelly(){
+	public Jelly getJelly() {
 		return this.jelly;
+	}
+
+	public Recorder getRecorder(){
+		return this.recorder;
+	}
+
+	public boolean isReplay(){
+		return this.replay;
+	}
+
+	public void setUpForReplay(Player currentPlayer) {
+		//TODO:
+
+		if (playerManager.getTurnNumber() < savedReplay.getTurns().size()) { //condition to stop reading more turns than are stored in file
+			Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()); //get the replay data for this specific turn
+			replayManager.setUpForReplay(currentPlayer, replayData); //call replayManager object to handle setup
+		}else{
+			Gdx.app.exit();
+		}
+
+
+	}
+
+	public int getAnimationFactor(){
+		return this.animationFactor;
+	}
+
+	public boolean getReplay() { return this.replay; }
+
+	public void setReplayManager(ReplayManager rm){
+		this.replayManager = rm;
 	}
 
 

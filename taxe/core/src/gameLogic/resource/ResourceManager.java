@@ -4,12 +4,14 @@ import Util.Tuple;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+
 import fvs.taxe.GameScreen;
 import fvs.taxe.controller.JellyController;
 import fvs.taxe.controller.JellyMoveController;
 import fvs.taxe.controller.JellyRouteController;
 import gameLogic.Game;
 import gameLogic.JellyListener;
+
 import gameLogic.Player;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
@@ -21,6 +23,8 @@ import java.util.Random;
 public class ResourceManager {
 	/** The maximum number of resources a Player can own */
     public final int CONFIG_MAX_RESOURCES = 7;
+
+	private int nextAvailableID;
 
     /** Random instance for generating random resources*/
     private Random random = new Random();
@@ -36,7 +40,8 @@ public class ResourceManager {
     
     /** Constructor to initialise trains */
     public ResourceManager() {
-    	initialise();
+    	nextAvailableID = -1;
+		initialise();
     }
     
     /** Get the trains from trains.json and store them as name, speed pairs */
@@ -119,8 +124,16 @@ public class ResourceManager {
 		//Uses a random number generator to pick a random train and return the complete train class for that train.
 		int index = random.nextInt(trains.size());
 		Tuple<String, Integer> train = trains.get(index);
-		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond());
+		nextAvailableID++;
+		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index,nextAvailableID);
 	}
+
+	public Train getTrainByIndex(int index){
+		Tuple<String, Integer> train = trains.get(index);
+		nextAvailableID++;
+		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index,nextAvailableID);
+	}
+
 
     /** Add one randomly generated Train to the given Player
      * @param player The player that will have a randomly generated resource added to it
@@ -133,14 +146,50 @@ public class ResourceManager {
      * @param player The player with which to add the resource
      * @param resource The resource that will be added to the player
      */
-    private void addResourceToPlayer(Player player, Resource resource) {
+    public void addResourceToPlayer(Player player, Resource resource) {
         if (player.getResources().size() >= CONFIG_MAX_RESOURCES || player.getSkip()) {
 			return;
         }
 
         resource.setPlayer(player);
         player.addResource(resource);
+		if (!Game.getInstance().getReplay()) {
+			Game.getInstance().getRecorder().addResource(resource);
+		}
     }
+
+	public void removeResourceFromPlayer(Player player, Resource resource){
+		if (player.getResources().contains(resource)) {
+			player.getResources().remove(resource);
+		}
+	}
+
+	public void removeResourceFromPlayerByID(Player player,int index){
+		if (index <0){
+			if (index==-1){
+				for (Resource r:player.getResources()){
+					if (r instanceof  NewConnection){
+						player.getResources().remove(r);
+					}
+				}
+			}else{
+				for (Resource r:player.getResources()){
+					if (r instanceof  DeleteConnection){
+						player.getResources().remove(r);
+					}
+				}
+			}
+
+		}else{
+			for (Resource r:player.getResources()){
+				Train train = (Train) r;
+				if (train.getID()==index){
+					player.getResources().remove(r);
+				}
+			}
+		}
+	}
+
 
 	public void jelly(){
 		if (Game.getInstance().getPlayerManager().getTurnNumber() == 1 && j == 0) {
@@ -195,5 +244,6 @@ public class ResourceManager {
 	public void newJelly(JellyListener listener){
 		jellyListener.add(listener);
 	}
+
 
 }

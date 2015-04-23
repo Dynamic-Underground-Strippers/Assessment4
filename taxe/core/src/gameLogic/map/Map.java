@@ -130,8 +130,8 @@ public class Map {
             String s1 = connection.getStation1().getName();
             String s2 = connection.getStation2().getName();
 
-            if (s1.equals(stationName) && s2.equals(anotherStationName)
-                || s1.equals(anotherStationName) && s2.equals(stationName)) {
+            if ((s1.equals(stationName) && s2.equals(anotherStationName))
+                ||( s1.equals(anotherStationName) && s2.equals(stationName))) {
                 return connection;
             }
         }
@@ -229,7 +229,7 @@ public class Map {
 		ArrayList<Station> connectedStations = new ArrayList<Station>();
 		for(Connection c : getConnectionsFromStation(station))
 		{
-            System.out.println(c + ", " + (c.getStation1() == null ? "null" : c.getStation1().getName()) + ", " + (c.getStation2() == null ? "null" : c.getStation2().getName()));
+
 			//Establish which end of the connection is the discovered station
 			Station discoveredStation;
 			if(c.getStation1().equals(station))
@@ -487,7 +487,7 @@ public class Map {
             } while (!canBlock);
 
             toBlock.setBlocked(5);
-
+            Game.getInstance().getRecorder().blockConnection(toBlock);
         }
 
     }
@@ -533,4 +533,35 @@ public class Map {
         System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "NOT deleted");
     }
 
-}
+    public void removeConnection(Connection connection){
+        Station station1 = connection.getStation1();
+        Station station2 = connection.getStation2();
+        removeConnection(station1, station2);
+    }
+
+    public void removeConnections(ArrayList<Connection> removedConnections){
+        for (Connection connection : removedConnections){
+            removeConnection(connection);
+        }
+    }
+
+    public void addConnections(ArrayList<Connection> placedConnections){
+        for (Connection connection : placedConnections){
+            addConnection(connection);
+        }
+    }
+
+    public void blockConnection(Connection c, int turnsBlocked){
+        blockConnection(c.getStation1(),c.getStation2(),turnsBlocked);
+    }
+
+    public void blockConnections(ArrayList<Connection> blockedConnections){
+        for (Connection connection : blockedConnections){
+            blockConnection(connection,5);
+        }
+    }
+
+
+
+
+    }

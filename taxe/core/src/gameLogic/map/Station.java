@@ -99,4 +99,5 @@ public class Station{
 	}
 
 	public void addAlias(Station station){this.aliases.add(station);}
+
 }

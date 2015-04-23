@@ -83,16 +83,20 @@ public class GameScreen extends ScreenAdapter {
 	private Rumble rumble;
 
     private ClockController clockController;
+
+	private int animationFactor;
+
+	private ReplayManager replayManager;
 	
 	/**Instantiation method. Sets up the game using the passed TaxeGame argument. 
 	 *@param game The instance of TaxeGame to be passed to the GameScreen to display.
 	*/
-	public GameScreen(TaxeGame game) {
+	public GameScreen(TaxeGame game,boolean replay) {
 		this.game = game;
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-		gameLogic = Game.getInstance();
+		gameLogic = Game.initialiseGame(replay);
 		context = new Context(stage, skin, game, gameLogic);
 		this.gameLogic.setContext(context);
 		Gdx.input.setInputProcessor(stage);
@@ -112,17 +116,25 @@ public class GameScreen extends ScreenAdapter {
 		scoreController = new ScoreController(context);
         clockController = new ClockController(context);
 
+		replayManager = new ReplayManager(context);
+		Game.getInstance().setReplayManager(replayManager);
+
+
 		context.setRouteController(routeController);
 		context.setNotepadController(notepadController);
 
 		rumble = obstacleController.getRumble();
 
+		animationFactor = Game.getInstance().getAnimationFactor();
+
 		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
 		@Override
 			public void changed() {
-				gameLogic.setState(GameState.ANIMATING);
-				notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
-			}
+				if (!Game.getInstance().getReplay()) {
+					notepadController.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK, ANIMATION_TIME);
+					gameLogic.setState(GameState.ANIMATING);
+				}
+		}
 });
 
 		gameLogic.subscribeStateChanged(new GameStateListener() {
@@ -132,13 +144,6 @@ public class GameScreen extends ScreenAdapter {
 					DialogEndGame dia = new DialogEndGame(GameScreen.this.game, gameLogic.getPlayerManager(), skin);
 					dia.show(stage);
 				}
-			}
-		});
-
-		gameLogic.getResourceManager().newJelly(new JellyListener(){
-			@Override
-			public void changed(){
-
 			}
 		});
 
@@ -181,8 +186,12 @@ public class GameScreen extends ScreenAdapter {
 
 		if(gameLogic.getState() == GameState.ANIMATING) {
 			timeAnimated += delta;
-			if (timeAnimated >= ANIMATION_TIME) {
-				gameLogic.setState(GameState.NORMAL);
+			if (timeAnimated >= ANIMATION_TIME / animationFactor) {
+				if (Game.getInstance().getReplay()){
+					gameLogic.setState(GameState.REPLAY_SETUP);
+				} else {
+					gameLogic.setState(GameState.NORMAL);
+				}
 				timeAnimated = 0;
 				displayMessagesInBuffer();
 			}
@@ -232,5 +241,6 @@ public class GameScreen extends ScreenAdapter {
 		}
 		currentPlayer.clearBuffer();
 	}
+
 
 }
