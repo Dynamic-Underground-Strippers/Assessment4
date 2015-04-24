@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public class TaxeGame extends Game {
 	
 	/**These variables hold the width and height of the window we will be using in the game.*/
-	public static final int WIDTH=1022,HEIGHT= 561;
+	public static final int WIDTH=1022,HEIGHT= 646;//561
 
 	/**The batch is used to draw the game. Each frame it is cleared and new items are drawn into it.*/
 	public SpriteBatch batch;

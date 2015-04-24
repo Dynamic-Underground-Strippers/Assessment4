@@ -2,199 +2,66 @@
 jsonTurns: [
 	{
 		givenGoal: {
-			origin: Alcuin,
-			destination: Biology,
-			nodeType: "null"
-		},
-		givenResources: [
-			{
-				index: -1
-			},
-			{
-				index: -1
-			}
-		]
-	},
-	{
-		givenGoal: {
 			origin: Derwent,
-			destination: "Science Park",
+			destination: Physics,
 			nodeType: "null"
 		},
-		givenResources: [
-			{},
-			{
-				index: -2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Halifax,
-			destination: Vanbrugh,
-			nodeType: "null"
-		},
-		givenResources: [
-			{
-				index: -2
-			},
-			{
-				index: 2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Alcuin,
-			destination: Goodricke,
-			nodeType: "null"
-		},
-		connectionsBlocked: [
-			{
-				start: "Science Park",
-				end: Chemistry
-			}
-		],
-		givenResources: [
-			{},
-			{
-				index: 2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Constantine,
-			destination: Library,
-			nodeType: "null"
-		},
-		connectionsBlocked: [
-			{
-				start: Derwent,
-				end: "Heslington Hall"
-			}
-		],
 		givenResources: [
 			{
 				index: 2
 			},
-			{}
+			{
+				index: 2
+			}
 		]
 	},
 	{
 		givenGoal: {
 			origin: Goodricke,
-			destination: Biology,
-			nodeType: "null"
+			destination: "null",
+			nodeType: SPORTS
 		},
 		givenResources: [
-			{},
 			{
-				index: -2
-			}
-		]
-	},
-	{
-		givenResources: [
+				index: 2
+			},
 			{
 				index: 1
 			}
 		]
 	},
 	{
-		connectionsBlocked: [
-			{
-				start: Alcuin,
-				end: "Science Park"
-			}
-		],
-		givenResources: [
-			{
-				index: 2
-			}
-		]
-	},
-	{
+		givenGoal: {
+			origin: Halifax,
+			destination: Wentworth,
+			nodeType: "null"
+		},
 		connectionsBlocked: [
 			{
 				start: "Science Park",
 				end: Chemistry
 			}
-		]
-	},
-	{
-		connectionsBlocked: [
+		],
+		givenResources: [
 			{
-				start: Derwent,
-				end: Vanbrugh
-			}
-		]
-	},
-	{},
-	{},
-	{},
-	{},
-	{
-		connectionsBlocked: [
+				index: 2
+			},
 			{
-				start: Goodricke,
-				end: Langwith
-			}
-		]
-	},
-	{},
-	{},
-	{
-		connectionsBlocked: [
-			{
-				start: Goodricke,
-				end: Langwith
+				index: 1
 			}
 		]
 	},
 	{
-		connectionsBlocked: [
+		givenGoal: {
+			origin: Halifax,
+			destination: "null",
+			nodeType: SPORTS
+		},
+		givenResources: [
 			{
-				start: Alcuin,
-				end: "Science Park"
-			}
-		]
-	},
-	{},
-	{
-		connectionsBlocked: [
-			{
-				start: Wentworth,
-				end: "Taxi Rank"
-			}
-		]
-	},
-	{},
-	{
-		connectionsBlocked: [
-			{
-				start: "Yellow Brick Road",
-				end: Langwith
-			}
-		]
-	},
-	{
-		connectionsBlocked: [
-			{
-				start: "Random Node",
-				end: Physics
-			}
-		]
-	},
-	{},
-	{},
-	{},
-	{
-		connectionsBlocked: [
-			{
-				start: "Random Node",
-				end: James
-			}
+				index: 1
+			},
+			{}
 		]
 	}
 ]

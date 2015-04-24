@@ -12,22 +12,22 @@ import com.badlogic.gdx.math.Vector3;
 
 /**This class is used to set up the graphical interface of the main menu for the player. It is first used when the TaxeGame.java is instantiated.*/
 public class MainMenuScreen extends ScreenAdapter {
-	
+
 	/**Stores the main instance of TaxeGame.java.*/
     final private TaxeGame game;
-    
+
     /**Stores an orthographic camera used in the menu to project clicks.*/
     private OrthographicCamera camera;
-    
+
     /**This rectange stores the bounds of the play button, and is used to detect whether a click has clicked the play button.*/
     private Rectangle playBounds;
-    
+
     /**This rectange stores the bounds of the exit button, and is used to detect whether a click has clicked the exit button.*/
     private Rectangle exitBounds;
-    
+
     /**This vector is set to the location of the most recent click on the screen.*/
     private Vector3 touchPoint;
-    
+
     /**Used to store the map texture which is placed in the background.*/
     private Texture mapTexture;
 
@@ -40,9 +40,9 @@ public class MainMenuScreen extends ScreenAdapter {
         camera = new OrthographicCamera(TaxeGame.WIDTH, TaxeGame.HEIGHT);
         camera.setToOrtho(false);
 
-        playBounds = new Rectangle(TaxeGame.WIDTH/2 - 200, 350, 400, 100);
-        replayBounds = new Rectangle(TaxeGame.WIDTH/2-200,200,400,100);
-        exitBounds = new Rectangle(TaxeGame.WIDTH/2 - 200, 50, 400, 100);
+        playBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 + 100, 400, 100);
+        replayBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 - 50, 400, 100);
+        exitBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 - 200, 400, 100);
         touchPoint = new Vector3();
         mapTexture = new Texture(Gdx.files.internal("Map4.png"));
     }

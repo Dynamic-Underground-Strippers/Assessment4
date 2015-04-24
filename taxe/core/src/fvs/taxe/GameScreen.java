@@ -249,12 +249,12 @@ public class GameScreen extends ScreenAdapter {
 			game.batch.end();
 		} else {
 			game.batch.begin();
-			game.batch.draw(mapTexture, 0, 0, 1022, 561);
+			game.batch.draw(mapTexture, 0, 85, 1022, 561);
 			game.batch.end();
 		}
 		if (turn > darkStartTurn + (timeUntilDark / 2f)) {
 			game.batch.begin();
-			game.batch.draw(mapOverlayTexture, 0, 0, 1022, 561);
+			game.batch.draw(mapOverlayTexture, 0, 85, 1022, 561);
 			game.batch.end();
 		}
 
