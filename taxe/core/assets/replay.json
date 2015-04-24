@@ -2,13 +2,13 @@
 jsonTurns: [
 	{
 		givenGoal: {
-			origin: James,
-			destination: Alcuin,
+			origin: Alcuin,
+			destination: "Central Hall",
 			nodeType: "null"
 		},
 		givenResources: [
 			{
-				index: 8
+				index: 2
 			},
 			{
 				index: 1
@@ -17,43 +17,16 @@ jsonTurns: [
 	},
 	{
 		givenGoal: {
-			origin: Wentworth,
-			destination: Physics,
+			origin: Derwent,
+			destination: Halifax,
 			nodeType: "null"
 		},
-		connectionsBlocked: [
-			{
-				start: Alcuin,
-				end: "Science Park"
-			}
-		],
 		givenResources: [
 			{
-				index: 4
+				index: -2
 			},
 			{
-				index: 7
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Alcuin,
-			destination: "Computer Science",
-			nodeType: "null"
-		},
-		connectionsBlocked: [
-			{
-				start: "Yellow Brick Road",
-				end: Goodricke
-			}
-		],
-		givenResources: [
-			{
-				index: 8
-			},
-			{
-				index: 5
+				index: 1
 			}
 		]
 	},
@@ -64,10 +37,44 @@ jsonTurns: [
 			nodeType: SPORTS
 		},
 		givenResources: [
+			{},
+			{
+				index: -1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Wentworth,
+			destination: Halifax,
+			nodeType: "null"
+		},
+		connectionsBlocked: [
+			{
+				start: Goodricke,
+				end: Langwith
+			}
+		],
+		givenResources: [
+			{
+				index: -1
+			},
+			{
+				index: 1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Goodricke,
+			destination: "Heslington Hall",
+			nodeType: "null"
+		},
+		givenResources: [
+			{},
 			{
 				index: 2
-			},
-			{}
+			}
 		]
 	},
 	{
@@ -76,61 +83,22 @@ jsonTurns: [
 			destination: Constantine,
 			nodeType: "null"
 		},
-		connectionsBlocked: [
-			{
-				start: James,
-				end: "Sports Centre"
-			}
-		],
 		givenResources: [
+			{},
 			{
 				index: -2
-			},
-			{
-				index: 5
 			}
 		]
 	},
 	{
-		givenGoal: {
-			origin: Derwent,
-			destination: Constantine,
-			nodeType: "null"
-		},
 		givenResources: [
-			{
-				index: 8
-			},
-			{
-				index: 4
-			}
-		]
-	},
-	{
-		connectionsBlocked: [
-			{
-				start: "Random Node",
-				end: Halifax
-			}
-		],
-		givenResources: [
-			{
-				index: -1
-			}
+			{}
 		]
 	},
 	{
 		givenResources: [
 			{
 				index: 2
-			}
-		]
-	},
-	{
-		connectionsBlocked: [
-			{
-				start: Wentworth,
-				end: Biology
 			}
 		]
 	}
