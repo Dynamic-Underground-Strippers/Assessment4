@@ -141,15 +141,22 @@ public class GoalManager {
 		Station destination;
 		if (i == 0) {
 			destination = generateDestDifToOrigin(origin, NodeType.DEPARTMENT);
-			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
+			List<List<Station>> idealRoute = new ArrayList<List<Station>>();
+			idealRoute.add(getIdealRoute(origin,destination));
+			return new Goal(origin, destination, null, turn,idealRoute);
 		} else if (i == 1)
 			return new Goal(origin, null, NodeType.SPORTS, turn, getIdealRouteForType(origin, NodeType.SPORTS));
 		else if (i == 2) {
 			destination = generateDestDifToOrigin(origin, NodeType.COLLEGE);
-			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
+			List<List<Station>> idealRoute = new ArrayList<List<Station>>();
+			idealRoute.add(getIdealRoute(origin,destination));
+			return new Goal(origin, destination, null, turn,idealRoute);
 		} else {
 			destination = generateDestDifToOrigin(origin, NodeType.RANDOM);
-			return new Goal(origin, destination, null, turn, getIdealRoute(origin, destination));
+			List<List<Station>> idealRoute = new ArrayList<List<Station>>();
+			idealRoute.add(getIdealRoute(origin,destination));
+			return new Goal(origin, destination, null, turn,idealRoute);
+
 
 		}
 	}
@@ -166,21 +173,27 @@ public class GoalManager {
 		i=random.nextInt(3);
 		if (i==0) {
 			Station destination = generateDestDifToOrigin(origin, NodeType.COLLEGE);
-			return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
+			List<List<Station>> idealRoute = new ArrayList<List<Station>>();
+			idealRoute.add(getIdealRoute(origin,destination));
+			return new Goal(origin, destination, null, turn,idealRoute);
 		}
 
 		else if (i==1) { 	//go to a specific pub or to any, really
 			i = random.nextInt(2);
 			if (i==0) {
 				Station destination = generateDestDifToOrigin(origin, NodeType.PUB);
-				return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
+				List<List<Station>> idealRoute = new ArrayList<List<Station>>();
+				idealRoute.add(getIdealRoute(origin,destination));
+				return new Goal(origin, destination, null, turn,idealRoute);
 			}
 			else return new Goal (origin, null, NodeType.PUB, turn, getIdealRouteForType(origin, NodeType.PUB));
 
 		}
 		else {
 			Station destination = generateDestDifToOrigin(origin, NodeType.RANDOM);
-			return new Goal (origin, destination,null, turn, getIdealRoute(origin, destination));
+			List<List<Station>> idealRoute = new ArrayList<List<Station>>();
+			idealRoute.add(getIdealRoute(origin,destination));
+			return new Goal(origin, destination, null, turn,idealRoute);
 		}
 	}
 
@@ -198,7 +211,9 @@ public class GoalManager {
 		else {
 			destination = generateDestDifToOrigin(origin,NodeType.TAXI);
 		}
-		return new Goal(origin, destination, null, turn,getIdealRoute(origin, destination));
+		List<List<Station>> idealRoute = new ArrayList<List<Station>>();
+		idealRoute.add(getIdealRoute(origin,destination));
+		return new Goal(origin, destination, null, turn,idealRoute);
 	}
 
 	public List<Station> getIdealRoute (Station origin, Station destination) {
@@ -210,7 +225,7 @@ public class GoalManager {
 		return Game.getInstance().getMap().getIdealRoute(destination, searchFringe, Game.getInstance().getMap().getStationsList());
 	}
 
-	public List<Station>[] getIdealRouteForType(Station origin, NodeType type){
+	public List<List<Station>> getIdealRouteForType(Station origin, NodeType type){
 		Game.getInstance().getMap();
 		ArrayList<List <Station>> ofThisType= new ArrayList<List<Station>>();
 		for (int i=0; i< Game.getInstance().getMap().getStations().size();i++)
@@ -219,7 +234,7 @@ public class GoalManager {
 				ofThisType.add(getIdealRoute(origin, Game.getInstance().getMap().getStations().get(i)));
 		}
 
-		return ofThisType.toArray(new List[ofThisType.size()]);
+		return ofThisType;
 	}
 
 	public Station generateDestDifToOrigin (Station station, NodeType type){

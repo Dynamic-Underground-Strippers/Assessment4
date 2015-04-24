@@ -1,5 +1,6 @@
 package gameLogic.replay;
 
+import gameLogic.map.NodeType;
 import gameLogic.map.Station;
 
 import java.util.ArrayList;
@@ -8,15 +9,19 @@ import java.util.List;
 public class JsonGoal{
     private String origin;
     private String destination;
-    private ArrayList<String> idealRoute;
+    private String nodeType;
+
     public JsonGoal(){}
-    public JsonGoal(String origin, String destination,List<Station> idealRoute){
+    public JsonGoal(String origin, String destination,NodeType nodeType){
         this.origin=origin;
-        this.destination = destination;
-        this.idealRoute = new ArrayList<String>();
-        for (Station station: idealRoute){
-            this.getIdealRoute().add(station.getName());
+       if (nodeType!=null){
+            this.nodeType = nodeType.toString();
+           this.destination = "null";
+        }else{
+            this.nodeType = "null";
+           this.destination = destination;
         }
+
     }
 
     public boolean equals(Object obj) {
@@ -35,7 +40,7 @@ public class JsonGoal{
         return destination;
     }
 
-    public ArrayList<String> getIdealRoute() {
-        return idealRoute;
+    public String getNodeType() {
+        return this.nodeType;
     }
 }

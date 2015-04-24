@@ -6,6 +6,7 @@ import gameLogic.Game;
 import gameLogic.goal.Goal;
 import gameLogic.map.Connection;
 import gameLogic.map.Map;
+import gameLogic.map.NodeType;
 import gameLogic.map.Station;
 import gameLogic.resource.*;
 
@@ -25,21 +26,37 @@ public class Replay {
             ResourceManager rm = Game.getInstance().getResourceManager();
 
             //Turns the information loaded from the Json into the given goal
-
-            ArrayList<Station> idealRoute = new ArrayList<Station>();
-            for (String stationName: turn.getGivenGoal().getIdealRoute()){
-                idealRoute.add(map.getStationByName(stationName));
+            Station origin = map.getStationByName(turn.getGivenGoal().getOrigin());
+            Station destination  = map.getStationByName(turn.getGivenGoal().getDestination());
+            NodeType nodeType=null;
+            Goal givenGoal;
+            List<List<Station>> idealRoute = new ArrayList<List<Station>>();
+            if (origin!=null) {
+                if (destination == null) {
+                    nodeType = NodeType.valueOf(turn.getGivenGoal().getNodeType());
+                    idealRoute = Game.getInstance().getGoalManager().getIdealRouteForType(origin, nodeType);
+                } else {
+                    idealRoute.add(Game.getInstance().getGoalManager().getIdealRoute(origin, destination));
+                }
+                givenGoal = new Goal(map.getStationByName(turn.getGivenGoal().getOrigin()), map.getStationByName(turn.getGivenGoal().getDestination()), nodeType, loadedRecorder.getJsonTurns().indexOf(turn), idealRoute);
+            }else{
+                givenGoal = null;
             }
-            Goal givenGoal = new Goal(map.getStationByName(turn.getGivenGoal().getOrigin()),map.getStationByName(turn.getGivenGoal().getDestination()),loadedRecorder.getJsonTurns().indexOf(turn),idealRoute);
 
             ArrayList<Goal> removedGoals = new ArrayList<Goal>();
             //Turns the information loaded from the Json into a list of removed goals
             for (JsonGoal removedJsonGoal:turn.getRemovedGoals()){
-                idealRoute = new ArrayList<Station>();
-                for (String stationName: removedJsonGoal.getIdealRoute()){
-                    idealRoute.add(map.getStationByName(stationName));
+                origin = map.getStationByName(removedJsonGoal.getOrigin());
+                destination  = map.getStationByName(removedJsonGoal.getDestination());
+                nodeType = NodeType.valueOf(removedJsonGoal.getNodeType());
+                idealRoute = new ArrayList<List<Station>>();
+                if (destination==null){
+                    idealRoute = Game.getInstance().getGoalManager().getIdealRouteForType(origin, nodeType);
+                }else{
+                    idealRoute.add(Game.getInstance().getGoalManager().getIdealRoute(origin,destination));
                 }
-                Goal removedGoal = new Goal(map.getStationByName(removedJsonGoal.getOrigin()),map.getStationByName(removedJsonGoal.getDestination()),0,idealRoute);
+
+                Goal removedGoal = new Goal(origin,destination,nodeType,0,idealRoute);
                 removedGoals.add(removedGoal);
             }
 

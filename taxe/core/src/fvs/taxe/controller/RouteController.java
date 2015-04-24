@@ -97,7 +97,11 @@ public class RouteController {
 
         //This makes all trains except the currently routed train to be invisible.
         //This makes the screen less cluttered while routing and prevents overlapping trainActors from stopping the user being able to click stations.
-        Game.getInstance().getJelly().getActor().setVisible(false);
+        try {
+            Game.getInstance().getJelly().getActor().setVisible(false);
+        }catch(Exception e){
+
+        }
         TrainController trainController = new TrainController(context);
         trainController.setTrainsVisible(train, false);
         train.getActor().setVisible(true);

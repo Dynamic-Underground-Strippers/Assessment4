@@ -68,12 +68,22 @@ public class JsonTurn {
     }
 
     public void addGoal(Goal goal){
-        JsonGoal jsonGoal = new JsonGoal(goal.getOrigin().getName(),goal.getDestination().getName(),goal.getIdealRoute());
+        JsonGoal jsonGoal;
+        if (goal.getDestination()!=null) {
+            jsonGoal = new JsonGoal(goal.getOrigin().getName(), goal.getDestination().getName(), null);
+        }else{
+            jsonGoal = new JsonGoal(goal.getOrigin().getName(), null, goal.getDestinationType());
+        }
         givenGoal = jsonGoal;
     }
 
     public void removeGoal(Goal goal){
-        JsonGoal jsonGoal = new JsonGoal(goal.getOrigin().getName(),goal.getDestination().getName(),goal.getIdealRoute());
+        JsonGoal jsonGoal;
+        if (goal.getDestination()!=null) {
+            jsonGoal = new JsonGoal(goal.getOrigin().getName(), goal.getDestination().getName(), null);
+        }else{
+            jsonGoal = new JsonGoal(goal.getOrigin().getName(), null, goal.getDestinationType());
+        }
        getRemovedGoals().add(jsonGoal);
     }
 
