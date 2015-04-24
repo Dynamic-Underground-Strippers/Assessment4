@@ -1,11 +1,5 @@
 package fvs.taxe;
 
-import fvs.taxe.controller.*;
-import fvs.taxe.dialog.DialogEndGame;
-import gameLogic.*;
-import gameLogic.map.Map;
-import gameLogic.map.Station;
-import gameLogic.obstacle.Rumble;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -16,9 +10,24 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
-import fvs.taxe.controller.*;
+
+import fvs.taxe.controller.ClockController;
+import fvs.taxe.controller.Context;
+import fvs.taxe.controller.GoalController;
+import fvs.taxe.controller.NotepadController;
+import fvs.taxe.controller.ObstacleController;
+import fvs.taxe.controller.ResourceController;
+import fvs.taxe.controller.RouteController;
+import fvs.taxe.controller.ScoreController;
+import fvs.taxe.controller.SkillBarController;
+import fvs.taxe.controller.StationController;
 import fvs.taxe.dialog.DialogEndGame;
-import gameLogic.*;
+import gameLogic.Game;
+import gameLogic.GameState;
+import gameLogic.GameStateListener;
+import gameLogic.Player;
+import gameLogic.PlayerChangedListener;
+import gameLogic.TurnListener;
 import gameLogic.map.Map;
 import gameLogic.map.Station;
 import gameLogic.obstacle.Rumble;
@@ -84,6 +93,8 @@ public class GameScreen extends ScreenAdapter {
 
     private ClockController clockController;
 
+	private SkillBarController skillBarController;
+
 	private int animationFactor;
 
 	private ReplayManager replayManager;
@@ -115,6 +126,7 @@ public class GameScreen extends ScreenAdapter {
 		obstacleController = new ObstacleController(context);
 		scoreController = new ScoreController(context);
         clockController = new ClockController(context);
+		skillBarController = new SkillBarController(context);
 
 		replayManager = new ReplayManager(context);
 		Game.getInstance().setReplayManager(replayManager);
@@ -209,6 +221,7 @@ public class GameScreen extends ScreenAdapter {
 		scoreController.drawScoreDetails();
 		scoreController.drawFinalScoreDetails();
         clockController.draw();
+		skillBarController.draw();
 	}
 
 	@Override
