@@ -2,14 +2,198 @@
 jsonTurns: [
 	{
 		givenGoal: {
-			origin: Vanbrugh,
-			destination: "null",
-			nodeType: SPORTS
+			origin: Alcuin,
+			destination: Biology,
+			nodeType: "null"
+		},
+		givenResources: [
+			{
+				index: -1
+			},
+			{
+				index: -1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Derwent,
+			destination: "Science Park",
+			nodeType: "null"
 		},
 		givenResources: [
 			{},
 			{
 				index: -2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Halifax,
+			destination: Vanbrugh,
+			nodeType: "null"
+		},
+		givenResources: [
+			{
+				index: -2
+			},
+			{
+				index: 2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Alcuin,
+			destination: Goodricke,
+			nodeType: "null"
+		},
+		connectionsBlocked: [
+			{
+				start: "Science Park",
+				end: Chemistry
+			}
+		],
+		givenResources: [
+			{},
+			{
+				index: 2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Constantine,
+			destination: Library,
+			nodeType: "null"
+		},
+		connectionsBlocked: [
+			{
+				start: Derwent,
+				end: "Heslington Hall"
+			}
+		],
+		givenResources: [
+			{
+				index: 2
+			},
+			{}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Goodricke,
+			destination: Biology,
+			nodeType: "null"
+		},
+		givenResources: [
+			{},
+			{
+				index: -2
+			}
+		]
+	},
+	{
+		givenResources: [
+			{
+				index: 1
+			}
+		]
+	},
+	{
+		connectionsBlocked: [
+			{
+				start: Alcuin,
+				end: "Science Park"
+			}
+		],
+		givenResources: [
+			{
+				index: 2
+			}
+		]
+	},
+	{
+		connectionsBlocked: [
+			{
+				start: "Science Park",
+				end: Chemistry
+			}
+		]
+	},
+	{
+		connectionsBlocked: [
+			{
+				start: Derwent,
+				end: Vanbrugh
+			}
+		]
+	},
+	{},
+	{},
+	{},
+	{},
+	{
+		connectionsBlocked: [
+			{
+				start: Goodricke,
+				end: Langwith
+			}
+		]
+	},
+	{},
+	{},
+	{
+		connectionsBlocked: [
+			{
+				start: Goodricke,
+				end: Langwith
+			}
+		]
+	},
+	{
+		connectionsBlocked: [
+			{
+				start: Alcuin,
+				end: "Science Park"
+			}
+		]
+	},
+	{},
+	{
+		connectionsBlocked: [
+			{
+				start: Wentworth,
+				end: "Taxi Rank"
+			}
+		]
+	},
+	{},
+	{
+		connectionsBlocked: [
+			{
+				start: "Yellow Brick Road",
+				end: Langwith
+			}
+		]
+	},
+	{
+		connectionsBlocked: [
+			{
+				start: "Random Node",
+				end: Physics
+			}
+		]
+	},
+	{},
+	{},
+	{},
+	{
+		connectionsBlocked: [
+			{
+				start: "Random Node",
+				end: James
 			}
 		]
 	}
