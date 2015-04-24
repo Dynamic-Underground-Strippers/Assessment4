@@ -32,7 +32,7 @@ public class SkillBarActor extends Actor {
 	HashMap<String, Texture> trainTextures = new HashMap<String, Texture>();
 
 	public SkillBarActor(final Context context) {
-		bgTexture = new Texture(Gdx.files.internal("toolbarsquare.png"));
+		bgTexture = new Texture(Gdx.files.internal("toolbarsquare_no_alpha.jpg"));
 		setSize(WIDTH, HEIGHT);
 		setPosition(XPOS, YPOS);
 		resources = Game.getInstance().getPlayerManager().getCurrentPlayer().getResources();
