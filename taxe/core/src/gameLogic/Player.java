@@ -1,7 +1,9 @@
 package gameLogic;
 
+import Util.Tuple;
 import gameLogic.goal.Goal;
 import gameLogic.goal.GoalManager;
+import gameLogic.map.Station;
 import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
@@ -83,6 +85,7 @@ public class Player {
     /**This method removes a resource from the player's resources.*/
     public void removeResource(Resource resource) {
         resources.remove(resource);
+        Game.getInstance().getRecorder().removeResource(resource);
         resource.dispose();
         changed();
     }
@@ -101,6 +104,8 @@ public class Player {
         }
 
         activeGoals.add(goal);
+
+        Game.getInstance().getRecorder().addGoal(goal);
         changed();
     }
 
@@ -123,7 +128,9 @@ public class Player {
             activeGoals.remove(goal);
         }
 
-       addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
+        if (!Game.getInstance().getReplay()) {
+            addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
+        }
     }
     
     /**This method completes a goal, giving the player the reward score and setting the goal to complete.*/
@@ -190,6 +197,22 @@ public class Player {
 
     public void clearBuffer(){
         messageBuffer.clear();
+    }
+
+    public Train getTrainByID(int id){
+        List<Train> allTrains = getTrains();
+        for (Train train : allTrains){
+            if (train.getID() == id){
+                return train;
+            }
+        }
+        return null;
+    }
+
+    public void setTrainsRoutes(ArrayList<Tuple<Integer, List<Station>>> routes){
+        for (Tuple<Integer,List<Station>> route : routes){
+            getTrainByID(route.getFirst()).setRoute(route.getSecond());
+        }
     }
 
 }

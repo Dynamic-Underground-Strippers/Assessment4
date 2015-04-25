@@ -69,7 +69,7 @@ public class PlayerManager {
 		turnNumber++;
 		// reverse iterate to give priority to calls from Game() (obstacles)
 		for(int i = 0; i< turnListeners.size(); i++) {
-			turnListeners.get(turnListeners.size()-1-i).changed();
+			turnListeners.get(i).changed();
 		}
 	}
 
@@ -88,5 +88,11 @@ public class PlayerManager {
 	/**@return The current number of turns that have passed.*/
 	public int getTurnNumber() {
 		return turnNumber;
+	}
+
+	public void setReplay(){
+		//replays must change to player 0 on turn 1
+		currentTurn = 1;
+		turnNumber = -1;
 	}
 }

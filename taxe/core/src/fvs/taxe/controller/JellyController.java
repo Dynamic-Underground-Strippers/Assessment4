@@ -2,6 +2,7 @@ package fvs.taxe.controller;
 
 import fvs.taxe.actor.JellyActor;
 import fvs.taxe.dialog.JellyClicked;
+import gameLogic.Game;
 import gameLogic.Player;
 import gameLogic.map.Station;
 import gameLogic.resource.Resource;
@@ -32,6 +33,13 @@ public class JellyController {
         return jellyActor;
     }
 
+    public void hideJelly(){
+        Game.getInstance().getJelly().getActor().setVisible(false);
+    }
+
+    public void showJelly(){
+        Game.getInstance().getJelly().getActor().setVisible(true);
+    }
 
 
     /**This method sets all jellys on the map to a visibility except for a specified jelly.

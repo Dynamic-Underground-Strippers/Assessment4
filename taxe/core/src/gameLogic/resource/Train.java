@@ -2,6 +2,7 @@ package gameLogic.resource;
 
 import Util.Tuple;
 import fvs.taxe.actor.TrainActor;
+import gameLogic.Game;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
 
@@ -36,19 +37,23 @@ public class Train extends Resource {
      * and the turn number they arrived at that station */
     private List<Tuple<Station, Integer>> history;
 
+    private int id;
+    private int index;
     /** Constructor for train initialises the names, images, speed, history and route
      * @param name The string that represents this train
      * @param leftImage The file name in assets/trains that corresponds to the left image
      * @param rightImage The file name in assets/trains that corresponds to the right image
      * @param speed The number of pixels the train moves per turn
      */
-    public Train(String name, String leftImage, String rightImage, int speed) {
+    public Train(String name, String leftImage, String rightImage, int speed, int index,int id) {
         this.name = name;
         this.leftImage = leftImage;
         this.rightImage = rightImage;
         this.speed = speed;
         history = new ArrayList<Tuple<Station, Integer>>();
         route =  new ArrayList<Station>();
+        this.index = index;
+        this.id = id;
     }
     
     /** Get the name of the train
@@ -116,6 +121,7 @@ public class Train extends Resource {
         	finalDestination = route.get(route.size() - 1);
         }
         this.route = route;
+        Game.getInstance().getRecorder().addRoute(this);
     }
 
     /** Return whether the train is currently moving
@@ -191,5 +197,17 @@ public class Train extends Resource {
             }
         }
         return null;
+    }
+
+    public int getID(){
+        return this.id;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

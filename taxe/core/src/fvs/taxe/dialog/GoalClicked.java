@@ -79,10 +79,12 @@ public class GoalClicked extends ClickListener {
 			//Sets the tooltip to have the destination's name and to be shown to the top right of the station
 			tooltip2 = new Tooltip(context.getSkin());
 			Station destination = goal.getDestination();
-			StationActor destinationActor = destination.getActor();
-			context.getStage().addActor(tooltip2);
-			tooltip2.setPosition(destinationActor.getX() + 20, destinationActor.getY() + 20);
-			tooltip2.show(destination.getName());
+			if (destination!=null) {
+				StationActor destinationActor = destination.getActor();
+				context.getStage().addActor(tooltip2);
+				tooltip2.setPosition(destinationActor.getX() + 20, destinationActor.getY() + 20);
+				tooltip2.show(destination.getName());
+			}
 			//Indicates that toolTips are currently being displayed
 			showingTooltips = true;
 		}

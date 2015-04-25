@@ -1,13 +1,13 @@
 package gameLogic.goal;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import Util.Tuple;
 import gameLogic.Game;
+import gameLogic.map.NodeType;
 import gameLogic.map.Station;
 import gameLogic.resource.ResourceManager;
 import gameLogic.resource.Train;
+
+import java.util.List;
 
 /**This class is a goal that is added to a player and repeatedly (?) checked for completion.*/
 public class Goal {
@@ -20,6 +20,9 @@ public class Goal {
 	
 	/**The destination of the goal.*/
 	private Station destination;
+
+
+	private NodeType destinationType;
 	
 	/**The turn in which the goal was created.*/
 	private int turnIssued;
@@ -42,14 +45,11 @@ public class Goal {
 	/**A station that a train must specifically avoid to complete this goal. If it is null a train can take any route.*/
 	private Station exclusionStation = null;
 	
-	/**An array that tracks trains that have already completed this goal for the trainCount constraint.*/
-	private ArrayList<Train> completedTrains;
-	
 	/**The number of constraints on the goal. The higher it is, the higher the score.*/
 	private int constraintCount = 0;
 	
 	/**The ideal Route to solving this goal.*/
-	private List<Station> idealRoute;
+	private List<List<Station>> idealRoute;
 	
 	/**Instantiation method also generates a score value.
 	 * @param origin The first location of the goal.
@@ -57,14 +57,15 @@ public class Goal {
 	 * @param turn The turn in which the goal was issued.
 	 * @param idealRoute the idealRoute for solving this goal
 	 */
-	public Goal(Station origin, Station destination, int turn, List<Station> idealRoute) {
+	public Goal(Station origin, Station destination,  NodeType destinationType, int turn, List<List<Station>> idealRoute) {
 		this.origin = origin;
 		this.destination = destination;
+		this.destinationType = destinationType;
 		this.turnIssued = turn;
 		this.idealRoute = idealRoute;
 		setRewardScore();
 	}
-	
+
 	/**This method adds a constraint to the goal. If there is a conflict (e.g. TrainType vs. TurnCount) then the constraints are adjusted. 
 	 * @param resourceManager The game ResourceManager.
 	 * @param name The name of the constraint to be added.
@@ -97,24 +98,6 @@ public class Goal {
 				throw new RuntimeException(val + " is not a valid turn count. Must be >= 0");
 			}
 		}
-		else if(name.equals("trainCount")) {
-			//CASE train count constraint
-			int val = (Integer)value;
-			//Ensure that our value is valid
-			if(val >= 0)
-			{
-				trainCount = val;
-				//If the completedTrains arraylist has not be initiated yet, initiate it
-				if(completedTrains == null)
-				{
-					completedTrains = new ArrayList<Train>();
-				}
-			}
-			else
-			{
-				throw new RuntimeException(val + " is not a valid train count. Must be >= 0");
-			}
-		} 
 		else if(name.equals("exclusionStation")){
 			exclusionStation = (Station)value;
 		}
@@ -133,7 +116,14 @@ public class Goal {
 	
 	/**This method generates a score based off the length of the ideal Route for this Goal, multiplying it higher when more constraints are added.*/
 	private void setRewardScore() {
-		float distance = Game.getInstance().getMap().getRouteLength(idealRoute);
+		float distance;
+
+			float total = 0;
+			for (List<Station> ls : idealRoute) {
+				total += Game.getInstance().getMap().getRouteLength(ls);
+			}
+			distance = total / (float) idealRoute.size();
+
 		//Scale score with route distant and number of constraints
 		rewardScore = (int)Math.ceil((float) ((distance / 50) * (1 + constraintCount)));
 	}
@@ -174,42 +164,9 @@ public class Goal {
 				}
 			}
 		}
-		if(train.getFinalDestination() == destination && passedOrigin && !passedExclusion && locationCountClone <= 1) {
-			if(trainName == null || trainName.equals(train.getName())) 
-			{
-				//The train has completed the goal criteria. Determine whether it is a single or multiple criteria
-				//And act accordingly
-				if(trainCount != -1)
-				{
-					//Check if this a train we have already had complete this goal
-					for(Train t : completedTrains)
-					{
-						if(t.equals(train))
-						{
-							return false;
-						}
-					}
-					trainCount--;
-					if(trainCount == 0)
-					{
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				}
-				else
-				{
-					//No train count criteria. Return true
-					return true;
-				}
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
+		return (passedOrigin&&!(passedExclusion));
+
+
 	}
 	
 	/**This method checks whether the goal has failed on turns. If the turnCount is less than <= 0, it returns true, otherwise false.*/
@@ -226,7 +183,15 @@ public class Goal {
 		}
 		return false;
 	}
-	
+
+	public String byHour(){
+		int newTurn = turnCount+turnIssued;
+		int l = newTurn/2;
+		if (newTurn%2 ==1) return 9+l +":30 o'clock";
+		else  return 9+l +":00 o'clock";
+
+	}
+
 	/**Produces a String representation of the Goal.*/
 	public String toString() {
 		String trainString = "train";
@@ -236,7 +201,7 @@ public class Goal {
 		String turnString = "";
 		if(turnCount != -1)
 		{
-			turnString = " within " + turnCount + " turns";
+			turnString = " by " + byHour(); //+ "within " + turnCount;
 		}
 		String trainCountString = "a ";
 		if(trainCount != -1)
@@ -253,7 +218,16 @@ public class Goal {
 		{
 			journeyString = " in less than " + locationCount + " journeys";
 		}
-		return "Send " + trainCountString + trainString + " from " + origin.getName() + " to " + destination.getName() + exclusionString + journeyString + turnString + " - " + rewardScore + " points";
+		String dest = new String();
+		if (destination==null)
+		{
+			if (getDestinationType() == NodeType.SPORTS) dest = "any sports venue";
+			else if (getDestinationType() ==NodeType.COLLEGE) dest =  "any college";
+			else if (getDestinationType() ==NodeType.PUB) dest = "any pub";
+		}
+		else dest = destination.getName();
+
+		return "Send " + trainCountString + trainString + " from " + origin.getName() + " to " + dest + exclusionString + journeyString + turnString + " - " + rewardScore + " points";
 	}
 
 	/**Sets the complete boolean*/
@@ -274,5 +248,13 @@ public class Goal {
 	/**Sets the destination of the goal.*/
 	public Station getDestination() {
 		return this.destination;
+	}
+
+	public List<List<Station>> getIdealRoute() {
+		return idealRoute;
+	}
+
+	public NodeType getDestinationType() {
+		return destinationType;
 	}
 }

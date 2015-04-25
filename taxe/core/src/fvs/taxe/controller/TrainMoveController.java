@@ -31,6 +31,8 @@ public class TrainMoveController {
 	
 	/**The train being controlled by the controller.*/
 	private Train train;
+
+	private int animationFactor;
 	
 	/**The action being applied to the train currently being controlled.*/
 	private InterruptableSequenceAction action;
@@ -42,6 +44,8 @@ public class TrainMoveController {
 	public TrainMoveController(final Context context, final Train train) {
 		this.context = context;
 		this.train = train;
+
+		animationFactor = context.getGameLogic().getAnimationFactor();
 
 		context.getGameLogic().getPlayerManager().subscribeTurnChanged(new TurnListener() {
 			// only set back the interrupt so the train can move after the turn has changed (players turn ended)
@@ -161,7 +165,7 @@ public class TrainMoveController {
 		};
 	}
 
-	/**This method uses the current's train's routes to create a set of move actions for the train.*/
+	/**This method uses the current train's routes to create a set of move actions for the train.*/
 	public void addMoveActions() {
 		action = new InterruptableSequenceAction();
 		IPositionable current = train.getPosition();
@@ -175,7 +179,7 @@ public class TrainMoveController {
 
 		for (final Station station : train.getRoute()) {
 			IPositionable next = station.getLocation();
-			float duration = getDistance(current, next) / train.getSpeed();
+			float duration = getDistance(current, next) / (train.getSpeed() * animationFactor);
 			action.addAction(moveTo(next.getX() - TrainActor.width / 2, next.getY() - TrainActor.height / 2, duration));
 			
 			action.addAction(perStationAction(station));

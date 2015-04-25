@@ -1,0 +1,106 @@
+{
+jsonTurns: [
+	{
+		givenGoal: {
+			origin: Alcuin,
+			destination: "Central Hall",
+			nodeType: "null"
+		},
+		givenResources: [
+			{
+				index: 2
+			},
+			{
+				index: 1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Derwent,
+			destination: Halifax,
+			nodeType: "null"
+		},
+		givenResources: [
+			{
+				index: -2
+			},
+			{
+				index: 1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Goodricke,
+			destination: "null",
+			nodeType: SPORTS
+		},
+		givenResources: [
+			{},
+			{
+				index: -1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Wentworth,
+			destination: Halifax,
+			nodeType: "null"
+		},
+		connectionsBlocked: [
+			{
+				start: Goodricke,
+				end: Langwith
+			}
+		],
+		givenResources: [
+			{
+				index: -1
+			},
+			{
+				index: 1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Goodricke,
+			destination: "Heslington Hall",
+			nodeType: "null"
+		},
+		givenResources: [
+			{},
+			{
+				index: 2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Goodricke,
+			destination: Constantine,
+			nodeType: "null"
+		},
+		givenResources: [
+			{},
+			{
+				index: -2
+			}
+		]
+	},
+	{
+		givenResources: [
+			{}
+		]
+	},
+	{
+		givenResources: [
+			{
+				index: 2
+			}
+		]
+	}
+]
+}
