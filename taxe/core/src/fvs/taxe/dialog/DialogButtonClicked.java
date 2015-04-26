@@ -176,8 +176,16 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                 } else {
                                     //Informs the player that their selection is invalid and cancels placement
                                     Dialog dia = new Dialog("Invalid Selection", context.getSkin());
-                                    dia.text("That connection would overlap other tracks." +
-                                            "\nPlease use the New Connection resource again.").align(Align.center);
+                                    if (newConnection.getStation1().getName() == newConnection.getStation2().getName()) {
+                                        dia.text("You have selected the same station twice." +
+                                                "\nPlease use the New Connection resource again.").align(Align.center);
+
+                                    } else {
+
+                                        dia.text("That connection would overlap other tracks." +
+                                                "\nPlease use the New Connection resource again.").align(Align.center);
+
+                                    }
                                     dia.button("OK", "OK");
                                     dia.show(context.getStage());
                                     newConnection.setStation1(null);
@@ -185,6 +193,8 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                 }
 
                             } else {
+
+
 
                                 //Informs the player that their selection is invalid and cancels placement
                                 Dialog dia = new Dialog("Invalid Selection", context.getSkin());
