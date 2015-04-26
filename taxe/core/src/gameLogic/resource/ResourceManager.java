@@ -1,23 +1,20 @@
 package gameLogic.resource;
 
-import Util.Tuple;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
-import fvs.taxe.GameScreen;
+import java.util.ArrayList;
+import java.util.Random;
+
+import Util.Tuple;
 import fvs.taxe.controller.JellyController;
 import fvs.taxe.controller.JellyMoveController;
-import fvs.taxe.controller.JellyRouteController;
 import gameLogic.Game;
 import gameLogic.JellyListener;
-
 import gameLogic.Player;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**This class creates and stores the Trains specified from trains.json*/
 public class ResourceManager {
@@ -194,7 +191,7 @@ public class ResourceManager {
 	public void jelly(){
 		if (Game.getInstance().getPlayerManager().getTurnNumber() == 1 && j == 0) {
 			this.j = 1;
-			Jelly jelly = new Jelly("Jelly", "GreenTrain.png", "GreenTrainRight.png", 50);
+			Jelly jelly = new Jelly("Jelly", "44Train.png", "44TrainRight.png", 50);
 			Station randStation = Game.getInstance().getMap().getRandomStation();
 			jelly.setPosition(randStation.getLocation());
 			jelly.addHistory(randStation,0);
