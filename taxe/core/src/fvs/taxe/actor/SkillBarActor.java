@@ -55,9 +55,9 @@ public class SkillBarActor extends Actor {
 				}
 			}
 		});
-		trainTextures.put("44 Train", new Texture(Gdx.files.internal("44_train.png")));
-		trainTextures.put("Electric Train", new Texture(Gdx.files.internal("electric_train.png")));
-		trainTextures.put("Taxi Train", new Texture(Gdx.files.internal("taxi_train.png")));
+		trainTextures.put("44 Train", new Texture(Gdx.files.internal("trains/44Train.png")));
+		trainTextures.put("Electric Train", new Texture(Gdx.files.internal("trains/ElectricTrain.png")));
+		trainTextures.put("Taxi Train", new Texture(Gdx.files.internal("trains/TaxiTrain.png")));
 	}
 
 
