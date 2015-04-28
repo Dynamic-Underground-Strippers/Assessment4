@@ -67,18 +67,12 @@ public class NotepadController {
                 ObstacleType type = obstacle.getType();
                 Color color = null;
                 switch (type) {
-                    case BLIZZARD:
-                        color = Color.WHITE;
-                        break;
+
                     case FLOOD:
                         color = Color.valueOf("1079c1");
                         break;
-                    case VOLCANO:
-                        color = Color.valueOf("ec182c");
-                        break;
-                    case EARTHQUAKE:
-                        color = Color.valueOf("7a370a");
-                        break;
+                    case FLU:
+                        color = Color.valueOf("00FF00");
                 }
                 displayObstacleMessage(obstacle.getType().toString() + " in " + obstacle.getStation().getName(), color);
             }

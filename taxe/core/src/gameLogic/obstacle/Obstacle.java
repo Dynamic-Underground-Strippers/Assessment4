@@ -24,7 +24,8 @@ public class Obstacle {
 	
 	/** Corresponding actor for the obstacle */
 	private ObstacleActor actor;					
-	
+
+	public Obstacle(){}
 	/** Constructor for the obstacle that sets the type, station, position and active fields of Obstacle
 	 * @param type The type of the Obstacle
 	 * @param station The station that the Obstacle is connected to
@@ -41,14 +42,8 @@ public class Obstacle {
 	 */
 	public float getDestructionChance() {
 		switch(this.type){
-		case BLIZZARD:
-			return 0.7f;
-		case EARTHQUAKE:
-			return 0.9f;
 		case FLOOD:
 			return 0.6f;
-		case VOLCANO:
-			return 1f;
 		default:
 			return 0f;
 		}
@@ -111,14 +106,11 @@ public class Obstacle {
 	 * @return Number of turns the obstacle should be active for
 	 */
 	private int getDuration() {
-		if (type == ObstacleType.BLIZZARD){
-			return 6;
-		} else if (type == ObstacleType.EARTHQUAKE) {
-			return 5;
-		} else if (type == ObstacleType.FLOOD) {
+
+		if (type == ObstacleType.FLOOD) {
 			return 4;
-		} else if (type == ObstacleType.VOLCANO) {
-			return 8;
+		} else if (type == ObstacleType.FLU) {
+			return 99;
 		} else {
 			return -1; // invalid obstacle type!
 		}

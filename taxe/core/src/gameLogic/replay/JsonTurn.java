@@ -21,7 +21,6 @@ public class JsonTurn {
     private ArrayList<JsonResource> givenResources = new ArrayList<JsonResource>();
     private ArrayList<JsonResource> removedResources = new ArrayList<JsonResource>();
     private ArrayList<JsonConnection> connectionsBlocked = new ArrayList<JsonConnection>();
-
     public JsonTurn(){
 
     }
@@ -155,4 +154,5 @@ public class JsonTurn {
     public ArrayList<JsonConnection> getConnectionsBlocked() {
         return connectionsBlocked;
     }
+
 }

@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.JsonValue;
 /** This class creates and stores the Obstacles from the Obstacles.json files */
 public class ObstacleManager {
 	/** The default value for the probability of an obstacle occurring if no probability is set in Obstacles.json*/
-	private static final float DEFAULT_OBSTACLE_PROBABILITY = 0.1f;
+	private static final float DEFAULT_OBSTACLE_PROBABILITY = 1f;
 	
 	/** List of pairs of Obstacles and their associated probabilities of occurring */
 	private ArrayList<Tuple<Obstacle,Float>> obstacles; 				
@@ -45,8 +45,6 @@ public class ObstacleManager {
 					typeName = val.asString();
 				} else if (val.name.equalsIgnoreCase("station")) {
 					stationName = val.asString();
-				} else {
-					probability = val.asFloat();
 				}
 			}
 			
@@ -65,15 +63,10 @@ public class ObstacleManager {
 	private Obstacle createObstacle(String typeName, String stationName) {
 		ObstacleType type = null;
 		Station station = null;
-		if (typeName.equalsIgnoreCase("volcano")){
-			type = ObstacleType.VOLCANO;
-		} else if (typeName.equalsIgnoreCase("blizzard")) {
-			type = ObstacleType.BLIZZARD;
-		} else if (typeName.equalsIgnoreCase("flood")) {
+
+		 if (typeName.equalsIgnoreCase("flood")) {
 			type = ObstacleType.FLOOD;
-		} else if (typeName.equalsIgnoreCase("earthquake")) {
-			type = ObstacleType.EARTHQUAKE;
-		} 
+		}
 		
 		System.out.println(type + " , " + typeName);
 		

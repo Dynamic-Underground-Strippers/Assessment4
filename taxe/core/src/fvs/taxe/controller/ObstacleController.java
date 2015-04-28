@@ -42,26 +42,19 @@ public class ObstacleController {
 			@Override
 			public void started(Obstacle obstacle) {
 				obstacle.start();
-				obstacle.getStation().setObstacle(obstacle); 
+				obstacle.getStation().setObstacle(obstacle);
 				// set the obstacle so its visible
 				obstacle.getActor().setVisible(true);
-				
-				// shake the screen if the obstacle is an earthquake
-				if (obstacle.getType() == ObstacleType.EARTHQUAKE) {
-					rumble.rumble(1f, 2f);
-				}
-				if (obstacle.getType() == ObstacleType.BLIZZARD) {
-					effects.get("Blizzard").setPosition(obstacle.getPosition().getX(), obstacle.getPosition().getY());
-					effects.get("Blizzard").start(); 
-				} else if (obstacle.getType() == ObstacleType.FLOOD) {
-					effects.get("Flood").setPosition(obstacle.getPosition().getX()-10, obstacle.getPosition().getY() + 50);
-					effects.get("Flood").start(); 
-				} else if (obstacle.getType() == ObstacleType.VOLCANO) {
-					effects.get("Volcano").setPosition(obstacle.getPosition().getX(), obstacle.getPosition().getY()-10);
-					effects.get("Volcano").start(); 
+
+
+				if (obstacle.getType() == ObstacleType.FLOOD) {
+					effects.get("Flood").setPosition(obstacle.getPosition().getX() - 10, obstacle.getPosition().getY() + 50);
+					effects.get("Flood").start();
+				} else if (obstacle.getType() == ObstacleType.FLU) {
+					effects.get("Blizzard").setPosition(obstacle.getPosition().getX() - 10, obstacle.getPosition().getY() + 50);
+					effects.get("Blizzard").start();
 				}
 			}
-			
 			@Override
 			public void ended(Obstacle obstacle) {
 				obstacle.getActor().setVisible(false);

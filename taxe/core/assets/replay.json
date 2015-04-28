@@ -2,29 +2,10 @@
 jsonTurns: [
 	{
 		givenGoal: {
-			origin: Wentworth,
-			destination: "Computer Science",
+			origin: James,
+			destination: Biology,
 			nodeType: "null"
 		},
-		givenResources: [
-			{},
-			{
-				index: 2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Wentworth,
-			destination: "null",
-			nodeType: SPORTS
-		},
-		connectionsBlocked: [
-			{
-				start: Vanbrugh,
-				end: "Central Hall"
-			}
-		],
 		givenResources: [
 			{},
 			{}
@@ -33,97 +14,72 @@ jsonTurns: [
 	{
 		givenGoal: {
 			origin: James,
-			destination: "Central Hall",
+			destination: Biology,
 			nodeType: "null"
 		},
 		givenResources: [
 			{
 				index: 1
-			},
-			{
-				index: -1
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Wentworth,
-			destination: "Computer Science",
-			nodeType: "null"
-		},
-		connectionsBlocked: [
-			{
-				start: Goodricke,
-				end: "Computer Science"
-			}
-		],
-		givenResources: [
-			{
-				index: -2
 			},
 			{
 				index: 2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Wentworth,
-			destination: "null",
-			nodeType: SPORTS
-		},
-		givenResources: [
-			{
-				index: 1
-			},
-			{
-				index: 1
 			}
 		]
 	},
 	{
 		givenGoal: {
 			origin: Halifax,
-			destination: "Heslington Hall",
+			destination: Biology,
 			nodeType: "null"
 		},
-		connectionsBlocked: [
-			{
-				start: Chemistry,
-				end: "Heslington Hall"
-			}
-		],
 		givenResources: [
 			{
-				index: 1
+				index: -2
 			},
 			{
-				index: -2
+				index: 2
 			}
 		]
 	},
 	{
 		givenGoal: {
-			origin: Chemistry,
-			destination: Langwith,
-			nodeType: "null"
+			origin: Alcuin,
+			destination: "null",
+			nodeType: SPORTS
 		},
-		givenResources: [
-			{}
-		]
-	},
-	{
 		connectionsBlocked: [
 			{
-				start: "Random Node",
-				end: Physics
+				start: Derwent,
+				end: "Heslington Hall"
 			}
 		],
 		givenResources: [
 			{
+				index: -2
+			},
+			{
 				index: 2
 			}
 		]
+	},
+	{
+		givenGoal: {
+			origin: James,
+			destination: Biology,
+			nodeType: "null"
+		},
+		givenResources: [
+			{
+				index: 1
+			},
+			{}
+		]
 	}
+],
+jellyHistory: [
+	Physics,
+	"Random Node",
+	Halifax,
+	"Random Node"
 ]
 }

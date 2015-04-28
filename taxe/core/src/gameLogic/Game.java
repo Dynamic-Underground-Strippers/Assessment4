@@ -3,15 +3,18 @@ package gameLogic;
 
 import com.badlogic.gdx.Gdx;
 import fvs.taxe.ReplayManager;
+import fvs.taxe.actor.ObstacleActor;
 import fvs.taxe.controller.Context;
 
 import gameLogic.goal.GoalManager;
 import gameLogic.map.Connection;
 import gameLogic.map.Map;
+import gameLogic.map.Station;
 import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleManager;
 
+import gameLogic.obstacle.ObstacleType;
 import gameLogic.resource.Jelly;
 
 import gameLogic.replay.Recorder;
@@ -29,6 +32,9 @@ import com.badlogic.gdx.math.MathUtils;
 
 /**Main Game class of the Game. Handles all of the game logic.*/
 public class Game {
+
+	private List<Obstacle> flus = new ArrayList<Obstacle>();
+
 	/**The instance that the game is running in.*/
 	private static Game instance;
 
@@ -105,6 +111,7 @@ public class Game {
 						savedReplay = recorder.loadReplay();
 					}
 					if (state == GameState.REPLAY_SETUP) {
+						resourceManager.jelly();
 						setUpForReplay(playerManager.getCurrentPlayer()); //calls method to set up for turn which is about to happen
 					}
 				}
@@ -126,6 +133,8 @@ public class Game {
 					map.blockRandomConnection();
 					calculateObstacles();
 					decreaseObstacleTime();
+					flu();
+					spreadFlu();
 
 				}
 			});
@@ -136,6 +145,7 @@ public class Game {
 	public static Game getInstance() {
 		return instance;
 	}
+
 	public static Game initialiseGame(boolean replay){
 		instance = new Game(replay);
 		instance.initialisePlayers();
@@ -298,7 +308,8 @@ public class Game {
 
 		if (playerManager.getTurnNumber() < savedReplay.getTurns().size()) { //condition to stop reading more turns than are stored in file
 			Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()); //get the replay data for this specific turn
-			replayManager.setUpForReplay(currentPlayer, replayData); //call replayManager object to handle setup
+			replayManager.setUpForReplay(currentPlayer, replayData,savedReplay.getNextJellyDestination()); //call replayManager object to handle setup
+
 		}else{
 			Gdx.app.exit();
 		}
@@ -316,5 +327,65 @@ public class Game {
 		this.replayManager = rm;
 	}
 
+	public void flu(){
+		if (flus.size()==0) {
+			int rand = MathUtils.random(2);
+			if (rand == 0) {
+				Station station = this.map.getRandomStation();
+				Obstacle obstacle = new Obstacle(ObstacleType.FLU, station);
+				obstacle.setActor(new ObstacleActor(obstacle));
+				obstacleStarted(obstacle);
+				obstacle.start();
+				flus.add(obstacle);
+				System.out.println("New flu in " + station.getName());
+			}
+		}
+	}
 
+	public void spreadFlu(){
+		int rand;
+		ArrayList<Obstacle> flusToAdd = new ArrayList<Obstacle>();
+		ArrayList<Obstacle> flusToRemove = new ArrayList<Obstacle>();
+
+		for (int i = 0; i<flus.size(); i++){
+			rand = MathUtils.random(2);
+			if(rand==0){
+				Obstacle obstacle = flus.get(i);
+				System.out.println("Killing the flu in "+obstacle.getStation().getName());
+				ObstacleActor a = obstacle.getActor();
+				if(a!= null){
+					System.out.println("actor present");
+				}
+				obstacleEnded(obstacle);
+				obstacle.end();
+				flusToRemove.add(obstacle);
+				System.out.println("killed");
+			}else{
+				rand = MathUtils.random(2);
+				if(rand==0){
+					Obstacle obstacle = flus.get(i);
+					Station station = obstacle.getStation();
+
+					int randStation = MathUtils.random(map.getConnectedStations(station, null).size()-1);
+					Station station1 = map.getConnectedStations(station, null).get(randStation);
+					Obstacle newObstacle = new Obstacle(ObstacleType.FLU, station1);
+					newObstacle.setActor(new ObstacleActor(obstacle));
+					obstacleStarted(newObstacle);
+					newObstacle.start();
+					flusToAdd.add(newObstacle);
+					System.out.println("New flu in "+station1.getName()+"from "+station.getName());
+				}
+			}
+		}
+		for (Obstacle flu: flusToRemove){
+			flus.remove(flu);
+		}
+		for (Obstacle flu: flusToAdd){
+			flus.add(flu);
+		}
+	}
+
+	public ReplayManager getReplayManager() {
+		return replayManager;
+	}
 }
