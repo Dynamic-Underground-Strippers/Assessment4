@@ -308,7 +308,7 @@ public class Game {
 
 		if (playerManager.getTurnNumber() < savedReplay.getTurns().size()) { //condition to stop reading more turns than are stored in file
 			Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()); //get the replay data for this specific turn
-			replayManager.setUpForReplay(currentPlayer, replayData,savedReplay.getNextJellyDestination()); //call replayManager object to handle setup
+			replayManager.setUpForReplay(currentPlayer, replayData,savedReplay.getJellyRoute()); //call replayManager object to handle setup
 
 		}else{
 			Gdx.app.exit();

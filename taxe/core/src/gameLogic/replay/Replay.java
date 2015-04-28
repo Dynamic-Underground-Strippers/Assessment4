@@ -17,12 +17,10 @@ public class Replay {
     //This class stores a list of turns, each which store what occurs on each turn
     private ArrayList<Turn> turns;
     private ArrayList<Station> jellyHistory = new ArrayList<Station>();
-    private int counter=0;
     public Replay(Recorder loadedRecorder) {
         turns = new ArrayList<Turn>();
         Map map = Game.getInstance().getMap();
         ResourceManager rm = Game.getInstance().getResourceManager();
-
         for (String station : loadedRecorder.getJellyHistory()) {
             jellyHistory.add(map.getStationByName(station));
         }
@@ -133,12 +131,10 @@ public class Replay {
             //Creates a new turn data structure based on the data read in from the json
             turns.add(new Turn(givenGoal, removedGoals, placedConnections, removedConnections, blockedConnections, givenResources, removedResources, placedTrains, routes));
         }
-        System.out.println(turns);
     }
 
-    public Station getNextJellyDestination() {
-        counter++;
-        return this.jellyHistory.get(counter-1);
+    public ArrayList<Station> getJellyRoute() {
+        return this.jellyHistory;
 
     }
 

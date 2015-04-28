@@ -225,9 +225,6 @@ public class Map {
     public Connection addConnection(String station1, String station2) {
         Station st1 = getStationByName(station1);
         Station st2 = getStationByName(station2);
-        if (st1 == null || st2 == null) {
-            System.out.println(st1 + ", " + st2 + ", " + station1 + ", " + station2);
-        }
         return addConnection(st1, st2);
     }
 
@@ -432,7 +429,7 @@ public class Map {
 	 * @return The length of the route.
 	 */
 	public float getRouteLength(List<Station> idealRoute) {
-        System.out.println("Ideal route: " + idealRoute);
+
 		//Simple method for finding the length of a route
 		int i = 1;
 		float length = 0.0f;
@@ -554,9 +551,7 @@ public class Map {
         }
         if (!(toRemove == null)){
             connections.remove(toRemove);
-            System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "has been deleted");
         }
-        System.out.println("Connection between " + station1.getName() + ", " + station2.getName() + "NOT deleted");
     }
 
     public void removeConnection(Connection connection){
@@ -602,7 +597,6 @@ public class Map {
         ArrayList<Station> ofThisType = new ArrayList<Station>();
         for (Station s : stations) {
             if(s.getType() == type) ofThisType.add(s);
-            System.out.println(s.getName() + ", " + s.getType());
         }
         Random random = new Random();
         int i = random.nextInt(ofThisType.size());

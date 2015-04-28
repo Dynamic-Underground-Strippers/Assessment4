@@ -76,8 +76,6 @@ public class ObstacleManager {
 			 type = ObstacleType.FLU;
 		 }
 		
-		System.out.println(type + " , " + typeName);
-		
 		station = map.getStationByName(stationName);
 		
 		if (type != null && station != null){

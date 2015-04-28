@@ -118,6 +118,7 @@ public class JellyMoveController {
 
 
                 System.out.println("Selected " + nextStation.getName());
+                jelly.addHistory(jelly.getFinalDestination(),context.getGameLogic().getPlayerManager().getTurnNumber());
                 jelly.getRoute().remove(index);
                 jelly.getRoute().add(index, nextStation);
                 jelly.setFinalDestination(nextStation);
@@ -143,7 +144,7 @@ public class JellyMoveController {
 
         for (final Station station : jelly.getRoute()) {
             IPositionable next = station.getLocation();
-            float duration = getDistance(current, next) / jelly.getSpeed();
+            float duration = (getDistance(current, next) / jelly.getSpeed()) / Game.getInstance().getAnimationFactor() ;
             action.addAction(moveTo(next.getX() - JellyActor.width / 2, next.getY() - JellyActor.height / 2, duration));
 
             action.addAction(perStationAction(station));

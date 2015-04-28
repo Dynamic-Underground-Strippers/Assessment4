@@ -178,18 +178,4 @@ public class JellyActor extends Image {
         }
         return null;
     }
-
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-    }
-
-    public boolean isPaused() {
-        return this.paused;
-    }
-
-
-
-    public void setRecentlyPaused(boolean recentlyPaused) {
-        this.recentlyPaused = recentlyPaused;
-    }
 }
