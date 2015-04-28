@@ -25,6 +25,7 @@ public class ClockController {
     }
 
     public void draw() {
+        if (clock != null) clock.remove();
         context.getStage().addActor(clock);
         int hour = 9;
         boolean halfPast = false;

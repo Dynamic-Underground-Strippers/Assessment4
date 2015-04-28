@@ -27,12 +27,12 @@ public class SkillBarActor extends Actor {
 	private static final float WIDTH = HEIGHT * NUM_ITEMS;
 	private static final float XPOS = TaxeGame.WIDTH / 2f - WIDTH / 2f;
 	private static final float YPOS = 0;
-	private final Texture bgTexture;
+	private static Texture bgTexture;
 	private List<Resource> resources;
-	HashMap<String, Texture> trainTextures = new HashMap<String, Texture>();
+	private static final HashMap<String, Texture> trainTextures = new HashMap<String, Texture>();
 
 	public SkillBarActor(final Context context) {
-		bgTexture = new Texture(Gdx.files.internal("toolbarsquare.png"));
+		if (bgTexture == null) bgTexture = new Texture(Gdx.files.internal("toolbarsquare.png"));
 		setSize(WIDTH, HEIGHT);
 		setPosition(XPOS, YPOS);
 		resources = Game.getInstance().getPlayerManager().getCurrentPlayer().getResources();
@@ -55,31 +55,34 @@ public class SkillBarActor extends Actor {
 				}
 			}
 		});
-		trainTextures.put("44 Train", new Texture(Gdx.files.internal("trains/icons/44Train.png")));
-		trainTextures.put("Electric Train",
-				new Texture(Gdx.files.internal("trains/icons/ElectricTrain.png")));
-		trainTextures.put("Taxi Train",
-				new Texture(Gdx.files.internal("trains/icons/TaxiTrain" + ".png")));
+		if (trainTextures.size() == 0) {
+			trainTextures
+					.put("44 Train", new Texture(Gdx.files.internal("trains/icons/44Train.png")));
+			trainTextures.put("Electric Train",
+					new Texture(Gdx.files.internal("trains/icons/ElectricTrain.png")));
+			trainTextures.put("Taxi Train",
+					new Texture(Gdx.files.internal("trains/icons/TaxiTrain" + ".png")));
+		}
 	}
 
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-//		super.draw(batch, parentAlpha);
+		super.draw(batch, parentAlpha);
 		batch.end();
 		batch.begin();
-		for (int i = 0; i < NUM_ITEMS; i++) {
-			batch.draw(bgTexture, getX() + ((float) i / (float) NUM_ITEMS) * getWidth(), getY(),
-					getHeight(), getHeight());
-			if (i < resources.size()) {
-				if (resources.get(i) instanceof Train) {
-					batch.draw(trainTextures.get(((Train) resources.get(i)).getName()),
-							getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
-									(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
-							getHeight() * 0.8f, getHeight() * 0.8f);
-				}
-			}
-		}
+//		for (int i = 0; i < NUM_ITEMS; i++) {
+//			batch.draw(bgTexture, getX() + ((float) i / (float) NUM_ITEMS) * getWidth(), getY(),
+//					getHeight(), getHeight());
+//			if (i < resources.size()) {
+//				if (resources.get(i) instanceof Train) {
+//					batch.draw(trainTextures.get(((Train) resources.get(i)).getName()),
+//							getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
+//									(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
+//							getHeight() * 0.8f, getHeight() * 0.8f);
+//				}
+//			}
+//		}
 		batch.end();
 		batch.begin();
 	}

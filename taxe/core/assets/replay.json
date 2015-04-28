@@ -2,14 +2,12 @@
 jsonTurns: [
 	{
 		givenGoal: {
-			origin: James,
-			destination: Biology,
+			origin: Wentworth,
+			destination: Vanbrugh,
 			nodeType: "null"
 		},
 		givenResources: [
-			{
-				index: -2
-			},
+			{},
 			{
 				index: 2
 			}
@@ -17,12 +15,20 @@ jsonTurns: [
 	},
 	{
 		givenGoal: {
-			origin: James,
-			destination: Constantine,
+			origin: Goodricke,
+			destination: "Central Hall",
 			nodeType: "null"
 		},
+		connectionsBlocked: [
+			{
+				start: "Random Node",
+				end: "Sports Centre"
+			}
+		],
 		givenResources: [
-			{},
+			{
+				index: 1
+			},
 			{
 				index: 2
 			}
