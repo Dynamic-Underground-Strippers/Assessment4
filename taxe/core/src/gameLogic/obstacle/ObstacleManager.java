@@ -17,7 +17,7 @@ public class ObstacleManager {
 	private static final float DEFAULT_OBSTACLE_PROBABILITY = 1f;
 	
 	/** List of pairs of Obstacles and their associated probabilities of occurring */
-	private ArrayList<Tuple<Obstacle,Float>> obstacles; 				
+	private ArrayList<Obstacle> obstacles;
 	
 	/* The map that the Obstacle's stations are connected with */
 	private Map map;
@@ -35,11 +35,10 @@ public class ObstacleManager {
 		JsonReader jsonReader = new JsonReader();
 		JsonValue jsonVal = jsonReader.parse(Gdx.files.local("obstacles.json"));
 
-		obstacles = new ArrayList<Tuple<Obstacle, Float>>();
+		obstacles = new ArrayList<Obstacle>();
 		for(JsonValue jObstacle = jsonVal.getChild("obstacles"); jObstacle != null; jObstacle = jObstacle.next()) {
 			String typeName = "";
 			String stationName = "";
-			float probability = DEFAULT_OBSTACLE_PROBABILITY;
 			for(JsonValue val  = jObstacle.child; val != null; val = val.next()) {
 				if(val.name.equalsIgnoreCase("type")) {
 					typeName = val.asString();
@@ -50,7 +49,7 @@ public class ObstacleManager {
 			
 			Obstacle obstacle = createObstacle(typeName, stationName);
 			if (obstacle != null){
-				obstacles.add(new Tuple<Obstacle, Float>(obstacle, probability));
+				obstacles.add(obstacle);
 			}
 		}
 	}
@@ -82,7 +81,7 @@ public class ObstacleManager {
 	/** Get the list of pairs of the obstacles and the probability of that obstacle occurring
 	 * @return The list of pairs of obstacles and the associated probability of that obstacle occurring
 	 */
-	public ArrayList<Tuple<Obstacle, Float>> getObstacles() {
+	public ArrayList<Obstacle> getObstacles() {
 		return this.obstacles;
 	}
 }

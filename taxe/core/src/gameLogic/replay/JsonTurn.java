@@ -21,8 +21,9 @@ public class JsonTurn {
     private ArrayList<JsonResource> givenResources = new ArrayList<JsonResource>();
     private ArrayList<JsonResource> removedResources = new ArrayList<JsonResource>();
     private ArrayList<JsonConnection> connectionsBlocked = new ArrayList<JsonConnection>();
+    private boolean flood;
     public JsonTurn(){
-
+        flood = false;
     }
 
     public void placeTrain(Train train){
@@ -155,4 +156,11 @@ public class JsonTurn {
         return connectionsBlocked;
     }
 
+    public void addFlood(){
+        this.flood = true;
+    }
+
+    public boolean isFlood(){
+        return this.flood;
+    }
 }

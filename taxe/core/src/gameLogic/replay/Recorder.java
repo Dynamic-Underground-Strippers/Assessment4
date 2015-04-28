@@ -9,6 +9,7 @@ import gameLogic.TurnListener;
 import gameLogic.goal.Goal;
 import gameLogic.map.Connection;
 import gameLogic.map.Station;
+import gameLogic.obstacle.Obstacle;
 import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
@@ -68,6 +69,10 @@ public class Recorder {
 
     public void removeResource(Resource resource){
         jsonTurns.get(jsonTurns.size()-1).removeResource(resource);
+    }
+
+    public void addFlood(){
+        jsonTurns.get(jsonTurns.size()-1).addFlood();
     }
 
     public List<JsonTurn> getJsonTurns(){

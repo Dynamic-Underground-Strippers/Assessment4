@@ -2,84 +2,42 @@
 jsonTurns: [
 	{
 		givenGoal: {
-			origin: James,
-			destination: Biology,
-			nodeType: "null"
-		},
-		givenResources: [
-			{},
-			{}
-		]
-	},
-	{
-		givenGoal: {
-			origin: James,
-			destination: Biology,
+			origin: Vanbrugh,
+			destination: "Computer Science",
 			nodeType: "null"
 		},
 		givenResources: [
 			{
 				index: 1
 			},
-			{
-				index: 2
-			}
+			{}
 		]
 	},
 	{
 		givenGoal: {
-			origin: Halifax,
-			destination: Biology,
-			nodeType: "null"
-		},
-		givenResources: [
-			{
-				index: -2
-			},
-			{
-				index: 2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Alcuin,
+			origin: Derwent,
 			destination: "null",
 			nodeType: SPORTS
 		},
 		connectionsBlocked: [
 			{
-				start: Derwent,
-				end: "Heslington Hall"
+				start: Library,
+				end: Alcuin
 			}
 		],
 		givenResources: [
 			{
-				index: -2
-			},
-			{
 				index: 2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: James,
-			destination: Biology,
-			nodeType: "null"
-		},
-		givenResources: [
+			},
 			{
 				index: 1
-			},
-			{}
+			}
 		]
 	}
 ],
 jellyHistory: [
-	Physics,
-	"Random Node",
-	Halifax,
-	"Random Node"
+	Constantine,
+	Langwith,
+	"Computer Science"
 ]
 }

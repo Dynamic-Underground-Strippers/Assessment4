@@ -68,9 +68,9 @@ public class ObstacleController {
 	public void drawObstacles(){
 		// needs to only be called once, on map creation
 		// adds all obstacles to the stage but makes them invisible
-		ArrayList<Tuple<Obstacle, Float>> obstaclePairs = context.getGameLogic().getObstacleManager().getObstacles();
-		for (Tuple<Obstacle, Float> obstaclePair: obstaclePairs) {
-			renderObstacle(obstaclePair.getFirst(), false);
+		ArrayList<Obstacle> obstacles = context.getGameLogic().getObstacleManager().getObstacles();
+		for (Obstacle obstacle: obstacles) {
+			renderObstacle(obstacle, false);
 		}
 	}
 
