@@ -71,18 +71,18 @@ public class SkillBarActor extends Actor {
 		super.draw(batch, parentAlpha);
 		batch.end();
 		batch.begin();
-//		for (int i = 0; i < NUM_ITEMS; i++) {
-//			batch.draw(bgTexture, getX() + ((float) i / (float) NUM_ITEMS) * getWidth(), getY(),
-//					getHeight(), getHeight());
-//			if (i < resources.size()) {
-//				if (resources.get(i) instanceof Train) {
-//					batch.draw(trainTextures.get(((Train) resources.get(i)).getName()),
-//							getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
-//									(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
-//							getHeight() * 0.8f, getHeight() * 0.8f);
-//				}
-//			}
-//		}
+		for (int i = 0; i < NUM_ITEMS; i++) {
+			batch.draw(bgTexture, getX() + ((float) i / (float) NUM_ITEMS) * getWidth(), getY(),
+					getHeight(), getHeight());
+			if (i < resources.size()) {
+				if (resources.get(i) instanceof Train) {
+					batch.draw(trainTextures.get(((Train) resources.get(i)).getName()),
+							getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
+									(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
+							getHeight() * 0.8f, getHeight() * 0.8f);
+				}
+			}
+		}
 		batch.end();
 		batch.begin();
 	}

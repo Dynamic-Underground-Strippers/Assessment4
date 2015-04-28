@@ -185,9 +185,9 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			public void changed() {
 				if (!Game.getInstance().getReplay()) {
-					notepadController
-							.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK,
-									ANIMATION_TIME);
+//					notepadController
+//							.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK,
+//									ANIMATION_TIME);
 					gameLogic.setState(GameState.ANIMATING);
 				}
 			}
@@ -294,8 +294,7 @@ public class GameScreen extends ScreenAdapter {
 		stationController.drawStations();
 		obstacleController.drawObstacleEffects();
 		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
-		notepadController.drawBackground();
-		notepadController.drawLabels();
+		notepadController.draw();
 		notepadController.drawEndTurnButton();
 		goalController.drawCurrentPlayerGoals();
 	}

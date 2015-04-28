@@ -1,7 +1,17 @@
 package fvs.taxe.controller;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import fvs.taxe.StationClickListener;
 import fvs.taxe.TaxeGame;
 import gameLogic.Game;
@@ -11,17 +21,6 @@ import gameLogic.map.Connection;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
 import gameLogic.resource.Jelly;
-import gameLogic.resource.Train;
-import java.text.DecimalFormat;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 /**Controller for using routing, with GUI*/
 public class JellyRouteController {
@@ -118,7 +117,7 @@ public class JellyRouteController {
                         //Sets the relevant boolean checking if the last node on the route is a junction or not
                         canEndRouting = !(station instanceof CollisionStation);
                     }else {
-                        context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
+//                        context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
                     }
                 }else {
                     Station lastStation = jelly.getLastStation();
@@ -129,7 +128,7 @@ public class JellyRouteController {
                         //Sets the relevant boolean checking if the last node on the route is a junction or not
                         canEndRouting = !(station instanceof CollisionStation);
                     } else {
-                        context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
+//                        context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
                     }
                 }
             }else{
@@ -146,7 +145,7 @@ public class JellyRouteController {
 
             if (!hasConnection) {
                 //If the connection doesn't exist then this informs the user
-                context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
+//                context.getNotepadController().displayFlashMessage("This connection doesn't exist", Color.RED);
 
             } else {
                 distance+= context.getGameLogic().getMap().getDistance(lastStation, station);
@@ -181,7 +180,7 @@ public class JellyRouteController {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 if(!canEndRouting) {
-                    context.getNotepadController().displayFlashMessage("Your route must end at a station", Color.RED);
+//                    context.getNotepadController().displayFlashMessage("Your route must end at a station", Color.RED);
                     return;
                 }
 
