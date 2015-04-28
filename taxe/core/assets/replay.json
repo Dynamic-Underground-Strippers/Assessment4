@@ -2,14 +2,27 @@
 jsonTurns: [
 	{
 		givenGoal: {
-			origin: Goodricke,
-			destination: "Heslington Hall",
+			origin: James,
+			destination: Biology,
 			nodeType: "null"
 		},
 		givenResources: [
 			{
-				index: 2
+				index: -2
 			},
+			{
+				index: 2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: James,
+			destination: Constantine,
+			nodeType: "null"
+		},
+		givenResources: [
+			{},
 			{
 				index: 2
 			}

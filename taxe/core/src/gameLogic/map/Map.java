@@ -1,16 +1,21 @@
 package gameLogic.map;
 
 
-import Util.Node;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+
+import Util.Node;
 import gameLogic.Game;
 import gameLogic.Player;
 import gameLogic.resource.Train;
-
-import java.util.*;
 
 public class Map {
 	/**The stations that exist on the map.*/
@@ -117,7 +122,7 @@ public class Map {
             if (isJunction) {
                 addJunction(name, new Position(x,y));
             } else {
-                addStation(name, new Position(x, y), type ,aliases);
+                addStation(name, new Position(x, y + 85), type ,aliases);
             }
         }
     }
