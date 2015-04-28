@@ -219,7 +219,11 @@ public class RouteController {
 
         TrainController trainController = new TrainController(context);
         trainController.setTrainsVisible(train, true);
-        Game.getInstance().getJelly().getActor().setVisible(true);
+        try {
+            Game.getInstance().getJelly().getActor().setVisible(true);
+        }catch(Exception e){
+
+        }
         if (train.getPosition().getX()!=-1){
             train.getActor().setVisible(false);
         }

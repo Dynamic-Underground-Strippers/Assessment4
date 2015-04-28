@@ -78,14 +78,14 @@ public class Goal {
 			trainName = String.valueOf(value);
 			if(turnCount >= 0) 
 			{
-				turnCount = (int)Math.ceil((Integer)turnCount * resourceManager.getTrainSpeed("Bullet Train") / resourceManager.getTrainSpeed(trainName)); 
+				turnCount = (int)Math.ceil(turnCount * 50 / resourceManager.getTrainSpeed(trainName));
 			}
 		}
 		else if(name.equals("turnCount")) {
 			//CASE turn count constraint
 			//Adjust our value for the train type if it is set
 			if (trainName != null){
-				value = (int)Math.ceil((Integer)value * resourceManager.getTrainSpeed("Bullet Train") / resourceManager.getTrainSpeed(trainName));
+				value = (int)Math.ceil((Integer)value * 50 / resourceManager.getTrainSpeed(trainName));
 			}
 			int val = (Integer)value ;
 			//Ensure that our value is valid
@@ -188,7 +188,7 @@ public class Goal {
 		int newTurn = turnCount+turnIssued;
 		int l = newTurn/2;
 		if (newTurn%2 ==1) return 9+l +":30 o'clock";
-		else  return 9+l +":00 o'clock";
+		else  return 9+l +":00";
 
 	}
 

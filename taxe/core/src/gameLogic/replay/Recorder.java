@@ -9,6 +9,7 @@ import gameLogic.TurnListener;
 import gameLogic.goal.Goal;
 import gameLogic.map.Connection;
 import gameLogic.map.Station;
+import gameLogic.obstacle.Obstacle;
 import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class Recorder {
     //Writes to file at end of turn then resets
     private List<JsonTurn> jsonTurns;
+    private List<String> jellyHistory=new ArrayList<String>();
     public Recorder(){
 
     }
@@ -69,6 +71,10 @@ public class Recorder {
         jsonTurns.get(jsonTurns.size()-1).removeResource(resource);
     }
 
+    public void addFlood(){
+        jsonTurns.get(jsonTurns.size()-1).addFlood();
+    }
+
     public List<JsonTurn> getJsonTurns(){
         return this.jsonTurns;
     }
@@ -85,6 +91,10 @@ public class Recorder {
         }
     }
 
+    public void updateJelly(Station destination){
+        jellyHistory.add(destination.getName());
+    }
+
     private void printContents(){
         Json json = new Json();
         System.out.println(json.prettyPrint(this));
@@ -98,6 +108,7 @@ public class Recorder {
         return new Replay(loadRecorder);
     }
 
-
-
+    public List<String> getJellyHistory() {
+        return jellyHistory;
+    }
 }

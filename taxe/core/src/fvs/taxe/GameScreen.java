@@ -283,7 +283,7 @@ public class GameScreen extends ScreenAdapter {
 		scoreController.drawScoreDetails();
 		scoreController.drawFinalScoreDetails();
 		clockController.draw();
-		skillBarController.draw();
+		//skillBarController.draw();
 	}
 
 	@Override

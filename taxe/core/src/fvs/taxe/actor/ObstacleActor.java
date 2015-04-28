@@ -33,14 +33,10 @@ public class ObstacleActor extends Image {
 	 */
 	private static Texture getTexture(Obstacle obstacle) {
 		switch(obstacle.getType()){
-		case VOLCANO:
-			return new Texture(Gdx.files.internal("obstacles/volcano.png"));
-		case BLIZZARD:
-			return new Texture(Gdx.files.internal("obstacles/blizzard.png"));
 		case FLOOD:
 			return new Texture(Gdx.files.internal("obstacles/flood.png"));
-		case EARTHQUAKE:
-			return new Texture(Gdx.files.internal("obstacles/earthquake.png"));
+		case FLU:
+			return new Texture(Gdx.files.internal("obstacles/blizzard.png"));
 		default:
 			return null;
 		}

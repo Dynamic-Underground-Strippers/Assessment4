@@ -26,12 +26,13 @@ import java.util.ArrayList;
 public class ReplayManager {
 
     private Context context;
+    private Station nextJellyDestination;
 
     public ReplayManager(Context context){
         this.context = context;
     }
 
-    public void setUpForReplay(Player currentPlayer, Replay.Turn replayData){
+    public void setUpForReplay(Player currentPlayer, Replay.Turn replayData,Station nextJellyDestination){
 
         //Add new connections
         for (Connection c : replayData.getPlacedConnections()){
@@ -102,7 +103,10 @@ public class ReplayManager {
         //Finished Setup
         Game.getInstance().setState(GameState.ANIMATING); //once finished setup, set into animating state to begin 1 second animation time
 
+        this.nextJellyDestination = nextJellyDestination;
+    }
 
-
+    public Station getNextJellyDestination() {
+        return nextJellyDestination;
     }
 }
