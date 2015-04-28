@@ -2,15 +2,23 @@
 	"obstacles": [
 	  {
 	"type": "Flood",
-	"station": "Computer Science"
+	"station": "Central Hall"
 	},
 	{
 	"type": "Flood",
-	"station": "London"
+	"station": "Vanbrugh"
 	},
 	{
 	"type": "Flood",
-	"station": "Amsterdam"
+	"station": "Physics"
+	},
+	{
+	  "type": "Flood",
+	  "station": "James"
+	},
+	{
+	  "type": "Flood",
+	  "station": "Wentworth"
 	}
 	]
 }

@@ -136,8 +136,8 @@ public class Game {
 					map.blockRandomConnection();
 					calculateObstacles();
 					decreaseObstacleTime();
-					flu();
 					spreadFlu();
+					flu();
 
 				}
 			});
