@@ -81,7 +81,7 @@ public class JellyActor extends Image {
             Train collision = collided();
             if (collision != null) {
                 //If there is a collision then the user is informed, the two trains destroyed and the connection that they collided on is blocked for 5 turns.
-                context.getNotepadController().displayFlashMessage("You were canvassed by a YUSU Election candidate. Miss a turn.", Color.BLACK, Color.RED, 4);
+                context.getNotepadController().displayFlashMessage("YUSU Candidate collided with a train", Color.BLACK, Color.RED, 4);
                 System.out.println("collision");
                 //no need to block connection
                 //Game.getInstance().getMap().blockConnection(jelly.getLastStation(), jelly.getFinalDestination(), 5);
