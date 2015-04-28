@@ -2,12 +2,12 @@ package fvs.taxe.dialog;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+
 import fvs.taxe.Button;
 import fvs.taxe.StationClickListener;
 import fvs.taxe.actor.TrainActor;
@@ -77,7 +77,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                 break;
             case TRAIN_PLACE:
                 Pixmap pixmap = new Pixmap(Gdx.files.internal(train.getCursorImage()));
-                Gdx.input.setCursorImage(pixmap, 20, 25); 
+                Gdx.input.setCursorImage(pixmap, 0, 0);
                 pixmap.dispose();
 
                 Game.getInstance().setState(GameState.PLACING);
@@ -93,7 +93,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                     @Override
                     public void clicked(Station station) {
                     	if(station instanceof CollisionStation) {
-                    		context.getNotepadController().displayFlashMessage("Trains cannot be placed at junctions.", Color.RED);
+//                    		context.getNotepadController().displayFlashMessage("Trains cannot be placed at junctions.", Color.RED);
                     		return;
                     	}
                     	
@@ -198,7 +198,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                             //This code runs regardless of whether the placement was successful, this returns the game to its normal state
 
                             //Resets the topBar
-                            context.getNotepadController().displayFlashMessage("", Color.BLACK);
+//                            context.getNotepadController().displayFlashMessage("", Color.BLACK);
 
                             //Unsubscribes from the StationClickListener as this would cause a lot of errors and unexpected behaviour is not called from the correct context
                             StationController.unsubscribeStationClick(this);

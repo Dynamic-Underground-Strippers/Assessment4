@@ -1,54 +1,24 @@
 {
 	"obstacles": [
-	{ 
-	"type": "Blizzard",
-	"station": "Stockholm",
-	"prob": 0.4
-	},
-	{ 
-	"type": "Blizzard",
-	"station": "Copenhagen",
-	"prob": 0.1
-	},
-	{ 
-	"type": "Blizzard",
-	"station": "Minsk",
-	"prob": 0.6
+	  {
+	"type": "Flood",
+	"station": "Central Hall"
 	},
 	{
 	"type": "Flood",
-	"station": "Lisbon",
-	"prob": 0.4
+	"station": "Vanbrugh"
 	},
 	{
 	"type": "Flood",
-	"station": "London",
-	"prob": 0.7
+	"station": "Physics"
 	},
 	{
-	"type": "Flood",
-	"station": "Amsterdam",
-	"prob": 0.2
+	  "type": "Flood",
+	  "station": "James"
 	},
 	{
-	"type": "Volcano",
-	"station": "Rome",
-	"prob": 0.2
-	},
-	{
-	"type": "Volcano",
-	"station": "London",
-	"prob": 0.00000001
-	},
-	{
-	"type": "Earthquake",
-	"station": "Sofia",
-	"prob": 0.3
-	},
-	{
-	"type": "Earthquake",
-	"station": "Cluj",
-	"prob": 0.5
+	  "type": "Flood",
+	  "station": "Wentworth"
 	}
 	]
 }

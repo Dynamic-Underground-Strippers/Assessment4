@@ -1,6 +1,14 @@
 package fvs.taxe.controller;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import Util.InterruptableSequenceAction;
 import fvs.taxe.actor.JellyActor;
 import gameLogic.Game;
 import gameLogic.Player;
@@ -9,19 +17,10 @@ import gameLogic.map.CollisionStation;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Position;
 import gameLogic.map.Station;
-import gameLogic.resource.Resource;
 import gameLogic.resource.Jelly;
+import gameLogic.resource.Resource;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import Util.InterruptableSequenceAction;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 
 /**Controller for moving trains.*/
 public class JellyMoveController {
@@ -120,7 +119,7 @@ public class JellyMoveController {
             boolean junctionFailed = MathUtils.randomBoolean(JUNCTION_FAILURE_CHANCE);
             if (junctionFailed && station != jelly.getRoute().get(0)) {
                 action.setInterrupt(true);
-                context.getNotepadController().displayObstacleMessage("Junction failed, " + jelly.getName() + " stopped!", Color.YELLOW);
+//                context.getNotepadController().displayObstacleMessage("Junction failed, " + jelly.getName() + " stopped!", Color.YELLOW);
             }
         }
     }
@@ -140,6 +139,7 @@ public class JellyMoveController {
                 jelly.setPosition(jelly.getFinalDestination().getLocation());
                 jelly.getActor().setVisible(false);
                 jelly.setFinalDestination(null); **/
+
                 System.out.println("selecting additional nodes");
                 System.out.println("last station was: "+jelly.getLastStation().getName());
                 List<Station> route = jelly.getRoute();
@@ -149,41 +149,25 @@ public class JellyMoveController {
 
                 Random rand = new Random();
 
-                int ran = rand.nextInt(4);
-
                 Station nextStation = null;
-
-                while(nextStation==null){
-
-                    try{
-                        nextStation = Game.getInstance().getMap().getConnectedStations(jelly.getFinalDestination(), null).get(ran);
-                        System.out.println("bad station: "+nextStation.getName());
-                    }
-
-                    catch (Exception e){System.out.println("bad number: "+ran);}
-                    try {
-                        if(Game.getInstance().getMap().isConnectionBlocked(nextStation, jelly.getFinalDestination())){
+                if (!Game.getInstance().getReplay()) {
+                    while (nextStation == null) {
+                        List<Station> connectedStations = Game.getInstance().getMap().getConnectedStations(jelly.getFinalDestination(), null);
+                        nextStation = connectedStations.get(rand.nextInt(connectedStations.size()));
+                        if (Game.getInstance().getMap().isConnectionBlocked(nextStation, jelly.getFinalDestination())) {
                             nextStation = null;
                         }
-                    } catch (Exception e){}
-                    try {
-                        if(Game.getInstance().getMap().doesConnectionExist(nextStation.getName(), jelly.getFinalDestination().getName())){
-                            break;
-                        }
-                    } catch (Exception e){}
-
-
-
-                    ran = ran -1;
+                    }
+                }else{
+                    nextStation = Game.getInstance().getReplayManager().getNextJellyDestination();
                 }
 
 
                 System.out.println("Selected " + nextStation.getName());
-                index = index;
                 jelly.getRoute().remove(index);
-                index = index;
                 jelly.getRoute().add(index, nextStation);
                 jelly.setFinalDestination(nextStation);
+                Game.getInstance().getRecorder().updateJelly(nextStation);
                 System.out.println("Added " + nextStation.getName() + " at index " + index);
                 addMoveActions();
 
@@ -244,7 +228,7 @@ public class JellyMoveController {
                 trainToDestroy.getPlayer().removeResource(trainToDestroy);
             }
 
-            context.getNotepadController().displayFlashMessage("Two trains collided at a Junction.  They were both destroyed.", Color.BLACK, Color.RED, 4);
+//            context.getNotepadController().displayFlashMessage("Two trains collided at a Junction.  They were both destroyed.", Color.BLACK, Color.RED, 4);
         }
     }
 
@@ -254,7 +238,7 @@ public class JellyMoveController {
         if (station.hasObstacle() && MathUtils.randomBoolean(station.getObstacle().getDestructionChance())){
             jelly.getActor().remove();
             jelly.getPlayer().removeResource(jelly);
-            context.getNotepadController().displayFlashMessage("Your jelly was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
+//            context.getNotepadController().displayFlashMessage("Your jelly was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
         }
     }
 

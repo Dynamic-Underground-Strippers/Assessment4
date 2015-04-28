@@ -21,9 +21,9 @@ public class JsonTurn {
     private ArrayList<JsonResource> givenResources = new ArrayList<JsonResource>();
     private ArrayList<JsonResource> removedResources = new ArrayList<JsonResource>();
     private ArrayList<JsonConnection> connectionsBlocked = new ArrayList<JsonConnection>();
-
+    private boolean flood;
     public JsonTurn(){
-
+        flood = false;
     }
 
     public void placeTrain(Train train){
@@ -104,7 +104,7 @@ public class JsonTurn {
     public void removeResource(Resource resource){
         JsonResource jsonResource;
         if (resource instanceof Train){
-            jsonResource = new JsonResource(((Train) resource).getIndex());
+            jsonResource = new JsonTrain(((Train) resource).getID(),((Train) resource).getIndex(),"");
         }else if (resource instanceof DeleteConnection){
             //-2 is delete connection
             jsonResource = new JsonResource(-2);
@@ -154,5 +154,13 @@ public class JsonTurn {
 
     public ArrayList<JsonConnection> getConnectionsBlocked() {
         return connectionsBlocked;
+    }
+
+    public void addFlood(){
+        this.flood = true;
+    }
+
+    public boolean isFlood(){
+        return this.flood;
     }
 }

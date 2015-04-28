@@ -16,22 +16,30 @@ import java.util.List;
 public class Replay {
     //This class stores a list of turns, each which store what occurs on each turn
     private ArrayList<Turn> turns;
-    public Replay(Recorder loadedRecorder){
+    private ArrayList<Station> jellyHistory = new ArrayList<Station>();
+    private int counter=0;
+    public Replay(Recorder loadedRecorder) {
         turns = new ArrayList<Turn>();
-        for (JsonTurn turn: loadedRecorder.getJsonTurns()){
+        Map map = Game.getInstance().getMap();
+        ResourceManager rm = Game.getInstance().getResourceManager();
+
+        for (String station : loadedRecorder.getJellyHistory()) {
+            jellyHistory.add(map.getStationByName(station));
+        }
+
+        for (JsonTurn turn : loadedRecorder.getJsonTurns()) {
             //Declared to allow the game to convert the station names into actual objects
-           Map map = Game.getInstance().getMap();
 
             //Declared to allow the game to load in the correct resources
-            ResourceManager rm = Game.getInstance().getResourceManager();
+
 
             //Turns the information loaded from the Json into the given goal
             Station origin = map.getStationByName(turn.getGivenGoal().getOrigin());
-            Station destination  = map.getStationByName(turn.getGivenGoal().getDestination());
-            NodeType nodeType=null;
+            Station destination = map.getStationByName(turn.getGivenGoal().getDestination());
+            NodeType nodeType = null;
             Goal givenGoal;
             List<List<Station>> idealRoute = new ArrayList<List<Station>>();
-            if (origin!=null) {
+            if (origin != null) {
                 if (destination == null) {
                     nodeType = NodeType.valueOf(turn.getGivenGoal().getNodeType());
                     idealRoute = Game.getInstance().getGoalManager().getIdealRouteForType(origin, nodeType);
@@ -39,95 +47,101 @@ public class Replay {
                     idealRoute.add(Game.getInstance().getGoalManager().getIdealRoute(origin, destination));
                 }
                 givenGoal = new Goal(map.getStationByName(turn.getGivenGoal().getOrigin()), map.getStationByName(turn.getGivenGoal().getDestination()), nodeType, loadedRecorder.getJsonTurns().indexOf(turn), idealRoute);
-            }else{
+            } else {
                 givenGoal = null;
             }
 
             ArrayList<Goal> removedGoals = new ArrayList<Goal>();
             //Turns the information loaded from the Json into a list of removed goals
-            for (JsonGoal removedJsonGoal:turn.getRemovedGoals()){
+            for (JsonGoal removedJsonGoal : turn.getRemovedGoals()) {
                 origin = map.getStationByName(removedJsonGoal.getOrigin());
-                destination  = map.getStationByName(removedJsonGoal.getDestination());
+                destination = map.getStationByName(removedJsonGoal.getDestination());
                 nodeType = NodeType.valueOf(removedJsonGoal.getNodeType());
                 idealRoute = new ArrayList<List<Station>>();
-                if (destination==null){
+                if (destination == null) {
                     idealRoute = Game.getInstance().getGoalManager().getIdealRouteForType(origin, nodeType);
-                }else{
-                    idealRoute.add(Game.getInstance().getGoalManager().getIdealRoute(origin,destination));
+                } else {
+                    idealRoute.add(Game.getInstance().getGoalManager().getIdealRoute(origin, destination));
                 }
 
-                Goal removedGoal = new Goal(origin,destination,nodeType,0,idealRoute);
+                Goal removedGoal = new Goal(origin, destination, nodeType, 0, idealRoute);
                 removedGoals.add(removedGoal);
             }
 
             //Loads in placed trains from Json
-            ArrayList<Tuple<Integer,Station>> placedTrains=  new ArrayList<Tuple<Integer,Station>>();
-            for (JsonTrain jsonTrain:turn.getPlacedTrains()){
-            //THIS WON'T WORK THE WAY IT IS INTENDED
-                placedTrains.add(new Tuple<Integer,Station>(jsonTrain.getId(),map.getStationByName(jsonTrain.getPlacedStation())));
+            ArrayList<Tuple<Integer, Station>> placedTrains = new ArrayList<Tuple<Integer, Station>>();
+            for (JsonTrain jsonTrain : turn.getPlacedTrains()) {
+                //THIS WON'T WORK THE WAY IT IS INTENDED
+                placedTrains.add(new Tuple<Integer, Station>(jsonTrain.getId(), map.getStationByName(jsonTrain.getPlacedStation())));
             }
 
             //Reads in all of the placed connections from the Json
             ArrayList<Connection> placedConnections = new ArrayList<Connection>();
-            for (JsonConnection jsonConnection: turn.getPlacedConnections()){
-                Connection placedConnection = new Connection(map.getStationByName(jsonConnection.getStart()),map.getStationByName(jsonConnection.getEnd()));
+            for (JsonConnection jsonConnection : turn.getPlacedConnections()) {
+                Connection placedConnection = new Connection(map.getStationByName(jsonConnection.getStart()), map.getStationByName(jsonConnection.getEnd()));
                 placedConnections.add(placedConnection);
             }
 
             //Reads in all of the removed connections from the Json
             ArrayList<Connection> removedConnections = new ArrayList<Connection>();
-            for (JsonConnection jsonConnection: turn.getRemovedConnections()){
-                Connection removedConnection = new Connection(map.getStationByName(jsonConnection.getStart()),map.getStationByName(jsonConnection.getEnd()));
+            for (JsonConnection jsonConnection : turn.getRemovedConnections()) {
+                Connection removedConnection = new Connection(map.getStationByName(jsonConnection.getStart()), map.getStationByName(jsonConnection.getEnd()));
                 removedConnections.add(removedConnection);
             }
 
             //Reads in all of the routes from the Json
             //This is commented out because it currently doesn't work and may require an overhaul of the whole saving system
-            ArrayList<Tuple<Integer,ArrayList<Station>>> routes = new ArrayList<Tuple<Integer,ArrayList<Station>>>();
-            for (Object[] jsonRoute: turn.getSetRoutes()){
+            ArrayList<Tuple<Integer, ArrayList<Station>>> routes = new ArrayList<Tuple<Integer, ArrayList<Station>>>();
+            for (Object[] jsonRoute : turn.getSetRoutes()) {
                 ArrayList<Station> route = new ArrayList<Station>();
-               for (int i=1;i<jsonRoute.length;i++){
+                for (int i = 1; i < jsonRoute.length; i++) {
                     route.add(map.getStationByName((String) jsonRoute[i]));
                 }
-                routes.add(new Tuple<Integer,ArrayList<Station>>((Integer) jsonRoute[0],route));
+                routes.add(new Tuple<Integer, ArrayList<Station>>((Integer) jsonRoute[0], route));
             }
 
             //Reads in all of the blocked connections from the Json
             ArrayList<Connection> blockedConnections = new ArrayList<Connection>();
-            for (JsonConnection jsonConnection: turn.getConnectionsBlocked()){
-                Connection blockedConnection = map.getConnection(jsonConnection.getStart(),jsonConnection.getEnd());
+            for (JsonConnection jsonConnection : turn.getConnectionsBlocked()) {
+                Connection blockedConnection = map.getConnection(jsonConnection.getStart(), jsonConnection.getEnd());
                 blockedConnections.add(blockedConnection);
             }
 
             //Reads in all of the given resources from the Json
             ArrayList<Resource> givenResources = new ArrayList<Resource>();
-            for (JsonResource jsonResource: turn.getGivenResources()){
-                if (jsonResource.getIndex()<0){
-                    if (jsonResource.getIndex()==-1){
+            for (JsonResource jsonResource : turn.getGivenResources()) {
+                if (jsonResource.getIndex() < 0) {
+                    if (jsonResource.getIndex() == -1) {
                         givenResources.add(new NewConnection());
                     } else {
                         givenResources.add(new DeleteConnection());
                     }
-                }
-                else{
+                } else {
                     givenResources.add(rm.getTrainByIndex(jsonResource.getIndex()));
                 }
             }
 
             //Reads in all of the removed resources from the Json
             ArrayList<Integer> removedResources = new ArrayList<Integer>();
-            for (JsonResource jsonResource: turn.getRemovedResources()){
-                if (jsonResource.getIndex()<0) {
+            for (JsonResource jsonResource : turn.getRemovedResources()) {
+                if (jsonResource.getIndex() < 0) {
                     removedResources.add(jsonResource.getIndex());
-                }else{
+                } else {
                     removedResources.add(((JsonTrain) jsonResource).getId());
                 }
             }
             //Creates a new turn data structure based on the data read in from the json
-            turns.add(new Turn(givenGoal,removedGoals,placedConnections,removedConnections,blockedConnections,givenResources,removedResources,placedTrains,routes));
+            turns.add(new Turn(givenGoal, removedGoals, placedConnections, removedConnections, blockedConnections, givenResources, removedResources, placedTrains, routes));
         }
         System.out.println(turns);
     }
+
+    public Station getNextJellyDestination() {
+        counter++;
+        return this.jellyHistory.get(counter-1);
+
+    }
+
 
     public ArrayList<Turn> getTurns() {
         return turns;

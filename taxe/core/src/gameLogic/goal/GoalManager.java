@@ -69,7 +69,7 @@ public class GoalManager {
 	private ArrayList<Tuple<String, Object>> generateExtraConstraints(List<Station> idealRoute, float routeLength) {
 		ArrayList<Tuple<String, Object>> list =  new ArrayList<Tuple<String, Object>>();
 		//Add a constraint based on number of turns, based on the time taken for a Bullet Train to complete the route of Param routeLength
-		list.add(new Tuple<String, Object>("turnCount", (int)Math.ceil((routeLength / resourceManager.getTrainSpeed("Bullet Train"))/2)));
+		list.add(new Tuple<String, Object>("turnCount", (int)Math.ceil((routeLength / 50)/2)));
 		//Add a constraint based on the train type, picking a random train type
 		list.add(new Tuple<String, Object>("trainType", resourceManager.getTrainNames().get(new Random().nextInt(resourceManager.getTrainNames().size()))));
 		//If the route is not linear between 2 points, then we can add an exclusion constraint from the idealRoute

@@ -80,14 +80,14 @@ public class Jelly extends Resource {
      * @return String representing filepath of left image, in assets/ directory
      */
     public String getLeftImage() {
-        return "trains/" + leftImage;
+        return  leftImage;
     }
 
     /** Get the filepath associated with the image of the train when moving right 
      * @return String representing filepath of right image, in assets/ directory
      */
     public String getRightImage() {
-        return "trains/" + rightImage;
+        return rightImage;
     }
 
     /** Get the filepath associated with the cursor image of the train

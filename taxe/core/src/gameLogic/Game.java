@@ -3,15 +3,18 @@ package gameLogic;
 
 import com.badlogic.gdx.Gdx;
 import fvs.taxe.ReplayManager;
+import fvs.taxe.actor.ObstacleActor;
 import fvs.taxe.controller.Context;
 
 import gameLogic.goal.GoalManager;
 import gameLogic.map.Connection;
 import gameLogic.map.Map;
+import gameLogic.map.Station;
 import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleManager;
 
+import gameLogic.obstacle.ObstacleType;
 import gameLogic.resource.Jelly;
 
 import gameLogic.replay.Recorder;
@@ -22,6 +25,7 @@ import gameLogic.resource.ResourceManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Util.Tuple;
 
@@ -29,6 +33,9 @@ import com.badlogic.gdx.math.MathUtils;
 
 /**Main Game class of the Game. Handles all of the game logic.*/
 public class Game {
+
+	private List<Obstacle> flus = new ArrayList<Obstacle>();
+
 	/**The instance that the game is running in.*/
 	private static Game instance;
 
@@ -105,8 +112,11 @@ public class Game {
 						savedReplay = recorder.loadReplay();
 					}
 					if (state == GameState.REPLAY_SETUP) {
+						resourceManager.jelly();
+						map.decrementBlockedConnections();
 						setUpForReplay(playerManager.getCurrentPlayer()); //calls method to set up for turn which is about to happen
 					}
+
 				}
 			});
 
@@ -126,6 +136,8 @@ public class Game {
 					map.blockRandomConnection();
 					calculateObstacles();
 					decreaseObstacleTime();
+					spreadFlu();
+					flu();
 
 				}
 			});
@@ -136,6 +148,7 @@ public class Game {
 	public static Game getInstance() {
 		return instance;
 	}
+
 	public static Game initialiseGame(boolean replay){
 		instance = new Game(replay);
 		instance.initialisePlayers();
@@ -243,19 +256,16 @@ public class Game {
 	
 	/**This method causes one obstacle to happen at random, notifying the listeners.*/
 	private void calculateObstacles() {
-		// randomly choose one obstacle, then make the obstacle happen with its associated probability
-		ArrayList<Tuple<Obstacle, Float>> obstacles = obstacleManager.getObstacles();
+		//Decides whether or not to trigger the flood event, based on the probability, set at 0.1
+		ArrayList<Obstacle> obstacles = obstacleManager.getObstacles();
+
 		if (obstacles.size() > 0) {
-			int index = MathUtils.random(obstacles.size() - 1);
-
-
-			Tuple<Obstacle, Float> obstacleProbPair = obstacles.get(index);
-			boolean obstacleOccured = MathUtils.randomBoolean(obstacleProbPair.getSecond());
-			Obstacle obstacle = obstacleProbPair.getFirst();
-
-			// if it has occurred and isn't already active, start the obstacle
-			if (obstacleOccured && !obstacle.isActive()) {
-				obstacleStarted(obstacle);
+			if (MathUtils.randomBoolean(0.1f)) {
+				for (Obstacle obstacle : obstacles) {
+					if (!obstacle.isActive()&&obstacle.getType()==ObstacleType.FLOOD){
+						obstacleStarted(obstacle);
+					}
+				}
 			}
 		}
 	}
@@ -263,10 +273,10 @@ public class Game {
 	/**This method decreases the remaining duration of any remaining obstacles by 1 turn. If the duration has reached 0, the obstacle is removed and all listeners are notified.*/
 	private void decreaseObstacleTime() {
 		// decreases any active obstacles time left active by 1
-		ArrayList<Tuple<Obstacle, Float>> obstacles = obstacleManager.getObstacles();
+		ArrayList<Obstacle> obstacles = obstacleManager.getObstacles();
 		for (int i = 0; i< obstacles.size(); i++) {
-			Obstacle obstacle = obstacles.get(i).getFirst();
-			if (obstacle.isActive()) {
+			Obstacle obstacle = obstacles.get(i);
+			if (obstacle.isActive() && obstacle.getType()==ObstacleType.FLOOD) {
 				boolean isTimeLeft = obstacle.decreaseTimeLeft();
 				if (!isTimeLeft) {
 					// if the time left = 0, then deactivate the obstacle
@@ -298,7 +308,8 @@ public class Game {
 
 		if (playerManager.getTurnNumber() < savedReplay.getTurns().size()) { //condition to stop reading more turns than are stored in file
 			Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()); //get the replay data for this specific turn
-			replayManager.setUpForReplay(currentPlayer, replayData); //call replayManager object to handle setup
+			replayManager.setUpForReplay(currentPlayer, replayData,savedReplay.getNextJellyDestination()); //call replayManager object to handle setup
+
 		}else{
 			Gdx.app.exit();
 		}
@@ -316,5 +327,59 @@ public class Game {
 		this.replayManager = rm;
 	}
 
+	public void flu(){
+		if (flus.size()==0) {
+			int rand = MathUtils.random(2);
+			if (rand == 0) {
+				Station station = this.map.getRandomStation();
+				Obstacle obstacle = obstacleManager.findFluObstacle(station);
+				obstacleStarted(obstacle);
+				flus.add(obstacle);
+				System.out.println("New flu in " + station.getName());
+			}
+		}
+	}
 
+	public void spreadFlu(){
+		int rand;
+		ArrayList<Obstacle> flusToAdd = new ArrayList<Obstacle>();
+		ArrayList<Obstacle> flusToRemove = new ArrayList<Obstacle>();
+
+		for (int i = 0; i<flus.size(); i++){
+			rand = MathUtils.random(2);
+			if(rand==0){
+				Obstacle obstacle = flus.get(i);
+				System.out.println("Killing the flu in "+obstacle.getStation().getName());
+				ObstacleActor a = obstacle.getActor();
+				if(a!= null){
+					System.out.println("actor present");
+				}
+				obstacleEnded(obstacle);
+				flusToRemove.add(obstacle);
+				System.out.println("killed");
+			}else{
+				rand = MathUtils.random(2);
+				if(rand==0){
+					Obstacle obstacle = flus.get(i);
+					Station station = obstacle.getStation();
+					int randStation = MathUtils.random(map.getConnectedStations(station, null).size()-1);
+					Station station1 = map.getConnectedStations(station, null).get(randStation);
+					Obstacle newObstacle = obstacleManager.findFluObstacle(station1);
+					obstacleStarted(newObstacle);
+					flusToAdd.add(newObstacle);
+					System.out.println("New flu in "+station1.getName()+"from "+station.getName());
+				}
+			}
+		}
+		for (Obstacle flu: flusToRemove){
+			flus.remove(flu);
+		}
+		for (Obstacle flu: flusToAdd){
+			flus.add(flu);
+		}
+	}
+
+	public ReplayManager getReplayManager() {
+		return replayManager;
+	}
 }

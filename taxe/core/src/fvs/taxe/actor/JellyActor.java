@@ -1,11 +1,11 @@
 package fvs.taxe.actor;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
 import fvs.taxe.controller.Context;
 import gameLogic.Game;
 import gameLogic.GameState;
@@ -81,7 +81,7 @@ public class JellyActor extends Image {
             Train collision = collided();
             if (collision != null) {
                 //If there is a collision then the user is informed, the two trains destroyed and the connection that they collided on is blocked for 5 turns.
-                context.getNotepadController().displayFlashMessage("Insert relevant message here", Color.BLACK, Color.RED, 4);
+//                context.getNotepadController().displayFlashMessage("Insert relevant message here", Color.BLACK, Color.RED, 4);
                 System.out.println("collision");
                 //no need to block connection
                 //Game.getInstance().getMap().blockConnection(jelly.getLastStation(), jelly.getFinalDestination(), 5);
