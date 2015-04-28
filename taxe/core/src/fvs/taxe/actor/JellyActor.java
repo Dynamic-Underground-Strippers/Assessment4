@@ -178,7 +178,7 @@ public class JellyActor extends Image {
                                         //There is still the potential issue of two blocked trains colliding when they shouldn't, as it is impossible to know which connection a blocked train will occupy. i.e when one train is rerouted but not the other
 
                                         //TEMP??? - ONLY COLLIDE WHEN TRAINS ARE IN SAME DIRECTION
-                                       
+
                                             return otherTrain;
 
                                         //This is slightly limiting as it only allows two trains to collide with each other, whereas in theory more than 2 could collide, this is however very unlikely and due to complications
