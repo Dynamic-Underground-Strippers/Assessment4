@@ -1,18 +1,17 @@
 package fvs.taxe.actor;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
 import fvs.taxe.controller.Context;
 import gameLogic.Game;
 import gameLogic.GameState;
 import gameLogic.Player;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
-import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
 
 
@@ -81,7 +80,7 @@ public class TrainActor extends Image {
             Train collision = collided();
             if (collision != null) {
                 //If there is a collision then the user is informed, the two trains destroyed and the connection that they collided on is blocked for 5 turns.
-                context.getNotepadController().displayFlashMessage("Two trains collided. They were both destroyed", Color.BLACK, Color.RED, 4);
+//                context.getNotepadController().displayFlashMessage("Two trains collided. They were both destroyed", Color.BLACK, Color.RED, 4);
                 Game.getInstance().getMap().blockConnection(train.getLastStation(), train.getNextStation(), 5);
 
                 collision.getActor().remove();

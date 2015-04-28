@@ -1,17 +1,17 @@
 package fvs.taxe.dialog;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import fvs.taxe.controller.Context;
 import gameLogic.GameState;
 import gameLogic.map.Station;
 import gameLogic.resource.Resource;
 import gameLogic.resource.Train;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**This is a special type of dialogue used when there are multiple trains at a station.*/
 public class DialogStationMultitrain extends Dialog {
@@ -44,7 +44,7 @@ public class DialogStationMultitrain extends Dialog {
 		if (localTrains.size() == 0) {
 			// if no active trains at station do nothing!
 			hide();
-			context.getNotepadController().displayFlashMessage("No Player " + context.getGameLogic().getPlayerManager().getCurrentPlayer().getPlayerNumber() + " trains at this station", Color.RED);
+//			context.getNotepadController().displayFlashMessage("No Player " + context.getGameLogic().getPlayerManager().getCurrentPlayer().getPlayerNumber() + " trains at this station", Color.RED);
 		} else if (localTrains.size() == 1) {
 			// if one active train, skip the dialog and go straight to train
 			hide();
