@@ -47,15 +47,15 @@ public class NewConnection extends Resource {
     }
 
     public boolean use(Context context){
+        if (station1.getName() == station2.getName()) {
+            //if stations are the same
+            return false;
+        }
+
     	Map map = Game.getInstance().getMap();
         map.addConnection(station1, station2);
         Connection connection = map.getConnection(station1.getName(),station2.getName());
 
-        if (station1.getName() == station2.getName()) {
-            //if stations are the same
-            map.removeConnection(station1, station2);
-            return false;
-        }
 
         for (Connection c : map.getConnections()){
             //if connection doesn't contain one of the stations involved in new connection

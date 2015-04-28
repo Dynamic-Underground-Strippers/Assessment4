@@ -257,4 +257,6 @@ public class Goal {
 	public NodeType getDestinationType() {
 		return destinationType;
 	}
+
+	public Station getExclusionStation() { return exclusionStation; }
 }
