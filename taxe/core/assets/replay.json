@@ -1,17 +1,85 @@
 {
 jsonTurns: [
 	{
+		placedTrains: [
+			{
+				placedStation: "Heslington Hall"
+			}
+		],
+		setRoutes: [
+			[
+				{
+					class: java.lang.Integer,
+					value: 0
+				},
+				{
+					class: java.lang.String,
+					value: "Heslington Hall"
+				},
+				{
+					class: java.lang.String,
+					value: Derwent
+				},
+				{
+					class: java.lang.String,
+					value: "Central Hall"
+				}
+			]
+		],
 		givenGoal: {
-			origin: Goodricke,
-			destination: "Heslington Hall",
+			origin: Vanbrugh,
+			destination: Library,
 			nodeType: "null"
 		},
+		givenResources: [
+			{},
+			{}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Vanbrugh,
+			destination: Derwent,
+			nodeType: "null"
+		},
+		givenResources: [
+			{
+				index: 1
+			},
+			{}
+		]
+	},
+	{
+		givenGoal: {
+			origin: James,
+			destination: "Central Hall",
+			nodeType: "null"
+		},
+		connectionsBlocked: [
+			{
+				start: Langwith,
+				end: Constantine
+			}
+		],
 		givenResources: [
 			{
 				index: 2
 			},
 			{
 				index: 2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Alcuin,
+			destination: "null",
+			nodeType: SPORTS
+		},
+		givenResources: [
+			{},
+			{
+				index: 1
 			}
 		]
 	}
