@@ -183,7 +183,11 @@ public class Train extends Resource {
 
     public Station getLastStation() {
         //Returns the station that the train has most recently visited
-        return this.history.get(history.size() - 1).getFirst();
+        if (this.history.size() > 0) {
+            return this.history.get(history.size() - 1).getFirst();
+        } else {
+            return this.route.get(0);
+        }
 
     }
 
