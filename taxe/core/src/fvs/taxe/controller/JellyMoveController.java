@@ -73,38 +73,6 @@ public class JellyMoveController {
     private RunnableAction perStationAction(final Station station) {
         return new RunnableAction() {
             public void run() {
-                if (!jelly.getRoute().get(0).equals(station)) {
-                    jelly.getActor().setRecentlyPaused(false);
-                }
-
-                jelly.addHistory(station, context.getGameLogic().getPlayerManager().getTurnNumber());
-
-                //Uncomment to test whether or not the jelly is correctly adding stations to its history.
-/*                System.out.println("Added to history: passed " + station.getName() + " on turn "
-                        + context.getGameLogic().getPlayerManager().getTurnNumber());*/
-
-                int stationIndex = jelly.getRoute().indexOf(station); //find this station in route
-                int nextIndex = stationIndex + 1;
-
-                //This checks whether or not the jelly is at its final destination by checking whether the index is still less than the list size
-                if (nextIndex < jelly.getRoute().size()) {
-                    Station nextStation = jelly.getRoute().get(nextIndex);
-
-                    //Checks whether the next connection is blocked, if so the jelly is paused, if not the jelly is unpaused.
-                    if (Game.getInstance().getMap().isConnectionBlocked(station, nextStation)) {
-                        jelly.getActor().setPaused(true);
-                        jelly.getActor().setRecentlyPaused(false);
-                    } else {
-                        if (jelly.getActor().isPaused()) {
-                            jelly.getActor().setPaused(false);
-                            jelly.getActor().setRecentlyPaused(true);
-                        }
-                    }
-                } else {
-                    //If the jelly is at its final destination then the jelly is set to unpaused so that it does not cause issues elsewhere in the program.
-                    jelly.getActor().setPaused(false);
-                }
-
 
             }
         };

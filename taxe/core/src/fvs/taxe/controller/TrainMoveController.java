@@ -228,6 +228,7 @@ public class TrainMoveController {
 		if (station.hasObstacle() && MathUtils.randomBoolean(station.getObstacle().getDestructionChance())){
 			train.getActor().remove();
 			train.getPlayer().removeResource(train);
+			Game.getInstance().getRecorder().removeResource(train);
 //			context.getNotepadController().displayFlashMessage("Your train was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
 		}
 	}
