@@ -3,68 +3,8 @@ jsonTurns: [
 	{
 		givenGoal: {
 			origin: Wentworth,
-			destination: Halifax,
+			destination: Derwent,
 			nodeType: "null"
-		},
-		givenResources: [
-			{
-				index: 2
-			},
-			{}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Derwent,
-			destination: "null",
-			nodeType: SPORTS
-		},
-		connectionsBlocked: [
-			{
-				start: Vanbrugh,
-				end: Wentworth
-			}
-		],
-		givenResources: [
-			{
-				index: -2
-			},
-			{
-				index: 1
-			}
-		]
-	},
-	{
-		removedResources: [
-			{
-				index: -2
-			}
-		],
-		givenGoal: {
-			origin: Alcuin,
-			destination: "null",
-			nodeType: SPORTS
-		},
-		removedConnections: [
-			{
-				start: Goodricke,
-				end: "Computer Science"
-			}
-		],
-		givenResources: [
-			{
-				index: -2
-			},
-			{
-				index: 2
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: Constantine,
-			destination: "null",
-			nodeType: SPORTS
 		},
 		givenResources: [
 			{
@@ -72,27 +12,6 @@ jsonTurns: [
 			},
 			{
 				index: 1
-			}
-		]
-	},
-	{
-		givenGoal: {
-			origin: James,
-			destination: Biology,
-			nodeType: "null"
-		},
-		connectionsBlocked: [
-			{
-				start: "Heslington Hall",
-				end: "The Charles"
-			}
-		],
-		givenResources: [
-			{
-				index: 2
-			},
-			{
-				index: 2
 			}
 		]
 	}
