@@ -260,7 +260,7 @@ public class Game {
 		ArrayList<Obstacle> obstacles = obstacleManager.getObstacles();
 
 		if (obstacles.size() > 0) {
-			if (MathUtils.randomBoolean(1f)) {
+			if (MathUtils.randomBoolean(0.1f)) {
 				for (Obstacle obstacle : obstacles) {
 					if (!obstacle.isActive()&&obstacle.getType()==ObstacleType.FLOOD){
 						obstacleStarted(obstacle);
