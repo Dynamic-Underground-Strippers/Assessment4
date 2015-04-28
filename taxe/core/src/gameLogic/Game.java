@@ -262,7 +262,7 @@ public class Game {
 		if (obstacles.size() > 0) {
 			if (MathUtils.randomBoolean(0.1f)) {
 				for (Obstacle obstacle : obstacles) {
-					if (!obstacle.isActive()){
+					if (!obstacle.isActive()&&obstacle.getType()==ObstacleType.FLOOD){
 						obstacleStarted(obstacle);
 					}
 				}
@@ -276,7 +276,7 @@ public class Game {
 		ArrayList<Obstacle> obstacles = obstacleManager.getObstacles();
 		for (int i = 0; i< obstacles.size(); i++) {
 			Obstacle obstacle = obstacles.get(i);
-			if (obstacle.isActive()) {
+			if (obstacle.isActive() && obstacle.getType()==ObstacleType.FLOOD) {
 				boolean isTimeLeft = obstacle.decreaseTimeLeft();
 				if (!isTimeLeft) {
 					// if the time left = 0, then deactivate the obstacle
@@ -332,10 +332,8 @@ public class Game {
 			int rand = MathUtils.random(2);
 			if (rand == 0) {
 				Station station = this.map.getRandomStation();
-				Obstacle obstacle = new Obstacle(ObstacleType.FLU, station);
-				obstacle.setActor(new ObstacleActor(obstacle));
+				Obstacle obstacle = obstacleManager.findFluObstacle(station);
 				obstacleStarted(obstacle);
-				obstacle.start();
 				flus.add(obstacle);
 				System.out.println("New flu in " + station.getName());
 			}
@@ -357,7 +355,6 @@ public class Game {
 					System.out.println("actor present");
 				}
 				obstacleEnded(obstacle);
-				obstacle.end();
 				flusToRemove.add(obstacle);
 				System.out.println("killed");
 			}else{
@@ -365,13 +362,10 @@ public class Game {
 				if(rand==0){
 					Obstacle obstacle = flus.get(i);
 					Station station = obstacle.getStation();
-
 					int randStation = MathUtils.random(map.getConnectedStations(station, null).size()-1);
 					Station station1 = map.getConnectedStations(station, null).get(randStation);
-					Obstacle newObstacle = new Obstacle(ObstacleType.FLU, station1);
-					newObstacle.setActor(new ObstacleActor(obstacle));
+					Obstacle newObstacle = obstacleManager.findFluObstacle(station1);
 					obstacleStarted(newObstacle);
-					newObstacle.start();
 					flusToAdd.add(newObstacle);
 					System.out.println("New flu in "+station1.getName()+"from "+station.getName());
 				}

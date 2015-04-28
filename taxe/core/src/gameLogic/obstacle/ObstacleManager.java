@@ -52,6 +52,13 @@ public class ObstacleManager {
 				obstacles.add(obstacle);
 			}
 		}
+
+		for (Station station: map.getStations()){
+			Obstacle obstacle = createObstacle("flu",station.getName());
+			if (obstacle != null){
+				obstacles.add(obstacle);
+			}
+		}
 	}
 
 	/** Create the obstacle that has given type, and is located at the station associated with the given string
@@ -65,7 +72,9 @@ public class ObstacleManager {
 
 		 if (typeName.equalsIgnoreCase("flood")) {
 			type = ObstacleType.FLOOD;
-		}
+		}else if (typeName.equalsIgnoreCase("flu")){
+			 type = ObstacleType.FLU;
+		 }
 		
 		System.out.println(type + " , " + typeName);
 		
@@ -83,5 +92,14 @@ public class ObstacleManager {
 	 */
 	public ArrayList<Obstacle> getObstacles() {
 		return this.obstacles;
+	}
+
+	public Obstacle findFluObstacle(Station station){
+		for (Obstacle obstacle: obstacles){
+			if (obstacle.getStation().equals(station)&&obstacle.getType()==ObstacleType.FLU){
+				return obstacle;
+			}
+		}
+		return null;
 	}
 }
