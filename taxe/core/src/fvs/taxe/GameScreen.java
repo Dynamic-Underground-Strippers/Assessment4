@@ -177,7 +177,6 @@ public class GameScreen extends ScreenAdapter {
 		context.setRouteController(routeController);
 		context.setNotepadController(notepadController);
 
-		rumble = obstacleController.getRumble();
 
 		animationFactor = Game.getInstance().getAnimationFactor();
 
@@ -242,16 +241,9 @@ public class GameScreen extends ScreenAdapter {
 		}
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		if (rumble.time > 0) {
-			Vector2 mapPosition = rumble.tick(delta);
-			game.batch.begin();
-			game.batch.draw(mapTexture, mapPosition.x, mapPosition.y);
-			game.batch.end();
-		} else {
 			game.batch.begin();
 			game.batch.draw(mapTexture, 0, 85, 1022, 561);
 			game.batch.end();
-		}
 		if (turn > darkStartTurn + (timeUntilDark / 2f)) {
 			game.batch.begin();
 			game.batch.draw(mapOverlayTexture, 0, 85, 1022, 561);

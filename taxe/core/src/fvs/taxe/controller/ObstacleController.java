@@ -2,6 +2,7 @@ package fvs.taxe.controller;
 
 import fvs.taxe.actor.ObstacleActor;
 import fvs.taxe.actor.ParticleEffectActor;
+import gameLogic.TurnListener;
 import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleType;
@@ -22,10 +23,8 @@ public class ObstacleController {
 	private Context context;
 	
 	/**Hashmap of particle effects with a corresponding string name*/
-	private HashMap<String, ParticleEffectActor> effects;
-	
-	/**The rumble is used to vibrate the Screen when an obstacle is placed*/
-	private Rumble rumble;
+	private ArrayList<ParticleEffectActor> effectActors;
+
 	
 	/**The Instantiation method sets up the particle effects and creates a listener for when an Obstacle is started so that it can update
 	 * the graphics accordingly.
@@ -34,9 +33,7 @@ public class ObstacleController {
 	public ObstacleController(final Context context) {
 		// take care of rendering of stations (only rendered on map creation, visibility changed when active)
 		this.context = context;
-		effects = new HashMap<String, ParticleEffectActor>();
-		createParticleEffects();
-		rumble = new Rumble();
+		effectActors = new ArrayList<ParticleEffectActor>();
 		context.getGameLogic().subscribeObstacleChanged(new ObstacleListener() {
 			
 			@Override
@@ -48,11 +45,19 @@ public class ObstacleController {
 
 
 				if (obstacle.getType() == ObstacleType.FLOOD) {
-					effects.get("Flood").setPosition(obstacle.getPosition().getX() - 10, obstacle.getPosition().getY() + 50);
-					effects.get("Flood").start();
+					ParticleEffect floodEffect = new ParticleEffect();
+					floodEffect.load(Gdx.files.internal("effects/flood.p"), Gdx.files.internal("effects"));
+					ParticleEffectActor floodActor = new ParticleEffectActor(floodEffect);
+					floodActor.setPosition(obstacle.getPosition().getX() - 10, obstacle.getPosition().getY() + 50);
+					floodActor.start();
+					effectActors.add(floodActor);
 				} else if (obstacle.getType() == ObstacleType.FLU) {
-					effects.get("Blizzard").setPosition(obstacle.getPosition().getX() - 10, obstacle.getPosition().getY() + 50);
-					effects.get("Blizzard").start();
+					ParticleEffect snowEffect = new ParticleEffect();
+					snowEffect.load(Gdx.files.internal("effects/snow.p"), Gdx.files.internal("effects"));
+					ParticleEffectActor fluActor = new ParticleEffectActor(snowEffect);
+					fluActor.setPosition(obstacle.getPosition().getX() - 10, obstacle.getPosition().getY() + 50);
+					fluActor.start();
+					effectActors.add(fluActor);
 				}
 			}
 			@Override
@@ -60,6 +65,12 @@ public class ObstacleController {
 				obstacle.getActor().setVisible(false);
 				obstacle.getStation().clearObstacle();
 				obstacle.end();
+			}
+		});
+		context.getGameLogic().getPlayerManager().subscribeTurnChanged(new TurnListener() {
+			@Override
+			public void changed() {
+				drawObstacleEffects();
 			}
 		});
 	}
@@ -88,33 +99,11 @@ public class ObstacleController {
 		return obstacleActor;
 	}
 	
-	/**This method sets up particle effects for use in the game. It needs to be called once to use effects, and loads effects from the internal files*/
-	private void createParticleEffects() {
-		ParticleEffect snowEffect = new ParticleEffect();
-		snowEffect.load(Gdx.files.internal("effects/snow.p"), Gdx.files.internal("effects"));
-		ParticleEffectActor snowActor = new ParticleEffectActor(snowEffect);
-		effects.put("Blizzard", snowActor);
-		
-		ParticleEffect floodEffect = new ParticleEffect();
-		floodEffect.load(Gdx.files.internal("effects/flood.p"), Gdx.files.internal("effects"));
-		ParticleEffectActor floodActor = new ParticleEffectActor(floodEffect);
-		effects.put("Flood", floodActor);
-		
-		ParticleEffect volcanoEffect = new ParticleEffect();
-		volcanoEffect.load(Gdx.files.internal("effects/volcano.p"), Gdx.files.internal("effects"));
-		ParticleEffectActor volcanoActor = new ParticleEffectActor(volcanoEffect);
-		effects.put("Volcano", volcanoActor);
-	}
-	
 	/**This method draws the obstacle effects at their locations with their visibilities*/
 	public void drawObstacleEffects() {
-		for (ParticleEffectActor actor : effects.values()) {
+		for (ParticleEffectActor actor : effectActors) {
 			context.getStage().addActor(actor);
 		}
-	}
-
-	/**@returns the Rumble used in the ObstacleController to shake the screen*/
-	public Rumble getRumble() {
-		return rumble;
+		effectActors.clear();
 	}
 }

@@ -260,7 +260,7 @@ public class Game {
 		ArrayList<Obstacle> obstacles = obstacleManager.getObstacles();
 
 		if (obstacles.size() > 0) {
-			if (MathUtils.randomBoolean(0.1f)) {
+			if (MathUtils.randomBoolean(1f)) {
 				for (Obstacle obstacle : obstacles) {
 					if (!obstacle.isActive()&&obstacle.getType()==ObstacleType.FLOOD){
 						obstacleStarted(obstacle);
@@ -371,6 +371,7 @@ public class Game {
 				}
 			}
 		}
+		//It was necessary to add and remove flus outside of the look as it is an index based loop, removing them inside the loop would cause the program to skip flus/check the newly created flus (could cause infinite spawn of flu)
 		for (Obstacle flu: flusToRemove){
 			flus.remove(flu);
 		}
