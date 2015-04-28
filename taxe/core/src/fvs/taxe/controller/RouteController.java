@@ -15,6 +15,7 @@ import java.util.List;
 
 import fvs.taxe.StationClickListener;
 import fvs.taxe.TaxeGame;
+import fvs.taxe.actor.TrainActor;
 import gameLogic.Game;
 import gameLogic.GameState;
 import gameLogic.map.CollisionStation;
@@ -50,6 +51,8 @@ public class RouteController {
     //changeRoute
     private boolean editingRoute = false;
     private double distance = 0;
+    /** If view route has been selected, the index into the connections array of which connection the train is partly across */
+    private int indexPartial = -1;
 
     /**Instantiation method. Sets up a listener for when a train is selected. If the RouteController is routing, that station is then added to the route,
      * @param context The context of the game.
@@ -215,7 +218,7 @@ public class RouteController {
         context.getGameLogic().setState(GameState.NORMAL);
         routingButtons.remove();
         isRouting = false;
-
+editingRoute = false;
         TrainController trainController = new TrainController(context);
         trainController.setTrainsVisible(train, true);
         try {
@@ -227,30 +230,43 @@ public class RouteController {
             train.getActor().setVisible(false);
         }
 
+        if (indexPartial != -1){
+            context.getGameLogic().getMap().getConnections().get(indexPartial).getActor().clearPartialPosition();
+        }
+        indexPartial = -1;
         drawRoute(Color.GRAY);
+
     }
 
     /**This method draws the currently selected Route for the player to view, using a different Color.
      * @param color The Color of the Route.
      */
     public void drawRoute(Color color) {
-        if (editingRoute && (positions.size()==1)){
-            Rectangle bounds = train.getActor().getBounds();
-            TaxeGame game = context.getTaxeGame();
-            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            game.shapeRenderer.setColor(color);
-            game.shapeRenderer.rectLine(bounds.getX(), bounds.getY(),
-                    positions.get(0).getX(), positions.get(0).getY(),
-                    StationController.CONNECTION_LINE_WIDTH);
-            game.shapeRenderer.end();
-        }
+        if (editingRoute){
+            drawPartialRoute();
+        }else {
 
-        for (Connection connection : connections) {
-            if ((connection.isBlocked()) && (!(Game.getInstance().getState() == GameState.PLACING)) && (!(Game.getInstance().getState() == GameState.ROUTING))){
-                connection.getActor().setConnectionColor(Color.RED);
-            } else{
-                connection.getActor().setConnectionColor(color);
+            for (Connection connection : connections) {
+                if ((connection.isBlocked()) && (!(Game.getInstance().getState() == GameState.PLACING)) && (!(Game.getInstance().getState() == GameState.ROUTING))) {
+                    connection.getActor().setConnectionColor(Color.RED);
+                } else {
+                    connection.getActor().setConnectionColor(color);
+                }
             }
+        }
+    }
+
+    /** draws a route with a train partially on it */
+    private void drawPartialRoute() {
+        // calculate where train is
+        Station next = train.getNextStation();
+        Connection partialConnection = context.getGameLogic().getMap().getConnection(next.getName(), train.getLastStation().getName());
+        indexPartial  = context.getGameLogic().getMap().getConnections().indexOf(partialConnection);
+        // set the connection actor to render a portion of it (from train to station)
+        partialConnection.getActor().setPartialPosition(train.getActor().getX()+ TrainActor.width/2, train.getActor().getY() + TrainActor.height/2, positions.get(0));
+
+        for (int i = connections.indexOf(partialConnection)+1; i<connections.size(); i++){
+            connections.get(i).getActor().setConnectionColor(Color.BLACK);
         }
     }
 
