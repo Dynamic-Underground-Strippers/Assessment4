@@ -2,7 +2,7 @@ Untitled
 - Delay -
 active: false
 - Duration - 
-lowMin: 2000.0
+lowMin: 2000.00
 lowMax: 2000.0
 - Count - 
 min: 0
