@@ -179,9 +179,11 @@ public class ResourceManager {
 
 		}else{
 			for (Resource r:player.getResources()){
-				Train train = (Train) r;
-				if (train.getID()==index){
-					player.getResources().remove(r);
+				if (r instanceof Train) {
+					Train train = (Train) r;
+					if (train.getID() == index) {
+						player.getResources().remove(r);
+					}
 				}
 			}
 		}
