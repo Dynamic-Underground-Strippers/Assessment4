@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import gameLogic.map.Position;
 
 /**This class is a type of image specifically for creating connections between stations.*/
 public class ConnectionActor extends Image{
@@ -32,6 +33,17 @@ public class ConnectionActor extends Image{
 
 	private TaxeGame game;
 
+	// By "partially draw", it means to draw the whole connection in COlor, then draw the partial section in black
+
+	/** Boolean saying whether the connection should be partly drawn */
+	private boolean partialDraw;
+
+	/** If the connection is being partially drawn, where the partial connection starts from */
+	private IPositionable partialStart;
+
+	/** If the connection is being partially drawn, where the partial connection ends */
+	private IPositionable partialNext;
+
 	public ConnectionActor(Color color, IPositionable start, IPositionable end, float connectionWidth, Context context)  {
 		shapeRenderer = new ShapeRenderer();
 		this.color = color;
@@ -48,8 +60,14 @@ public class ConnectionActor extends Image{
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(color);
         shapeRenderer.rectLine(start.getX(), start.getY(), end.getX(), end.getY(), connectionWidth);
-        shapeRenderer.end();
 
+
+		if (partialDraw) {
+			shapeRenderer.setColor(Color.BLACK);
+			shapeRenderer.rectLine(partialStart.getX(), partialStart.getY(), partialNext.getX(), partialNext.getY(), connectionWidth);
+		}
+
+		shapeRenderer.end();
 		if (Game.getInstance().getState() == GameState.ROUTING) {
 			IPositionable midpoint = this.getMidpoint();
 			batch.begin();
@@ -106,4 +124,23 @@ public class ConnectionActor extends Image{
 		//Uses vector maths to find the absolute distance of the connection
 		return Vector2.dst(start.getX(), start.getY(), end.getX(), end.getY());
 	}
+
+	/** Clear the previous partial drawing values, and disable the drawing of partial routes until reenabled with setPartialPosition() */
+	public void clearPartialPosition(){
+		partialDraw = false;
+		partialStart = null;
+		partialNext = null;
+	}
+
+	/** Set the connection to be partially drawn
+	 * @param x The starting location's x value
+	 * @param y The starting location's y value
+	 * @param position The end position to draw the partial route to
+	 */
+	public void setPartialPosition(float x, float y, IPositionable position) {
+		partialDraw = true;
+		partialStart = new Position((int)x, (int)y);
+		partialNext = position;
+	}
+
 }
