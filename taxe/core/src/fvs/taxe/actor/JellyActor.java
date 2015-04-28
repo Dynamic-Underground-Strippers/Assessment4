@@ -81,7 +81,7 @@ public class JellyActor extends Image {
             Train collision = collided();
             if (collision != null) {
                 //If there is a collision then the user is informed, the two trains destroyed and the connection that they collided on is blocked for 5 turns.
-                context.getNotepadController().displayFlashMessage("Insert relevant message here", Color.BLACK, Color.RED, 4);
+                context.getNotepadController().displayFlashMessage("You were canvassed by a YUSU Election candidate. Miss a turn.", Color.BLACK, Color.RED, 4);
                 System.out.println("collision");
                 //no need to block connection
                 //Game.getInstance().getMap().blockConnection(jelly.getLastStation(), jelly.getFinalDestination(), 5);
@@ -177,9 +177,6 @@ public class JellyActor extends Image {
                                         //This prevents the issue of two paused trains crashing when they shouldn't
                                         //There is still the potential issue of two blocked trains colliding when they shouldn't, as it is impossible to know which connection a blocked train will occupy. i.e when one train is rerouted but not the other
 
-                                        //TEMP??? - ONLY COLLIDE WHEN TRAINS ARE IN SAME DIRECTION
-                                        //TODO: DECIDE WHETHER THIS IS TEMPORARY OR PERMANENT CHANGE
-                                        if (this.facingLeft == otherTrain.getActor().isFacingLeft())
                                             return otherTrain;
 
                                         //This is slightly limiting as it only allows two trains to collide with each other, whereas in theory more than 2 could collide, this is however very unlikely and due to complications
