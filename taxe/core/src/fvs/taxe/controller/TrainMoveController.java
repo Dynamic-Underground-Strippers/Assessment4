@@ -81,7 +81,7 @@ public class TrainMoveController {
 				if (!train.getRoute().get(0).equals(station)) {
 					train.getActor().setRecentlyPaused(false);
 				}
-
+				obstacleCollision(station);
 				train.addHistory(station, context.getGameLogic().getPlayerManager().getTurnNumber());
 
 

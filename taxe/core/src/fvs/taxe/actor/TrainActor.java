@@ -185,10 +185,6 @@ public class TrainActor extends Image {
         return this.paused;
     }
 
-    public boolean getPaused() {
-        return this.paused;
-    }
-
     public boolean isRecentlyPaused() {
         return recentlyPaused;
     }

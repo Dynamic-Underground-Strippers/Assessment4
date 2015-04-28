@@ -24,8 +24,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 
 /**Controller for moving trains.*/
 public class JellyMoveController {
-    /**The chance (as a decimal) of a junction failing.*/
-    private static final float JUNCTION_FAILURE_CHANCE = 0.2f;
 
     /**The context of the game.*/
     private Context context;
@@ -110,18 +108,6 @@ public class JellyMoveController {
 
             }
         };
-    }
-
-    /**This method checks whether a jelly has failed upon reaching a statement using the junction failiure chance. If it has, the movement is interrupted.*/
-    private void junctionFailure(Station station) {
-        // calculate if a junction failure has occured- if it has, stop the jelly at the station for that turn
-        if (station instanceof CollisionStation){
-            boolean junctionFailed = MathUtils.randomBoolean(JUNCTION_FAILURE_CHANCE);
-            if (junctionFailed && station != jelly.getRoute().get(0)) {
-                action.setInterrupt(true);
-//                context.getNotepadController().displayObstacleMessage("Junction failed, " + jelly.getName() + " stopped!", Color.YELLOW);
-            }
-        }
     }
 
     /**This method produces an action for when the jelly has reached it's final destination.
@@ -212,58 +198,5 @@ public class JellyMoveController {
         return Vector2.dst(a.getX(), a.getY(), b.getX(), b.getY());
     }
 
-    /**This method tests for collisions when a jelly reaches a junction. If there is a collision, both trains are destroyed.
-     * @param station The station to test.
-     */
-    private void collisions(Station station) {
-        //test for jelly collisions at Junction point
-        if(!(station instanceof CollisionStation)) {
-            return;
-        }
-        List<Jelly> trainsToDestroy = collidedJellys();
 
-        if(trainsToDestroy.size() > 0) {
-            for(Jelly trainToDestroy : trainsToDestroy) {
-                trainToDestroy.getActor().remove();
-                trainToDestroy.getPlayer().removeResource(trainToDestroy);
-            }
-
-//            context.getNotepadController().displayFlashMessage("Two trains collided at a Junction.  They were both destroyed.", Color.BLACK, Color.RED, 4);
-        }
-    }
-
-    /**This method checks if the jelly has collided with an obstacle when it reaches a station. If it has, the jelly is destroyed.*/
-    private void obstacleCollision(Station station) {
-        // works out if the station has an obstacle active there, whether to destroy the train
-        if (station.hasObstacle() && MathUtils.randomBoolean(station.getObstacle().getDestructionChance())){
-            jelly.getActor().remove();
-            jelly.getPlayer().removeResource(jelly);
-//            context.getNotepadController().displayFlashMessage("Your jelly was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
-        }
-    }
-
-    /**This method returns the list of trains that the jelly has collided with at a junction.
-     * @return A list of trains that the current jelly collided with.
-     */
-    private List<Jelly> collidedJellys() {
-        List<Jelly> trainsToDestroy = new ArrayList<Jelly>();
-
-        for(Player player : context.getGameLogic().getPlayerManager().getAllPlayers()) {
-            for(Resource resource : player.getResources()) {
-                if(resource instanceof Jelly) {
-                    Jelly otherJelly = (Jelly) resource;
-                    if(otherJelly.getActor() == null) continue;
-                    if(otherJelly == jelly) continue;
-
-                    if(jelly.getActor().getBounds().overlaps(otherJelly.getActor().getBounds())) {
-                        //destroy trains that have crashed and burned
-                        trainsToDestroy.add(jelly);
-                        trainsToDestroy.add(otherJelly);
-                    }
-                }
-            }
-        }
-
-        return trainsToDestroy;
-    }
 }
