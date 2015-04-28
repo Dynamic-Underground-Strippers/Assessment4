@@ -75,8 +75,8 @@ timeline0: 0.0
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 30.0
-highMax: 300.0
+highMin: 20.0
+highMax: 250.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -124,12 +124,24 @@ timeline0: 0.0
 - Gravity - 
 active: false
 - Tint - 
-colorsCount: 3
-colors0: 1.0
-colors1: 0.99215686
-colors2: 0.99215686
-timelineCount: 1
+colorsCount: 12
+colors0: 0.06666667
+colors1: 1.0
+colors2: 0.0627451
+colors3: 0.11372549
+colors4: 1.0
+colors5: 0.10980392
+colors6: 0.0
+colors7: 0.60784316
+colors8: 0.0
+colors9: 0.047058824
+colors10: 0.3372549
+colors11: 0.0
+timelineCount: 4
 timeline0: 0.0
+timeline1: 0.37694705
+timeline2: 0.5742471
+timeline3: 1.0
 - Transparency - 
 lowMin: 0.0
 lowMax: 0.0
@@ -137,14 +149,14 @@ highMin: 1.0
 highMax: 1.0
 relative: false
 scalingCount: 4
-scaling0: 0.33333334
+scaling0: 0.1754386
 scaling1: 0.28070176
-scaling2: 0.14035088
+scaling2: 0.5263158
 scaling3: 0.0
 timelineCount: 4
 timeline0: 0.0
 timeline1: 0.28767124
-timeline2: 0.8561644
+timeline2: 0.79452056
 timeline3: 1.0
 - Options - 
 attached: false
@@ -152,6 +164,5 @@ continuous: false
 aligned: false
 additive: true
 behind: false
-premultipliedAlpha: false
 - Image Path -
 pre_particle.png
