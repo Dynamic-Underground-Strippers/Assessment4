@@ -3,15 +3,125 @@ jsonTurns: [
 	{
 		givenGoal: {
 			origin: Wentworth,
-			destination: Derwent,
+			destination: "Computer Science",
+			nodeType: "null"
+		},
+		givenResources: [
+			{},
+			{
+				index: 2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Wentworth,
+			destination: "null",
+			nodeType: SPORTS
+		},
+		connectionsBlocked: [
+			{
+				start: Vanbrugh,
+				end: "Central Hall"
+			}
+		],
+		givenResources: [
+			{},
+			{}
+		]
+	},
+	{
+		givenGoal: {
+			origin: James,
+			destination: "Central Hall",
 			nodeType: "null"
 		},
 		givenResources: [
 			{
+				index: 1
+			},
+			{
+				index: -1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Wentworth,
+			destination: "Computer Science",
+			nodeType: "null"
+		},
+		connectionsBlocked: [
+			{
+				start: Goodricke,
+				end: "Computer Science"
+			}
+		],
+		givenResources: [
+			{
+				index: -2
+			},
+			{
 				index: 2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Wentworth,
+			destination: "null",
+			nodeType: SPORTS
+		},
+		givenResources: [
+			{
+				index: 1
 			},
 			{
 				index: 1
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Halifax,
+			destination: "Heslington Hall",
+			nodeType: "null"
+		},
+		connectionsBlocked: [
+			{
+				start: Chemistry,
+				end: "Heslington Hall"
+			}
+		],
+		givenResources: [
+			{
+				index: 1
+			},
+			{
+				index: -2
+			}
+		]
+	},
+	{
+		givenGoal: {
+			origin: Chemistry,
+			destination: Langwith,
+			nodeType: "null"
+		},
+		givenResources: [
+			{}
+		]
+	},
+	{
+		connectionsBlocked: [
+			{
+				start: "Random Node",
+				end: Physics
+			}
+		],
+		givenResources: [
+			{
+				index: 2
 			}
 		]
 	}

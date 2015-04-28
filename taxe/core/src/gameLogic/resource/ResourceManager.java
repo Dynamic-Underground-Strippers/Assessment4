@@ -191,7 +191,7 @@ public class ResourceManager {
 	public void jelly(){
 		if (Game.getInstance().getPlayerManager().getTurnNumber() == 1 && j == 0) {
 			this.j = 1;
-			Jelly jelly = new Jelly("Jelly", "44Train.png", "44TrainRight.png", 50);
+			Jelly jelly = new Jelly("Jelly", "YusuCandidate.png", "YusuCandidate.png", 50);
 			Station randStation = Game.getInstance().getMap().getRandomStation();
 			jelly.setPosition(randStation.getLocation());
 			jelly.addHistory(randStation,0);
