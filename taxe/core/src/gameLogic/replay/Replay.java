@@ -54,10 +54,10 @@ public class Replay {
             for (JsonGoal removedJsonGoal : turn.getRemovedGoals()) {
                 origin = map.getStationByName(removedJsonGoal.getOrigin());
                 destination = map.getStationByName(removedJsonGoal.getDestination());
-                if (removedJsonGoal.getNodeType()!="null") {
-                    nodeType = NodeType.valueOf(removedJsonGoal.getNodeType());
+                if (removedJsonGoal.getNodeType().equals("null")) {
+                   nodeType = null;
                 }else{
-                    nodeType=null;
+                    nodeType = NodeType.valueOf(removedJsonGoal.getNodeType());
                 }
                 idealRoute = new ArrayList<List<Station>>();
                 if (destination == null) {
