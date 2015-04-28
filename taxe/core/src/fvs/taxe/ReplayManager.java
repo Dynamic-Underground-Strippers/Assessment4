@@ -72,16 +72,18 @@ private int jellyIndex;
         for (Tuple<Integer,Station> placing : replayData.getPlacedTrains()){
             Train train = currentPlayer.getTrainByID(placing.getFirst());
             Station station = placing.getSecond();
-            train.setPosition(station.getLocation());
-            train.addHistory(station, Game.getInstance().getPlayerManager().getTurnNumber());
+            if (train!=null) {
+                train.setPosition(station.getLocation());
+                train.addHistory(station, Game.getInstance().getPlayerManager().getTurnNumber());
 
-            Gdx.input.setCursorImage(null, 0, 0);
+                Gdx.input.setCursorImage(null, 0, 0);
 
-            TrainController trainController = new TrainController(context);
-            TrainActor trainActor = trainController.renderTrain(train);
-            trainController.setTrainsVisible(null, true);
-            trainActor.setVisible(true);
-            train.setActor(trainActor);
+                TrainController trainController = new TrainController(context);
+                TrainActor trainActor = trainController.renderTrain(train);
+                trainController.setTrainsVisible(null, true);
+                trainActor.setVisible(true);
+                train.setActor(trainActor);
+            }
         }
 
         for (Tuple<Integer, ArrayList<Station>> route : replayData.getSetRoutes()){
@@ -109,6 +111,10 @@ private int jellyIndex;
 
     public Station getNextJellyDestination() {
         jellyIndex++;
-        return jellyRoute.get(jellyIndex-1);
+        try {
+            return jellyRoute.get(jellyIndex - 1);
+        }catch (Exception e){
+            return jellyRoute.get(jellyRoute.size()-1);
+        }
     }
 }

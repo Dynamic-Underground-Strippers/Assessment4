@@ -167,12 +167,14 @@ public class ResourceManager {
 				for (Resource r:player.getResources()){
 					if (r instanceof  NewConnection){
 						player.getResources().remove(r);
+						break;
 					}
 				}
 			}else{
 				for (Resource r:player.getResources()){
 					if (r instanceof  DeleteConnection){
 						player.getResources().remove(r);
+						break;
 					}
 				}
 			}
@@ -183,6 +185,7 @@ public class ResourceManager {
 					Train train = (Train) r;
 					if (train.getID() == index) {
 						player.getResources().remove(r);
+						break;
 					}
 				}
 			}
