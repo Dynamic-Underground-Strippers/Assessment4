@@ -507,6 +507,10 @@ public class Map {
                         }catch(Exception e){}
                     }
                 }
+                if ((Game.getInstance().getJelly().getFinalDestination() == toBlock.getStation1() && Game.getInstance().getJelly().getLastStation() == toBlock.getStation2())
+                        || (Game.getInstance().getJelly().getFinalDestination() == toBlock.getStation2() && Game.getInstance().getJelly().getLastStation() == toBlock.getStation1())) {
+                    canBlock = false;
+                }
             } while (!canBlock);
 
             toBlock.setBlocked(5);
