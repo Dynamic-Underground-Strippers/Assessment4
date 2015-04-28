@@ -104,7 +104,7 @@ public class JsonTurn {
     public void removeResource(Resource resource){
         JsonResource jsonResource;
         if (resource instanceof Train){
-            jsonResource = new JsonResource(((Train) resource).getIndex());
+            jsonResource = new JsonTrain(((Train) resource).getID(),((Train) resource).getIndex(),"");
         }else if (resource instanceof DeleteConnection){
             //-2 is delete connection
             jsonResource = new JsonResource(-2);

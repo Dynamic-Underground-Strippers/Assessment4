@@ -113,8 +113,10 @@ public class Game {
 					}
 					if (state == GameState.REPLAY_SETUP) {
 						resourceManager.jelly();
+						map.decrementBlockedConnections();
 						setUpForReplay(playerManager.getCurrentPlayer()); //calls method to set up for turn which is about to happen
 					}
+
 				}
 			});
 

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import fvs.taxe.actor.ClockActor;
+import gameLogic.PlayerChangedListener;
+import gameLogic.TurnListener;
 
 public class ClockController {
     private final Context context;
@@ -16,7 +18,12 @@ public class ClockController {
 
     public ClockController(Context context) {
         this.context = context;
-
+        context.getGameLogic().getPlayerManager().subscribeTurnChanged(new TurnListener() {
+            @Override
+            public void changed() {
+                draw();
+            }
+        });
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("clock_font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = (int) (ClockActor.HEIGHT * 0.6f);

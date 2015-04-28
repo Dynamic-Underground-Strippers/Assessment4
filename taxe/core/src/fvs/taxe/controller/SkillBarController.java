@@ -1,6 +1,7 @@
 package fvs.taxe.controller;
 
 import fvs.taxe.actor.SkillBarActor;
+import gameLogic.PlayerChangedListener;
 
 public class SkillBarController {
 	private final Context context;
@@ -8,6 +9,12 @@ public class SkillBarController {
 
 	public SkillBarController(Context context) {
 		this.context = context;
+		context.getGameLogic().getPlayerManager().subscribePlayerChanged(new PlayerChangedListener() {
+			@Override
+			public void changed() {
+				draw();
+			}
+		});
 	}
 
 	public void draw() {

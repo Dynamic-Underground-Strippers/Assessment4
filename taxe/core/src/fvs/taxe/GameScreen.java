@@ -278,12 +278,12 @@ public class GameScreen extends ScreenAdapter {
 			stationController.displayNumberOfTrainsAtStations();
 		}
 
-		resourceController.drawHeaderText();
+		//resourceController.drawHeaderText();
 		goalController.drawHeaderText();
 		scoreController.drawScoreDetails();
 		scoreController.drawFinalScoreDetails();
-		clockController.draw();
-		//skillBarController.draw();
+		//clockController.draw();
+		skillBarController.draw();
 	}
 
 	@Override
@@ -293,11 +293,13 @@ public class GameScreen extends ScreenAdapter {
 		stationController.drawConnections(map.getConnections(), Color.GRAY);
 		stationController.drawStations();
 		obstacleController.drawObstacleEffects();
-		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
+		//resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
+		skillBarController.draw();
 		notepadController.drawBackground();
 		notepadController.drawLabels();
 		notepadController.drawEndTurnButton();
 		goalController.drawCurrentPlayerGoals();
+		clockController.draw();
 	}
 
 	@Override
