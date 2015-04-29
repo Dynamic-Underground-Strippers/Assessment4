@@ -217,12 +217,6 @@ public class ResourceManager {
 				Game.getInstance().getRecorder().updateJelly(nextStation);
 			}
 			route.add(nextStation.getLocation());
-			//Station nextStation1 = Game.getInstance().getMap().getConnectedStations(nextStation, null).get(0);
-			//route.add(nextStation1.getLocation());
-			/*route.add(nextStation.getLocation());
-			route.add(randStation.getLocation());
-			route.add(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getLocation());*/
-			//jelly.setFinalDestination(Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1));
 			jelly.setRoute(Game.getInstance().getMap().createRoute(route));
 
 			JellyController jellycontroller = new JellyController(Game.getInstance().getContext());

@@ -2,6 +2,7 @@ package gameLogic;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import fvs.taxe.ReplayManager;
 import fvs.taxe.actor.ObstacleActor;
 import fvs.taxe.controller.Context;
@@ -109,7 +110,12 @@ public class Game {
 				@Override
 				public void changed() {
 					if (savedReplay==null){
-						savedReplay = recorder.loadReplay();
+						try {
+							savedReplay = recorder.loadReplay();
+						} catch(Exception e){
+							new Dialog("No replay file found. \n Game will now exit",context.getSkin());
+							Gdx.app.exit();
+						}
 					}
 					if (state == GameState.REPLAY_SETUP) {
 						resourceManager.jelly();
