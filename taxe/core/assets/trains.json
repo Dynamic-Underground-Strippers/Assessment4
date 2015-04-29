@@ -11,6 +11,10 @@
       {
         "name": "Taxi Train",
         "speed": 75
+      },
+      {
+        "name": "Bike Train",
+        "speed": 25
       }
     ]
 }

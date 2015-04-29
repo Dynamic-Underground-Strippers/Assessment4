@@ -1,13 +1,13 @@
 package gameLogic.resource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Util.Tuple;
 import fvs.taxe.actor.TrainActor;
 import gameLogic.Game;
 import gameLogic.map.IPositionable;
 import gameLogic.map.Station;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /** The class that represents a train- defined by its name and speed */
 public class Train extends Resource {
@@ -67,21 +67,21 @@ public class Train extends Resource {
      * @return String representing filepath of left image, in assets/ directory
      */
     public String getLeftImage() {
-        return "trains/" + leftImage;
+        return "resources/" + leftImage;
     }
 
     /** Get the filepath associated with the image of the train when moving right 
      * @return String representing filepath of right image, in assets/ directory
      */
     public String getRightImage() {
-        return "trains/" + rightImage;
+        return "resources/" + rightImage;
     }
 
     /** Get the filepath associated with the cursor image of the train
      * @return String representing filepath of cursor image, in assets/ directory
      */
     public String getCursorImage() {
-        return "trains/cursor/" + leftImage;
+        return "resources/cursor/" + leftImage;
     }
 
     /** Set the position of the train to be the Ipositionable given
