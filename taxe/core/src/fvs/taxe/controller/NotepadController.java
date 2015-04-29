@@ -1,14 +1,8 @@
 package fvs.taxe.controller;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import fvs.taxe.TaxeGame;
 import fvs.taxe.actor.NotepadActor;
-import gameLogic.Game;
-import gameLogic.GameState;
-import gameLogic.GameStateListener;
 
 public class NotepadController {
 
@@ -48,40 +42,4 @@ public class NotepadController {
 		notepadActor = new NotepadActor();
 		context.getStage().addActor(notepadActor);
 	}
-
-	/**
-	 * This method adds an End Turn button to the game that captures an on click event and notifies the game when the turn is over.
-	 */
-	public void drawEndTurnButton() {
-		if (Game.getInstance().getReplay()) {
-			endTurnButton = new TextButton("Start", context.getSkin());
-		} else {
-			endTurnButton = new TextButton("End Turn", context.getSkin());
-		}
-		endTurnButton.setPosition(TaxeGame.WIDTH - 100.0f, TaxeGame.HEIGHT - 33.0f);
-		endTurnButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				context.getGameLogic().getPlayerManager().turnOver(context);
-			}
-		});
-
-		context.getGameLogic().subscribeStateChanged(new GameStateListener() {
-			@Override
-			public void changed(GameState state) {
-				if (state == GameState.NORMAL || state == GameState.REPLAY_SETUP) {
-					endTurnButton.setText("Next Turn");
-					endTurnButton.setSize(80, 25);
-					endTurnButton.setVisible(true);
-				} else {
-					endTurnButton.setVisible(false);
-				}
-			}
-		});
-
-		context.getStage().addActor(endTurnButton);
-	}
-
-
-
 }

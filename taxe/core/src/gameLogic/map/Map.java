@@ -602,7 +602,7 @@ public class Map {
         ArrayList<Station> ofThisType = new ArrayList<Station>();
         for (Station s : stations) {
             if(s.getType() == type) ofThisType.add(s);
-            System.out.println(s.getName() + ", " + s.getType());
+//            System.out.println(s.getName() + ", " + s.getType());
         }
         Random random = new Random();
         int i = random.nextInt(ofThisType.size());
