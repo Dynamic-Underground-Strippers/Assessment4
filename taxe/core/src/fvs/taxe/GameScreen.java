@@ -13,10 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import fvs.taxe.controller.ClockController;
 import fvs.taxe.controller.Context;
+import fvs.taxe.controller.EndTurnController;
 import fvs.taxe.controller.GoalController;
 import fvs.taxe.controller.NotepadController;
 import fvs.taxe.controller.ObstacleController;
-import fvs.taxe.controller.ResourceController;
 import fvs.taxe.controller.RouteController;
 import fvs.taxe.controller.ScoreController;
 import fvs.taxe.controller.SkillBarController;
@@ -103,7 +103,7 @@ public class GameScreen extends ScreenAdapter {
 	/**
 	 * Controller for handling resources.
 	 */
-	private ResourceController resourceController;
+//	private ResourceController resourceController;
 
 	/**
 	 * Controller for handling each of the players' goals.
@@ -134,6 +134,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private SkillBarController skillBarController;
 
+	private EndTurnController endTurnController;
+
 	private int animationFactor;
 
 	private ReplayManager replayManager;
@@ -162,13 +164,14 @@ public class GameScreen extends ScreenAdapter {
 
 		stationController = new StationController(context, tooltip);
 		notepadController = new NotepadController(context);
-		resourceController = new ResourceController(context);
+//		resourceController = new ResourceController(context);
 		goalController = new GoalController(context);
 		routeController = new RouteController(context);
 		obstacleController = new ObstacleController(context);
 		scoreController = new ScoreController(context);
 		clockController = new ClockController(context);
 		skillBarController = new SkillBarController(context);
+		endTurnController = new EndTurnController(context);
 
 		replayManager = new ReplayManager(context);
 		Game.getInstance().setReplayManager(replayManager);
@@ -223,19 +226,24 @@ public class GameScreen extends ScreenAdapter {
 			}
 		});
 
+		skillBarController.draw();
+
 	}
 
 	@Override
 	public void render(float delta) {
 		int turn = Game.getInstance().getPlayerManager().getTurnNumber();
-		int darkStartTurn = 20;
-		float timeUntilDark = 8;
-		if (turn < darkStartTurn) {
+		int darkTurn = 26;
+//		if (turn < darkStartTurn) {
+//			Gdx.gl.glClearColor(255, 255, 255, 1);
+//		} else if (turn < darkStartTurn + timeUntilDark) {
+//			float colour = ((darkStartTurn + timeUntilDark - turn) / timeUntilDark);
+//			Gdx.gl.glClearColor(colour, colour, colour, 1);
+//		} else {
+//			Gdx.gl.glClearColor(0, 0, 0, 1);
+//		}
+		if (turn < darkTurn) {
 			Gdx.gl.glClearColor(255, 255, 255, 1);
-		} else if (turn < darkStartTurn + timeUntilDark) {
-			System.out.println();
-			float colour = ((darkStartTurn + timeUntilDark - turn) / timeUntilDark);
-			Gdx.gl.glClearColor(colour, colour, colour, 1);
 		} else {
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 		}
@@ -244,7 +252,8 @@ public class GameScreen extends ScreenAdapter {
 			game.batch.begin();
 			game.batch.draw(mapTexture, 0, 85, 1022, 561);
 			game.batch.end();
-		if (turn > darkStartTurn + (timeUntilDark / 2f)) {
+
+		if (turn >= darkTurn) {
 			game.batch.begin();
 			game.batch.draw(mapOverlayTexture, 0, 85, 1022, 561);
 			game.batch.end();
@@ -272,10 +281,10 @@ public class GameScreen extends ScreenAdapter {
 
 		//resourceController.drawHeaderText();
 		goalController.drawHeaderText();
-		scoreController.drawScoreDetails();
-		scoreController.drawFinalScoreDetails();
-		//clockController.draw();
-		skillBarController.draw();
+//		scoreController.drawScoreDetails();
+//		scoreController.drawFinalScoreDetails();
+		clockController.draw();
+//		skillBarController.draw();
 	}
 
 	@Override
@@ -285,11 +294,12 @@ public class GameScreen extends ScreenAdapter {
 		stationController.drawConnections(map.getConnections(), Color.GRAY);
 		stationController.drawStations();
 		obstacleController.drawObstacleEffects();
-		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
+//		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
 		notepadController.draw();
-		notepadController.drawEndTurnButton();
+//		notepadController.drawEndTurnButton();
 		goalController.drawCurrentPlayerGoals();
 		clockController.draw();
+		endTurnController.draw();
 	}
 
 	@Override

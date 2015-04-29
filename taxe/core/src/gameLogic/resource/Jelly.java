@@ -1,16 +1,12 @@
 package gameLogic.resource;
 
-import Util.Tuple;
-import fvs.taxe.actor.JellyActor;
-import fvs.taxe.actor.TrainActor;
-import fvs.taxe.controller.JellyController;
-import gameLogic.Game;
-import gameLogic.map.IPositionable;
-import gameLogic.map.Map;
-import gameLogic.map.Station;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import Util.Tuple;
+import fvs.taxe.actor.JellyActor;
+import gameLogic.map.IPositionable;
+import gameLogic.map.Station;
 
 /** The class that represents a train- defined by its name and speed */
 public class Jelly extends Resource {
@@ -94,7 +90,7 @@ public class Jelly extends Resource {
      * @return String representing filepath of cursor image, in assets/ directory
      */
     public String getCursorImage() {
-        return "trains/cursor/" + leftImage;
+        return "resources/cursor/" + leftImage;
     }
 
     /** Set the position of the train to be the Ipositionable given

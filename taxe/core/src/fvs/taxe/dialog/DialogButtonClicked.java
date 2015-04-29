@@ -12,6 +12,7 @@ import fvs.taxe.Button;
 import fvs.taxe.StationClickListener;
 import fvs.taxe.actor.TrainActor;
 import fvs.taxe.controller.Context;
+import fvs.taxe.controller.SkillBarController;
 import fvs.taxe.controller.StationController;
 import fvs.taxe.controller.TrainController;
 import gameLogic.Game;
@@ -406,5 +407,6 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
 
 
         }
+        SkillBarController.getInstance().draw();
     }
 }
