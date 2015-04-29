@@ -15,6 +15,7 @@ import fvs.taxe.controller.ClockController;
 import fvs.taxe.controller.Context;
 import fvs.taxe.controller.EndTurnController;
 import fvs.taxe.controller.GoalController;
+import fvs.taxe.controller.NewsFlashController;
 import fvs.taxe.controller.NotepadController;
 import fvs.taxe.controller.ObstacleController;
 import fvs.taxe.controller.RouteController;
@@ -136,6 +137,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private EndTurnController endTurnController;
 
+	private NewsFlashController newsFlashController;
+
 	private int animationFactor;
 
 	private ReplayManager replayManager;
@@ -172,6 +175,7 @@ public class GameScreen extends ScreenAdapter {
 		clockController = new ClockController(context);
 		skillBarController = new SkillBarController(context);
 		endTurnController = new EndTurnController(context);
+		newsFlashController = new NewsFlashController(context);
 
 		replayManager = new ReplayManager(context);
 		Game.getInstance().setReplayManager(replayManager);
