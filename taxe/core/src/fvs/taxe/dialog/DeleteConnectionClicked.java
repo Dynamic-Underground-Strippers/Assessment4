@@ -39,31 +39,4 @@ public class DeleteConnectionClicked extends ClickListener {
             dia.subscribeClick(listener);
         }
     }
-
-    @Override
-    public void enter(InputEvent event, float x, float y, int pointer, Actor trainActor) {
-        //This is used for mouseover events for Obstacles
-        //This shows the message if there is not one currently being displayed
-        if (!displayingMessage) {
-            displayingMessage = true;
-            if (Game.getInstance().getState() == GameState.NORMAL) {
-                //context.getTopBarController().displayMessage("Remove a connection on the map", Color.BLACK);
-
-
-            }
-        }
-    }
-
-    @Override
-    public void exit(InputEvent event, float x, float y, int pointer, Actor trainActor) {
-        //This is used for mouseover events for Obstacles
-        //This hides the message currently in the topBar if one is being displayed
-        if (displayingMessage) {
-            displayingMessage = false;
-            if (Game.getInstance().getState() == GameState.NORMAL) {
-                //If the game state is normal then the topBar is cleared by passing it an empty string to display for 0 seconds
-                //context.getTopBarController().clearMessage();
-            }
-        }
-    }
 }

@@ -17,17 +17,23 @@ public class EndTurnController {
 	}
 
 	public void draw() {
+		//This draws the end turn button
+
+		//If the actor exists then remove it and redraw it.
+		//This was necessary as the garbage collection was failing for this
 		if (endTurnActor != null) endTurnActor.remove();
 		endTurnActor = new EndTurnActor();
 		endTurnActor.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				//When the button is clicked, it triggers the turn over event
 				context.getGameLogic().getPlayerManager().turnOver(context);
 			}
 		});
 		context.getGameLogic().subscribeStateChanged(new GameStateListener() {
 			@Override
 			public void changed(GameState state) {
+				//Hides the end turn button while animating to prevent unintended behaviour
 				if (state == GameState.ANIMATING && !removed) {
 					endTurnActor.remove();
 					removed = true;

@@ -80,6 +80,7 @@ public class GoalController {
 		Player currentPlayer = pm.getCurrentPlayer();
 		float lastHeight = 65;
 
+		//Draws the current goals as clickable labels
 		for (Goal goal : currentPlayer.getActiveGoals()) {
 			y -= lastHeight;
 			Label label = new Label(goal.toString(), context.getSkin());

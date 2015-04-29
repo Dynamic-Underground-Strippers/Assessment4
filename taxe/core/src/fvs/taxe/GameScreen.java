@@ -31,7 +31,6 @@ import gameLogic.PlayerChangedListener;
 import gameLogic.TurnListener;
 import gameLogic.map.Map;
 import gameLogic.map.Station;
-import gameLogic.obstacle.Rumble;
 
 /**
  * This class displays the Game.java game state graphically to the player.
@@ -126,10 +125,7 @@ public class GameScreen extends ScreenAdapter {
 	 */
 	private ScoreController scoreController;
 
-	/**
-	 * Variable that is used to visibly "rumble" the game when an obstacle is placed.
-	 */
-	private Rumble rumble;
+
 
 	private ClockController clockController;
 
@@ -237,15 +233,9 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 		int turn = Game.getInstance().getPlayerManager().getTurnNumber();
-		int darkTurn = 26;
-//		if (turn < darkStartTurn) {
-//			Gdx.gl.glClearColor(255, 255, 255, 1);
-//		} else if (turn < darkStartTurn + timeUntilDark) {
-//			float colour = ((darkStartTurn + timeUntilDark - turn) / timeUntilDark);
-//			Gdx.gl.glClearColor(colour, colour, colour, 1);
-//		} else {
-//			Gdx.gl.glClearColor(0, 0, 0, 1);
-//		}
+
+		//After a certain turn, turn the map dark to create the illusion of nighttime
+		int darkTurn = 22;
 		if (turn < darkTurn) {
 			Gdx.gl.glClearColor(255, 255, 255, 1);
 		} else {
@@ -257,6 +247,7 @@ public class GameScreen extends ScreenAdapter {
 			game.batch.draw(mapTexture, 0, 85, 1022, 561);
 			game.batch.end();
 
+//After a certain turn, turn the map dark to create the illusion of nighttime
 		if (turn >= darkTurn) {
 			game.batch.begin();
 			game.batch.draw(mapOverlayTexture, 0, 85, 1022, 561);
@@ -283,12 +274,7 @@ public class GameScreen extends ScreenAdapter {
 			stationController.displayNumberOfTrainsAtStations();
 		}
 
-		//resourceController.drawHeaderText();
 		goalController.drawHeaderText();
-//		scoreController.drawScoreDetails();
-//		scoreController.drawFinalScoreDetails();
-		//clockController.draw();
-//		skillBarController.draw();
 	}
 
 	@Override
@@ -298,9 +284,7 @@ public class GameScreen extends ScreenAdapter {
 		stationController.drawConnections(map.getConnections(), Color.GRAY);
 		stationController.drawStations();
 		obstacleController.drawObstacleEffects();
-//		resourceController.drawPlayerResources(gameLogic.getPlayerManager().getCurrentPlayer());
 		notepadController.draw();
-//		notepadController.drawEndTurnButton();
 		goalController.drawCurrentPlayerGoals();
 		clockController.draw();
 		endTurnController.draw();

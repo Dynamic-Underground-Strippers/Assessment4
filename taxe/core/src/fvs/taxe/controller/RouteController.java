@@ -230,6 +230,7 @@ editingRoute = false;
             train.getActor().setVisible(false);
         }
 
+        //Resets the partial routing so that the connectionActor returns to its normal state
         if (indexPartial != -1){
             context.getGameLogic().getMap().getConnections().get(indexPartial).getActor().clearPartialPosition();
         }
@@ -245,7 +246,7 @@ editingRoute = false;
         if (editingRoute){
             drawPartialRoute();
         }else {
-
+            //If the route is not being edited then there is no need to draw a partial route, each connectionActor is coloured appropriately instead
             for (Connection connection : connections) {
                 if ((connection.isBlocked()) && (!(Game.getInstance().getState() == GameState.PLACING)) && (!(Game.getInstance().getState() == GameState.ROUTING))) {
                     connection.getActor().setConnectionColor(Color.RED);
@@ -258,6 +259,7 @@ editingRoute = false;
 
     /** draws a route with a train partially on it */
     private void drawPartialRoute() {
+        //This method draws a route which has a train part-way along the track
         // calculate where train is
         Station next = train.getNextStation();
         Connection partialConnection = context.getGameLogic().getMap().getConnection(next.getName(), train.getLastStation().getName());

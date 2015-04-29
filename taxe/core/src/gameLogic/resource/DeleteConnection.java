@@ -54,7 +54,7 @@ public class DeleteConnection extends Resource {
 
         Connection tempDeleted = map.getConnection(station1.getName(), station2.getName());
         map.removeConnection(station1, station2);
-
+        //Temporarily uses the removeConnection
 
         //Find the ideal solution to solving this objective
         Node<Station> originNode = new Node<Station>();
@@ -70,6 +70,7 @@ public class DeleteConnection extends Resource {
             map.addConnection(tempDeleted);
             return false;
         } else {
+            //If the removal was permitted then the actors are removed and the removal is recorded
             tempDeleted.getActor().remove();
             Game.getInstance().getRecorder().removeConnection(tempDeleted);
             return true;

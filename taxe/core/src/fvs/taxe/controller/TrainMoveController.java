@@ -202,25 +202,6 @@ public class TrainMoveController {
 		return Vector2.dst(a.getX(), a.getY(), b.getX(), b.getY());
 	}
 
-	/**This method tests for collisions when a train reaches a junction. If there is a collision, both trains are destroyed.
-	 * @param station The station to test.
-	 */
-	private void collisions(Station station) {
-		//test for train collisions at Junction point
-		if(!(station instanceof CollisionStation)) {
-			return;
-		}
-		List<Train> trainsToDestroy = collidedTrains();
-
-		if(trainsToDestroy.size() > 0) {
-			for(Train trainToDestroy : trainsToDestroy) {
-				trainToDestroy.getActor().remove();
-				trainToDestroy.getPlayer().removeResource(trainToDestroy);
-			}
-
-//			context.getNotepadController().displayFlashMessage("Two trains collided at a Junction.  They were both destroyed.", Color.BLACK, Color.RED, 4);
-		}
-	}
 
 	/**This method checks if the train has collided with an obstacle when it reaches a station. If it has, the train is destroyed.*/
 	private void obstacleCollision(Station station) {
@@ -233,28 +214,4 @@ public class TrainMoveController {
 		}
 	}
 
-	/**This method returns the list of trains that the train has collided with at a junction.
-	 * @return A list of trains that the current train collided with.
-	 */
-	private List<Train> collidedTrains() {
-		List<Train> trainsToDestroy = new ArrayList<Train>();
-
-		for(Player player : context.getGameLogic().getPlayerManager().getAllPlayers()) {
-			for(Resource resource : player.getResources()) {
-				if(resource instanceof Train) {
-					Train otherTrain = (Train) resource;
-					if(otherTrain.getActor() == null) continue;
-					if(otherTrain == train) continue;
-
-					if(train.getActor().getBounds().overlaps(otherTrain.getActor().getBounds())) {
-						//destroy trains that have crashed and burned
-						trainsToDestroy.add(train);
-						trainsToDestroy.add(otherTrain);
-					}
-				}
-			}
-		}
-
-		return trainsToDestroy;
-	}
 }

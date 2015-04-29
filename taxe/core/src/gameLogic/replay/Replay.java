@@ -54,12 +54,16 @@ public class Replay {
             for (JsonGoal removedJsonGoal : turn.getRemovedGoals()) {
                 origin = map.getStationByName(removedJsonGoal.getOrigin());
                 destination = map.getStationByName(removedJsonGoal.getDestination());
+
+                //Check whether the nodeType is equal to "null"
                 if (removedJsonGoal.getNodeType().equals("null")) {
                    nodeType = null;
                 }else{
                     nodeType = NodeType.valueOf(removedJsonGoal.getNodeType());
                 }
+
                 idealRoute = new ArrayList<List<Station>>();
+                //Checks whether or not it needs to retrieve multiple ideal routes or just one
                 if (destination == null) {
                     idealRoute = Game.getInstance().getGoalManager().getIdealRouteForType(origin, nodeType);
                 } else {
@@ -91,13 +95,13 @@ public class Replay {
             }
 
             //Reads in all of the routes from the Json
-            //This is commented out because it currently doesn't work and may require an overhaul of the whole saving system
             ArrayList<Tuple<Integer, ArrayList<Station>>> routes = new ArrayList<Tuple<Integer, ArrayList<Station>>>();
             for (Object[] jsonRoute : turn.getSetRoutes()) {
                 ArrayList<Station> route = new ArrayList<Station>();
                 for (int i = 1; i < jsonRoute.length; i++) {
                     route.add(map.getStationByName((String) jsonRoute[i]));
                 }
+                //Converts the object array to the Tuple<Integer,ArrayList<Station>>
                 routes.add(new Tuple<Integer, ArrayList<Station>>((Integer) jsonRoute[0], route));
             }
 

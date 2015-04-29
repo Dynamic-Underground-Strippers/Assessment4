@@ -34,7 +34,7 @@ public class ReplayManager {
     }
 private int jellyIndex;
     public void setUpForReplay(Player currentPlayer, Replay.Turn replayData,ArrayList<Station> jellyRoute){
-
+        //This is called every turn and sets up all the replay values for that turn
         //Add new connections
         for (Connection c : replayData.getPlacedConnections()){
             NewConnection nc = new NewConnection();
@@ -70,8 +70,11 @@ private int jellyIndex;
 
         //place trains
         for (Tuple<Integer,Station> placing : replayData.getPlacedTrains()){
+            //Retrieves the train from the player's inventory based on the ID passed to it
             Train train = currentPlayer.getTrainByID(placing.getFirst());
             Station station = placing.getSecond();
+            //If the train exists, then it is placed
+            //The train should always exist
             if (train!=null) {
                 train.setPosition(station.getLocation());
                 train.addHistory(station, Game.getInstance().getPlayerManager().getTurnNumber());
@@ -86,9 +89,11 @@ private int jellyIndex;
             }
         }
 
+        //Sets the route for the train with the ID provided to be equal to the route set out in the list of strings
         for (Tuple<Integer, ArrayList<Station>> route : replayData.getSetRoutes()){
             Train t = currentPlayer.getTrainByID(route.getFirst());
             t.setRoute(route.getSecond());
+            //Unused by required to move the train
             TrainMoveController move = new TrainMoveController(context, t);
         }
 
@@ -110,10 +115,13 @@ private int jellyIndex;
     }
 
     public Station getNextJellyDestination() {
+        //This increments the index at which the next station should be retrieved from the route
         jellyIndex++;
         try {
+            //Returns the next station along the route
             return jellyRoute.get(jellyIndex - 1);
         }catch (Exception e){
+            //This try catch was necessary as in some very rare scenarios a jelly would travel slightly further than it originally had done by a few pixels, this prevents the issues caused from this
             return jellyRoute.get(jellyRoute.size()-1);
         }
     }

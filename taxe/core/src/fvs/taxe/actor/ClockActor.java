@@ -19,7 +19,7 @@ public class ClockActor extends Actor {
      */
     public ClockActor() {
         super();
-        clockTexture = new Texture(Gdx.files.internal("clock.png"));
+        clockTexture = new Texture(Gdx.files.internal("Clock.png"));
         setSize(WIDTH, HEIGHT);
         setPosition(XPOS, YPOS);
     }

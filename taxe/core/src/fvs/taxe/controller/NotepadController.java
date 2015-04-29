@@ -18,10 +18,6 @@ public class NotepadController {
 	 */
 	private Context context;
 
-	/**
-	 * The end Turn Button used for the player to End the Turn.
-	 */
-	private TextButton endTurnButton;
 
 	/**
 	 * Actor for the background to the Top Bar

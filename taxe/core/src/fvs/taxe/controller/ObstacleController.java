@@ -6,15 +6,15 @@ import gameLogic.TurnListener;
 import gameLogic.obstacle.Obstacle;
 import gameLogic.obstacle.ObstacleListener;
 import gameLogic.obstacle.ObstacleType;
-import gameLogic.obstacle.Rumble;
+
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 
-import Util.Tuple;
+
 
 /**Controller for updating the game with graphics for obstacles.*/
 public class ObstacleController {
@@ -43,7 +43,7 @@ public class ObstacleController {
 				// set the obstacle so its visible
 				obstacle.getActor().setVisible(true);
 
-
+				//Adds the particle effect actor based on the obstacle's type, to ensure that the correct particle effect is displayed
 				if (obstacle.getType() == ObstacleType.FLOOD) {
 					ParticleEffect floodEffect = new ParticleEffect();
 					floodEffect.load(Gdx.files.internal("effects/flood.p"), Gdx.files.internal("effects"));
@@ -51,8 +51,10 @@ public class ObstacleController {
 					floodActor.setPosition(obstacle.getPosition().getX() - 10, obstacle.getPosition().getY() + 50);
 					floodActor.start();
 					effectActors.add(floodActor);
+
 				} else if (obstacle.getType() == ObstacleType.FLU) {
 					ParticleEffect snowEffect = new ParticleEffect();
+					//The flu obstacle uses an altered version of the snow particle, coloured to be green instead
 					snowEffect.load(Gdx.files.internal("effects/snow.p"), Gdx.files.internal("effects"));
 					ParticleEffectActor fluActor = new ParticleEffectActor(snowEffect);
 					fluActor.setPosition(obstacle.getPosition().getX() - 10, obstacle.getPosition().getY() + 50);

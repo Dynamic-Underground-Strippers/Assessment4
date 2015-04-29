@@ -134,6 +134,7 @@ public class GoalManager {
 
 
 	public Goal generateRandomMorningGoal(int turn) {
+		//A morning goal should be from a College to a department or sports
 		Map map = Game.getInstance().getMap();
 		Station origin = map.getRandomStationOfType(NodeType.COLLEGE);
 		Random random = new Random();
@@ -162,6 +163,7 @@ public class GoalManager {
 	}
 
 	public Goal generateRandomMiddayGoal(int turn){
+		//A midday goal is like a morning goal, but with the addition of pubs
 		Station origin;
 		Random random = new Random();
 		int i =random.nextInt(4);
@@ -198,6 +200,7 @@ public class GoalManager {
 	}
 
 	public Goal generateRandomEveningGoal (int turn){
+		//An evening goal should be from a random node to either a College, Pub or Taxi
 		Station origin = Game.getInstance().getMap().getRandomStation();
 		Random random = new Random();
 		int i = random.nextInt(3);
@@ -217,6 +220,7 @@ public class GoalManager {
 	}
 
 	public List<Station> getIdealRoute (Station origin, Station destination) {
+		//Retrieves the ideal route for two nodes based on the A* algorithm
 		Node<Station> originNode = new Node<Station>();
 		originNode.setData(origin);
 		ArrayList<Node<Station>> searchFringe = new ArrayList<Node<Station>>();
@@ -226,6 +230,8 @@ public class GoalManager {
 	}
 
 	public List<List<Station>> getIdealRouteForType(Station origin, NodeType type){
+		//Gets the list of ideal routes for a given type
+		//This is used to create an average distance for the ideal routes to calculate an appropriate score
 		Game.getInstance().getMap();
 		ArrayList<List <Station>> ofThisType= new ArrayList<List<Station>>();
 		for (int i=0; i< Game.getInstance().getMap().getStations().size();i++)
@@ -238,6 +244,7 @@ public class GoalManager {
 	}
 
 	public Station generateDestDifToOrigin (Station station, NodeType type){
+		//This method generates a station that is of a different type to the station that is passed to the method
 		Station dest = Game.getInstance().getMap().getRandomStationOfType(type);
 		while (dest.getName()==station.getName())
 			dest = Game.getInstance().getMap().getRandomStationOfType(type);

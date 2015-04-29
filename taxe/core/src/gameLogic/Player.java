@@ -94,6 +94,7 @@ public class Player {
      * @param goal The goal to add.
      */
     public void addGoal(Goal goal) {
+        //Adds the given goal to the player
     	int incompleteGoals = 0;
     	for(Goal activeGoal : activeGoals) {
     		incompleteGoals++;
@@ -104,7 +105,7 @@ public class Player {
         }
 
         activeGoals.add(goal);
-
+        //Records the goal
         Game.getInstance().getRecorder().addGoal(goal);
         changed();
     }
@@ -115,6 +116,7 @@ public class Player {
      */
     public void updateGoals(GoalManager sender)
     {
+        //Updates the goals, so removes failed ones, if the game is not replaying then generates a new random goal
         ArrayList<Goal> goalsToRemove = new ArrayList<Goal>();
     	for(Goal goal : activeGoals)
     	{
@@ -200,6 +202,7 @@ public class Player {
     }
 
     public Train getTrainByID(int id){
+        //Returns the train that matches the id passed to the method
         List<Train> allTrains = getTrains();
         for (Train train : allTrains){
             if (train.getID() == id){
@@ -207,12 +210,6 @@ public class Player {
             }
         }
         return null;
-    }
-
-    public void setTrainsRoutes(ArrayList<Tuple<Integer, List<Station>>> routes){
-        for (Tuple<Integer,List<Station>> route : routes){
-            getTrainByID(route.getFirst()).setRoute(route.getSecond());
-        }
     }
 
 }

@@ -21,7 +21,7 @@ public class Recorder {
     private List<JsonTurn> jsonTurns;
     private List<String> jellyHistory=new ArrayList<String>();
     public Recorder(){
-
+        //Unused but the json library requires a default constructor for reflection
     }
     public Recorder(PlayerManager pm){
       jsonTurns = new ArrayList<JsonTurn>();
@@ -29,8 +29,10 @@ public class Recorder {
         pm.subscribeTurnChanged(new TurnListener() {
             @Override
             public void changed() {
-                //Write to file
+                //Write to file every time turn changes
                 saveReplay();
+
+                //Adds a new element to the list every turn
                 jsonTurns.add(new JsonTurn());
             }
         });
@@ -77,30 +79,35 @@ public class Recorder {
 
     public void saveReplay(){
        //Saves replay
+        //Serialises the current class to a jsonString which can be deserialised automatically
         if (!Game.getInstance().getReplay()) {
             if (jsonTurns.size() > 0) {
                 Json json = new Json();
                 String jsonText = json.prettyPrint(this);
+                //If you wish to make the save file system more complex this is where you would change it
                 FileHandle file = Gdx.files.local("replay.json");
+
+                //Writes the string to a file
                 file.writeString(jsonText, false);
             }
         }
     }
 
     public void updateJelly(Station destination){
+        //Adds a new station to the Jelly's history to be saved
         jellyHistory.add(destination.getName());
     }
 
-    private void printContents(){
-        Json json = new Json();
-        System.out.println(json.prettyPrint(this));
-    }
 
     public Replay loadReplay(){
+        //Creates a new recorder which is a deserialised version of the Json
+        //Has to create a new recorder as you cannot use "this=" to assign this instance to equal json.fromJson
         FileHandle file = Gdx.files.local("replay.json");
         String text = file.readString();
         Json json = new Json();
         Recorder loadRecorder = json.fromJson(Recorder.class, text);
+
+        //Passes the loadedRecorder to the Replay class
         return new Replay(loadRecorder);
     }
 

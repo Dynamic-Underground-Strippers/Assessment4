@@ -118,7 +118,7 @@ public class Game {
 						}
 					}
 					if (state == GameState.REPLAY_SETUP) {
-						resourceManager.jelly();
+						resourceManager.createJelly();
 						map.decrementBlockedConnections();
 						setUpForReplay(playerManager.getCurrentPlayer()); //calls method to set up for turn which is about to happen
 					}
@@ -137,7 +137,7 @@ public class Game {
 					goalManager.updatePlayerGoals(currentPlayer);
 					resourceManager.addRandomResourceToPlayer(currentPlayer);
 					resourceManager.addRandomResourceToPlayer(currentPlayer);
-					resourceManager.jelly();
+					resourceManager.createJelly();
 					map.decrementBlockedConnections();
 					map.blockRandomConnection();
 					calculateObstacles();
@@ -334,38 +334,38 @@ public class Game {
 	}
 
 	public void flu(){
+		//Generates a new flu at a random station if one does not exist
 		if (flus.size()==0) {
 			int rand = MathUtils.random(2);
+			//50% chance for a flu to spawn
 			if (rand == 0) {
 				Station station = this.map.getRandomStation();
 				Obstacle obstacle = obstacleManager.findFluObstacle(station);
 				obstacleStarted(obstacle);
 				flus.add(obstacle);
-				System.out.println("New flu in " + station.getName());
 			}
 		}
 	}
 
 	public void spreadFlu(){
+		//This method either spreads or kills existing flu, based on the random number generated
 		int rand;
+
+		//Has two lists of flus to add and remove as otherwise there is concurrent list modification which should be avoided as much as possible as it can cause unexpected behaviour
 		ArrayList<Obstacle> flusToAdd = new ArrayList<Obstacle>();
 		ArrayList<Obstacle> flusToRemove = new ArrayList<Obstacle>();
 
 		for (int i = 0; i<flus.size(); i++){
 			rand = MathUtils.random(2);
 			if(rand==0){
+				//Kills the flu
 				Obstacle obstacle = flus.get(i);
-				System.out.println("Killing the flu in "+obstacle.getStation().getName());
-				ObstacleActor a = obstacle.getActor();
-				if(a!= null){
-					System.out.println("actor present");
-				}
 				obstacleEnded(obstacle);
 				flusToRemove.add(obstacle);
-				System.out.println("killed");
 			}else{
 				rand = MathUtils.random(2);
 				if(rand==0){
+					//Generates a flu at a random station connected to the current station with the flu
 					Obstacle obstacle = flus.get(i);
 					Station station = obstacle.getStation();
 					int randStation = MathUtils.random(map.getConnectedStations(station, null).size()-1);
@@ -373,7 +373,6 @@ public class Game {
 					Obstacle newObstacle = obstacleManager.findFluObstacle(station1);
 					obstacleStarted(newObstacle);
 					flusToAdd.add(newObstacle);
-					System.out.println("New flu in "+station1.getName()+"from "+station.getName());
 				}
 			}
 		}

@@ -35,16 +35,19 @@ public class SkillBarController {
 	}
 
 	public void draw() {
+		//Checks whether the actor exists and if it does then it is removed
+		//This is due to issues with garbage collection and memory leaks that we experienced
 		if (skillBarActor != null) skillBarActor.remove();
 		skillBarActor = new SkillBarActor();
 		resources = Game.getInstance().getPlayerManager().getCurrentPlayer().getResources();
 		skillBarActor.addListener(new ClickListener() {
 			public void clicked(InputEvent event, float x, float y) {
+				//Passes to the relevant click listener based on which resource was clicked by the player
 				for (int i = 0; i < SkillBarActor.NUM_ITEMS; i++) {
 					if (x < ((float) (i + 1) / (float) SkillBarActor
 							.NUM_ITEMS) *
 							SkillBarActor.WIDTH) {
-						System.out.println(resources);
+
 						if (resources.get(i) instanceof Train) {
 							new TrainClicked(context, (Train) resources.get(i))
 									.clicked(event, x, y);

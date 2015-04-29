@@ -110,6 +110,7 @@ public class Obstacle {
 		if (type == ObstacleType.FLOOD) {
 			return 4;
 		} else if (type == ObstacleType.FLU) {
+			//Set to a really high value so that it does not run out on its own, should be randomly destroyed
 			return 99;
 		} else {
 			return -1; // invalid obstacle type!

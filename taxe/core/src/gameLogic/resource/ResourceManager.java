@@ -121,12 +121,14 @@ public class ResourceManager {
 		//Uses a random number generator to pick a random train and return the complete train class for that train.
 		int index = random.nextInt(trains.size());
 		Tuple<String, Integer> train = trains.get(index);
+		//next available ID is incremented so that it remains a unique identifier
 		nextAvailableID++;
 		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index,nextAvailableID);
 	}
 
 	public Train getTrainByIndex(int index){
 		Tuple<String, Integer> train = trains.get(index);
+		//next available ID is incremented so that it remains a unique identifier
 		nextAvailableID++;
 		return new Train(train.getFirst(), train.getFirst().replaceAll(" ", "") + ".png", train.getFirst().replaceAll(" ", "") + "Right.png", train.getSecond(),index,nextAvailableID);
 	}
@@ -151,17 +153,14 @@ public class ResourceManager {
         resource.setPlayer(player);
         player.addResource(resource);
 		if (!Game.getInstance().getReplay()) {
+			//if the game is recording then record the resource being given
 			Game.getInstance().getRecorder().addResource(resource);
 		}
     }
 
-	public void removeResourceFromPlayer(Player player, Resource resource){
-		if (player.getResources().contains(resource)) {
-			player.getResources().remove(resource);
-		}
-	}
 
 	public void removeResourceFromPlayerByID(Player player,int index){
+		//Removes the resource associated with the index if it is <0 and removes the resource associated with the ID if it is >0
 		if (index <0){
 			if (index==-1){
 				for (Resource r:player.getResources()){
@@ -193,11 +192,16 @@ public class ResourceManager {
 	}
 
 
-	public void jelly(){
+	public void createJelly(){
+		//This method creates the jelly
+		//Checks whether it is the first turn
 		if (Game.getInstance().getPlayerManager().getTurnNumber() == 1 && j == 0) {
 			this.j = 1;
+			//Creates the jelly with all the relevant images
 			Jelly jelly = new Jelly("Jelly", "YusuCandidate.png", "YusuCandidate.png", 50);
 			Station startStation;
+
+			//if the game is replaying read in the first station from the replay, if not choose a random one
 			if (Game.getInstance().getReplay()){
 				startStation = Game.getInstance().getReplayManager().getNextJellyDestination();
 			}else {
@@ -209,6 +213,7 @@ public class ResourceManager {
 			jelly.addHistory(startStation,0);
 			ArrayList<IPositionable> route = new ArrayList();
 
+			//If the game is replaying, read the next station from the replay, if not choose a random one
 			Station nextStation;
 			if(Game.getInstance().getReplay()){
 				nextStation = Game.getInstance().getReplayManager().getNextJellyDestination();
@@ -219,6 +224,7 @@ public class ResourceManager {
 			route.add(nextStation.getLocation());
 			jelly.setRoute(Game.getInstance().getMap().createRoute(route));
 
+			//Generates all the relevant controllers to allow the jelly to be fully autonomous via listeners etc
 			JellyController jellycontroller = new JellyController(Game.getInstance().getContext());
 			jelly.setActor(jellycontroller.renderJelly(jelly));
 			jelly.getActor().setVisible(true);
@@ -227,8 +233,6 @@ public class ResourceManager {
 
 			this.jelly = jelly;
 			Game.getInstance().setJelly(jelly);
-			//System.out.println(randStation.getName() + " " + nextStation.getName() + " " + nextStation1.getName() + " " + Game.getInstance().getMap().getConnectedStations(nextStation, null).get(1).getName());
-			System.out.println("new jelly in " + startStation.getName());
 		}
 	}
 

@@ -558,46 +558,10 @@ public class Map {
         }
     }
 
-    public void removeConnection(Connection connection){
-        Station station1 = connection.getStation1();
-        Station station2 = connection.getStation2();
-        removeConnection(station1, station2);
-    }
 
-    public void removeConnections(ArrayList<Connection> removedConnections){
-        for (Connection connection : removedConnections){
-            removeConnection(connection);
-        }
-    }
-
-    public void addConnections(ArrayList<Connection> placedConnections){
-        for (Connection connection : placedConnections){
-            addConnection(connection);
-        }
-    }
-
-    public void blockConnection(Connection c, int turnsBlocked){
-        blockConnection(c.getStation1(),c.getStation2(),turnsBlocked);
-    }
-
-    public void blockConnections(ArrayList<Connection> blockedConnections){
-        for (Connection connection : blockedConnections){
-            blockConnection(connection,5);
-        }
-    }
-
-
-
-    public NodeType getRandomType() {
-        Random random = new Random();
-        int x = random.nextInt(4);
-        if (x==0) return NodeType.COLLEGE;
-        else if (x==1) return  NodeType.DEPARTMENT;
-        else if (x==2) return NodeType.PUB;
-        else return NodeType.SPORTS;
-    }
 
     public Station getRandomStationOfType (NodeType type){
+        //Retrieves a random station of the NodeType passed to the method
         ArrayList<Station> ofThisType = new ArrayList<Station>();
         for (Station s : stations) {
             if(s.getType() == type) ofThisType.add(s);

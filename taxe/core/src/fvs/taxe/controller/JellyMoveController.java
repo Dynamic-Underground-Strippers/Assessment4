@@ -85,19 +85,9 @@ public class JellyMoveController {
     private RunnableAction afterAction() {
         return new RunnableAction() {
             public void run() {
-                //ArrayList<String> completedGoals = context.getGameLogic().getGoalManager().jellyArrived(jelly, jelly.getPlayer());
-                /**for(String message : completedGoals) {
-                    context.getTopBarController().displayFlashMessage(message, Color.WHITE, 2);
-                }
-                System.out.println(jelly.getFinalDestination().getLocation().getX() + "," + jelly.getFinalDestination().getLocation().getY());
-                jelly.setPosition(jelly.getFinalDestination().getLocation());
-                jelly.getActor().setVisible(false);
-                jelly.setFinalDestination(null); **/
+                //This is run when the train reaches its final destination and it needs to pick a new station to travel to
 
-                System.out.println("selecting additional nodes");
-                System.out.println("last station was: "+jelly.getLastStation().getName());
                 List<Station> route = jelly.getRoute();
-                //System.out.println(route);
                 int index = route.indexOf(jelly.getFinalDestination());
                 System.out.println("adding after "+ jelly.getFinalDestination().getName() + " index " + index);
 
@@ -105,6 +95,7 @@ public class JellyMoveController {
 
                 Station nextStation = null;
                 if (!Game.getInstance().getReplay()) {
+                    //If the game is not replaying then the jelly chooses a random connected station
                     while (nextStation == null) {
                         List<Station> connectedStations = Game.getInstance().getMap().getConnectedStations(jelly.getFinalDestination(), null);
                         nextStation = connectedStations.get(rand.nextInt(connectedStations.size()));
@@ -116,14 +107,19 @@ public class JellyMoveController {
                     nextStation = Game.getInstance().getReplayManager().getNextJellyDestination();
                 }
 
-
-                System.out.println("Selected " + nextStation.getName());
+                //Adds the previous station to the jelly's history which is used to check what connection the jelly is currently on later
                 jelly.addHistory(jelly.getFinalDestination(),context.getGameLogic().getPlayerManager().getTurnNumber());
+
+                //Replaces the last element of the route with the next station
+                //This is somewhat of a hack, however it was the simplest method of implementation, it means that the jelly never has to worry about being blocked or paused.
                 jelly.getRoute().remove(index);
                 jelly.getRoute().add(index, nextStation);
                 jelly.setFinalDestination(nextStation);
+
+                //Records the station that the jelly visited
                 Game.getInstance().getRecorder().updateJelly(nextStation);
-                System.out.println("Added " + nextStation.getName() + " at index " + index);
+
+                //Generates the move actions for the jelly
                 addMoveActions();
 
             }
@@ -132,10 +128,11 @@ public class JellyMoveController {
 
     /**This method uses the current's train's routes to create a set of move actions for the jelly.*/
     public void addMoveActions() {
+        //This method generates the move actions for the jelly based on its route
         action = new InterruptableSequenceAction();
         IPositionable current = jelly.getPosition();
 
-        //for changeRoute
+
         if (jelly.getPosition().getX() == -1){
             current = new Position ((int) jelly.getActor().getBounds().getX(),(int) jelly.getActor().getBounds().getY());
         }

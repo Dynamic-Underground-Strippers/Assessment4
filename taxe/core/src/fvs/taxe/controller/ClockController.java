@@ -36,10 +36,13 @@ public class ClockController {
         context.getStage().addActor(clock);
         int hour = 9;
         boolean halfPast = false;
+        //Sets whether the time is half past the hour by constantly inverting halfPast boolean
         for (int i = 0; i < context.getGameLogic().getPlayerManager().getTurnNumber(); i++) {
             if (!(halfPast = !halfPast)) hour++;
             if (hour == 24) hour = 0;
         }
+
+        //Generates the string for the time
         String hourStr = String.valueOf(hour);
         String[] parts = new String[4];
         if (hourStr.length() == 1) {
@@ -52,6 +55,8 @@ public class ClockController {
         parts[2] = String.valueOf(halfPast ? "3" : "0");
         parts[3] = String.valueOf("0");
         Group group = new Group();
+
+        //Generates the text required to show the time using the clock font
         for (int i = 0; i < xPosPercentages.length; i++) {
             Label label = new Label(parts[i], context.getSkin());
             label.setStyle(new Label.LabelStyle(font, Color.GREEN));

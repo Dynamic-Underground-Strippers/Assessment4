@@ -13,9 +13,7 @@ import com.badlogic.gdx.utils.JsonValue;
 
 /** This class creates and stores the Obstacles from the Obstacles.json files */
 public class ObstacleManager {
-	/** The default value for the probability of an obstacle occurring if no probability is set in Obstacles.json*/
-	private static final float DEFAULT_OBSTACLE_PROBABILITY = 1f;
-	
+
 	/** List of pairs of Obstacles and their associated probabilities of occurring */
 	private ArrayList<Obstacle> obstacles;
 	
@@ -52,7 +50,8 @@ public class ObstacleManager {
 				obstacles.add(obstacle);
 			}
 		}
-
+//This loads in every single station and creates a flu actor for that station that can be used to display the flu obstacle
+		//Without this the green circle does not display properly around stations
 		for (Station station: map.getStations()){
 			Obstacle obstacle = createObstacle("flu",station.getName());
 			if (obstacle != null){
@@ -93,11 +92,13 @@ public class ObstacleManager {
 	}
 
 	public Obstacle findFluObstacle(Station station){
+		//This method returns the fluObstacle for the station passed to the method
 		for (Obstacle obstacle: obstacles){
 			if (obstacle.getStation().equals(station)&&obstacle.getType()==ObstacleType.FLU){
 				return obstacle;
 			}
 		}
+		//Every station has a flu obstacle so this should never be reached, but java requires it
 		return null;
 	}
 }

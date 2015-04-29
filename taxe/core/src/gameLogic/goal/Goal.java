@@ -72,7 +72,7 @@ public class Goal {
 	 * @param value The value of the constraint to be added.
 	 */
 	public void addConstraint(ResourceManager resourceManager, String name, Object value) {
-		
+		//Assigns a constraint on train type
 		if(name.equals("trainType")) {
 			//CASE train type
 			trainName = String.valueOf(value);
@@ -81,6 +81,7 @@ public class Goal {
 				turnCount = (int)Math.ceil(turnCount * 50 / resourceManager.getTrainSpeed(trainName));
 			}
 		}
+		//Assigns a constraint for the number of turns the goal must be completed in
 		else if(name.equals("turnCount")) {
 			//CASE turn count constraint
 			//Adjust our value for the train type if it is set
@@ -98,12 +99,9 @@ public class Goal {
 				throw new RuntimeException(val + " is not a valid turn count. Must be >= 0");
 			}
 		}
+		//Assigns a constraint designating a station which the train cannot travel through
 		else if(name.equals("exclusionStation")){
 			exclusionStation = (Station)value;
-		}
-		else if(name.equals("locationCount"))
-		{
-			locationCount = (Integer)value;
 		}
 		else
 		{
@@ -138,10 +136,12 @@ public class Goal {
 	 * @return True if the goal is complete, false otherwise.
 	 */
 	public boolean isComplete(Train train) {
+		//This checks whether or not the goal has been completed
 		boolean passedOrigin = false;
 		boolean passedExclusion = false;
 		int locationCountClone = -1;
 		int originTurn = 0;
+		//Checks whether the origin of the goal has been passed by the train
 		for(Tuple<Station, Integer> history: train.getHistory()) {
 			if(history.getFirst().getName().equals(origin.getName()) && history.getSecond() >= turnIssued) {
 				passedOrigin = true;
@@ -156,6 +156,8 @@ public class Goal {
 				}
 			}
 		}
+
+		//If it has then checks whether or not the train has travelled through the exclusion station, if it exists
 		if(exclusionStation != null && passedOrigin)
 		{
 			for(Tuple<Station, Integer> history: train.getHistory()) {
@@ -178,13 +180,16 @@ public class Goal {
 			turnCount = turnCount - 2;
 			if(turnCount <= 0)
 			{
+				//If the turncount is less than 0 then the goal is failed
 				return true;
 			}
 		}
+		//Otherwise the goal is still not failed
 		return false;
 	}
 
 	public String byHour(){
+		//Converts the turn in the goal to a time, which can be represented in the string
 		int newTurn = turnCount+turnIssued;
 		int l = newTurn/2;
 		if (newTurn%2 ==1) return 9+l +":30 o'clock";

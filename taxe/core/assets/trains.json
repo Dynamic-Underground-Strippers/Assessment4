@@ -6,11 +6,11 @@
       },
       {
         "name": "Electric Train",
-        "speed": 100
+        "speed": 75
       },
       {
         "name": "Taxi Train",
-        "speed": 75
+        "speed": 100
       },
       {
         "name": "Bike Train",

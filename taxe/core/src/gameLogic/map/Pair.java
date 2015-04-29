@@ -1,8 +1,5 @@
 package gameLogic.map;
 
-/**
- * Created by swag on 20/04/2015.
- */
 public class Pair<L,R> {
     private L l;
     private R r;
