@@ -90,9 +90,4 @@ public class PlayerManager {
 		return turnNumber;
 	}
 
-	public void setReplay(){
-		//replays must change to player 0 on turn 1
-		currentTurn = 1;
-		turnNumber = -1;
-	}
 }

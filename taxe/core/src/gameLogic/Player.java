@@ -85,8 +85,7 @@ public class Player {
     /**This method removes a resource from the player's resources.*/
     public void removeResource(Resource resource) {
         resources.remove(resource);
-        Game.getInstance().getRecorder().removeResource(resource);
-        resource.dispose();
+               resource.dispose();
         changed();
     }
 
@@ -106,8 +105,7 @@ public class Player {
 
         activeGoals.add(goal);
         //Records the goal
-        Game.getInstance().getRecorder().addGoal(goal);
-        changed();
+                changed();
     }
 
     
@@ -130,10 +128,9 @@ public class Player {
             activeGoals.remove(goal);
         }
 
-        if (!Game.getInstance().getReplay()) {
+
             addGoal(sender.generateRandomGoal(Game.getInstance().getPlayerManager().getTurnNumber()));
         }
-    }
     
     /**This method completes a goal, giving the player the reward score and setting the goal to complete.*/
     public void completeGoal(Goal goal) {

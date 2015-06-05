@@ -31,7 +31,7 @@ public class MainMenuScreen extends ScreenAdapter {
     /**Used to store the map texture which is placed in the background.*/
     private Texture mapTexture;
 
-    private Rectangle replayBounds;
+
     /**Instantiation method. sets up bounds and camera.
 	 *@param game The main TaxeGame instance is assigned to the local variable game.
     */
@@ -41,7 +41,7 @@ public class MainMenuScreen extends ScreenAdapter {
         camera.setToOrtho(false);
 
         playBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 + 100, 400, 100);
-        replayBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 - 50, 400, 100);
+
         exitBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 - 200, 400, 100);
         touchPoint = new Vector3();
         mapTexture = new Texture(Gdx.files.internal("Map4.png"));
@@ -52,17 +52,13 @@ public class MainMenuScreen extends ScreenAdapter {
         if (Gdx.input.justTouched()) {
             camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new GameScreen(game,false));
+                game.setScreen(new GameScreen(game));
                 return;
             }
             if (exitBounds.contains(touchPoint.x, touchPoint.y)) {
                 Gdx.app.exit();
             }
-            if (replayBounds.contains(touchPoint.x, touchPoint.y)){
-                //Add replay start
-                game.setScreen(new GameScreen(game,true));
-                return;
-            }
+
         }
     }
 
@@ -89,8 +85,6 @@ public class MainMenuScreen extends ScreenAdapter {
 
         game.shapeRenderer.setColor(Color.GREEN);
         game.shapeRenderer.rect(playBounds.getX(), playBounds.getY(), playBounds.getWidth(), playBounds.getHeight());
-        game.shapeRenderer.setColor(Color.BLUE);
-        game.shapeRenderer.rect(replayBounds.getX(), replayBounds.getY(), replayBounds.getWidth(), replayBounds.getHeight());
         game.shapeRenderer.setColor(Color.RED);
         game.shapeRenderer.rect(exitBounds.getX(), exitBounds.getY(), exitBounds.getWidth(), exitBounds.getHeight());
         game.shapeRenderer.end();
@@ -100,9 +94,6 @@ public class MainMenuScreen extends ScreenAdapter {
         String startGameString = "Start Game";
         game.font.draw(game.batch, startGameString, playBounds.getX() + playBounds.getWidth()/2 - game.font.getBounds(startGameString).width/2,
                 playBounds.getY() + playBounds.getHeight()/2 + game.font.getBounds(startGameString).height/2); // center the text
-        String replayString = "Watch Replay";
-        game.font.draw(game.batch, replayString, replayBounds.getX() + replayBounds.getWidth()/2 - game.font.getBounds(replayString).width/2,
-                replayBounds.getY() + replayBounds.getHeight()/2 + game.font.getBounds(replayString).height/2); // center the text
         String exitGameString = "Exit";
         game.font.draw(game.batch, exitGameString, exitBounds.getX() + exitBounds.getWidth()/2 - game.font.getBounds(exitGameString).width/2,
                 exitBounds.getY() + exitBounds.getHeight()/2 + game.font.getBounds(exitGameString).height/2); // center the text

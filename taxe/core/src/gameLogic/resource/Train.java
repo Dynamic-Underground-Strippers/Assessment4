@@ -121,7 +121,7 @@ public class Train extends Resource {
         	finalDestination = route.get(route.size() - 1);
         }
         this.route = route;
-        Game.getInstance().getRecorder().addRoute(this);
+
     }
 
     /** Return whether the train is currently moving

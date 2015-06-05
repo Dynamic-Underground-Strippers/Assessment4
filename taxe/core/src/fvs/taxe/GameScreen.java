@@ -135,21 +135,19 @@ public class GameScreen extends ScreenAdapter {
 
 	private NewsFlashController newsFlashController;
 
-	private int animationFactor;
 
-	private ReplayManager replayManager;
 
 	/**
 	 * Instantiation method. Sets up the game using the passed TaxeGame argument.
 	 *
 	 * @param game The instance of TaxeGame to be passed to the GameScreen to display.
 	 */
-	public GameScreen(TaxeGame game, boolean replay) {
+	public GameScreen(TaxeGame game) {
 		this.game = game;
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-		gameLogic = Game.initialiseGame(replay);
+		gameLogic = Game.initialiseGame();
 		context = new Context(stage, skin, game, gameLogic);
 		this.gameLogic.setContext(context);
 		Gdx.input.setInputProcessor(stage);
@@ -173,25 +171,18 @@ public class GameScreen extends ScreenAdapter {
 		endTurnController = new EndTurnController(context);
 		newsFlashController = new NewsFlashController(context);
 
-		replayManager = new ReplayManager(context);
-		Game.getInstance().setReplayManager(replayManager);
 
 
 		context.setRouteController(routeController);
 		context.setNotepadController(notepadController);
 
 
-		animationFactor = Game.getInstance().getAnimationFactor();
+
 
 		gameLogic.getPlayerManager().subscribeTurnChanged(new TurnListener() {
 			@Override
 			public void changed() {
-				if (!Game.getInstance().getReplay()) {
-//					notepadController
-//							.displayFlashMessage("Time is passing...", Color.GREEN, Color.BLACK,
-//									ANIMATION_TIME);
 					gameLogic.setState(GameState.ANIMATING);
-				}
 			}
 		});
 
@@ -256,12 +247,8 @@ public class GameScreen extends ScreenAdapter {
 
 		if (gameLogic.getState() == GameState.ANIMATING) {
 			timeAnimated += delta;
-			if (timeAnimated >= ANIMATION_TIME / animationFactor) {
-				if (Game.getInstance().getReplay()) {
-					gameLogic.setState(GameState.REPLAY_SETUP);
-				} else {
-					gameLogic.setState(GameState.NORMAL);
-				}
+			if (timeAnimated >= ANIMATION_TIME) {
+				gameLogic.setState(GameState.NORMAL);
 				timeAnimated = 0;
 				displayMessagesInBuffer();
 			}

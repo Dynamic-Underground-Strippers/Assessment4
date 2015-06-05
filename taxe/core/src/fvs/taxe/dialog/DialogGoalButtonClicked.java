@@ -20,7 +20,6 @@ public class DialogGoalButtonClicked implements ResourceDialogClickListener {
             case GOAL_DELETE:
                 currentPlayer.removeGoal(goal);
                 //simulate mouse exiting goal button to remove tooltips
-                Game.getInstance().getRecorder().removeGoal(goal);
                 break;
         }
     }

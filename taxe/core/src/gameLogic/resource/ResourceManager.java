@@ -152,44 +152,8 @@ public class ResourceManager {
 
         resource.setPlayer(player);
         player.addResource(resource);
-		if (!Game.getInstance().getReplay()) {
-			//if the game is recording then record the resource being given
-			Game.getInstance().getRecorder().addResource(resource);
-		}
+
     }
-
-
-	public void removeResourceFromPlayerByID(Player player,int index){
-		//Removes the resource associated with the index if it is <0 and removes the resource associated with the ID if it is >0
-		if (index <0){
-			if (index==-1){
-				for (Resource r:player.getResources()){
-					if (r instanceof  NewConnection){
-						player.getResources().remove(r);
-						break;
-					}
-				}
-			}else{
-				for (Resource r:player.getResources()){
-					if (r instanceof  DeleteConnection){
-						player.getResources().remove(r);
-						break;
-					}
-				}
-			}
-
-		}else{
-			for (Resource r:player.getResources()){
-				if (r instanceof Train) {
-					Train train = (Train) r;
-					if (train.getID() == index) {
-						player.getResources().remove(r);
-						break;
-					}
-				}
-			}
-		}
-	}
 
 
 	public void createJelly(){
@@ -202,12 +166,8 @@ public class ResourceManager {
 			Station startStation;
 
 			//if the game is replaying read in the first station from the replay, if not choose a random one
-			if (Game.getInstance().getReplay()){
-				startStation = Game.getInstance().getReplayManager().getNextJellyDestination();
-			}else {
+
 				startStation = Game.getInstance().getMap().getRandomStation();
-				Game.getInstance().getRecorder().updateJelly(startStation);
-			}
 
 			jelly.setPosition(startStation.getLocation());
 			jelly.addHistory(startStation,0);
@@ -215,12 +175,9 @@ public class ResourceManager {
 
 			//If the game is replaying, read the next station from the replay, if not choose a random one
 			Station nextStation;
-			if(Game.getInstance().getReplay()){
-				nextStation = Game.getInstance().getReplayManager().getNextJellyDestination();
-			}else {
+
 				nextStation = Game.getInstance().getMap().getConnectedStations(startStation, null).get(0);
-				Game.getInstance().getRecorder().updateJelly(nextStation);
-			}
+
 			route.add(nextStation.getLocation());
 			jelly.setRoute(Game.getInstance().getMap().createRoute(route));
 

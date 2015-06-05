@@ -32,8 +32,6 @@ public class TrainMoveController {
 	/**The train being controlled by the controller.*/
 	private Train train;
 
-	private int animationFactor;
-	
 	/**The action being applied to the train currently being controlled.*/
 	private InterruptableSequenceAction action;
 
@@ -45,7 +43,7 @@ public class TrainMoveController {
 		this.context = context;
 		this.train = train;
 
-		animationFactor = context.getGameLogic().getAnimationFactor();
+
 
 		context.getGameLogic().getPlayerManager().subscribeTurnChanged(new TurnListener() {
 			// only set back the interrupt so the train can move after the turn has changed (players turn ended)
@@ -179,7 +177,7 @@ public class TrainMoveController {
 
 		for (final Station station : train.getRoute()) {
 			IPositionable next = station.getLocation();
-			float duration = getDistance(current, next) / (train.getSpeed() * animationFactor);
+			float duration = getDistance(current, next) / (train.getSpeed());
 			action.addAction(moveTo(next.getX() - TrainActor.width / 2, next.getY() - TrainActor.height / 2, duration));
 			
 			action.addAction(perStationAction(station));
@@ -209,7 +207,6 @@ public class TrainMoveController {
 		if (station.hasObstacle() && MathUtils.randomBoolean(station.getObstacle().getDestructionChance())){
 			train.getActor().remove();
 			train.getPlayer().removeResource(train);
-			Game.getInstance().getRecorder().removeResource(train);
 //			context.getNotepadController().displayFlashMessage("Your train was hit by a natural disaster...", Color.BLACK, Color.RED, 4);
 		}
 	}

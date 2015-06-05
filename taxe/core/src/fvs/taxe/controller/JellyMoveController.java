@@ -94,7 +94,7 @@ public class JellyMoveController {
                 Random rand = new Random();
 
                 Station nextStation = null;
-                if (!Game.getInstance().getReplay()) {
+
                     //If the game is not replaying then the jelly chooses a random connected station
                     while (nextStation == null) {
                         List<Station> connectedStations = Game.getInstance().getMap().getConnectedStations(jelly.getFinalDestination(), null);
@@ -103,9 +103,7 @@ public class JellyMoveController {
                             nextStation = null;
                         }
                     }
-                }else{
-                    nextStation = Game.getInstance().getReplayManager().getNextJellyDestination();
-                }
+
 
                 //Adds the previous station to the jelly's history which is used to check what connection the jelly is currently on later
                 jelly.addHistory(jelly.getFinalDestination(),context.getGameLogic().getPlayerManager().getTurnNumber());
@@ -117,7 +115,7 @@ public class JellyMoveController {
                 jelly.setFinalDestination(nextStation);
 
                 //Records the station that the jelly visited
-                Game.getInstance().getRecorder().updateJelly(nextStation);
+
 
                 //Generates the move actions for the jelly
                 addMoveActions();
@@ -141,7 +139,7 @@ public class JellyMoveController {
 
         for (final Station station : jelly.getRoute()) {
             IPositionable next = station.getLocation();
-            float duration = (getDistance(current, next) / jelly.getSpeed()) / Game.getInstance().getAnimationFactor() ;
+            float duration = (getDistance(current, next) / jelly.getSpeed()) ;
             action.addAction(moveTo(next.getX() - JellyActor.width / 2, next.getY() - JellyActor.height / 2, duration));
 
             action.addAction(perStationAction(station));

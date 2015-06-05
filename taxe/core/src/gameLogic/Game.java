@@ -3,7 +3,6 @@ package gameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import fvs.taxe.ReplayManager;
 import fvs.taxe.actor.ObstacleActor;
 import fvs.taxe.controller.Context;
 
@@ -18,8 +17,6 @@ import gameLogic.obstacle.ObstacleManager;
 import gameLogic.obstacle.ObstacleType;
 import gameLogic.resource.Jelly;
 
-import gameLogic.replay.Recorder;
-import gameLogic.replay.Replay;
 import gameLogic.resource.NewConnection;
 
 import gameLogic.resource.ResourceManager;
@@ -49,8 +46,6 @@ public class Game {
 	/**The game's PlayerManager that handles both of the players.*/
 	private PlayerManager playerManager;
 
-	private Recorder recorder;
-	
 	/**The game's GoalManager that handles goals for the players.*/
 	private GoalManager goalManager;
 	
@@ -80,18 +75,9 @@ public class Game {
 
 	public final int MAX_TURNS = 30;
 
-	private boolean replay;
-
-	private int animationFactor;
-
-	private Replay savedReplay=null;
-
-	private ReplayManager replayManager;
-
 
 	/**The Instantiation method, sets up the players and game listeners.*/
-	private Game(boolean replay) {
-		this.replay = replay;
+	private Game() {
 		playerManager = new PlayerManager();
 		playerManager.createPlayers(CONFIG_PLAYERS);
 
@@ -100,35 +86,8 @@ public class Game {
 		map = new Map();
 		obstacleManager = new ObstacleManager(map);
 
-		recorder = new Recorder(playerManager);
 
-		if (replay) { //if game is in replay mode
-			state = GameState.REPLAY_SETUP;
-
-			animationFactor = 1;//set animationFactor (used to get train speed and turn time length
-			playerManager.subscribeTurnChanged(new TurnListener() {
-				@Override
-				public void changed() {
-					if (savedReplay==null){
-						try {
-							savedReplay = recorder.loadReplay();
-						} catch(Exception e){
-							new Dialog("No replay file found. \n Game will now exit",context.getSkin());
-							Gdx.app.exit();
-						}
-					}
-					if (state == GameState.REPLAY_SETUP) {
-						resourceManager.createJelly();
-						map.decrementBlockedConnections();
-						setUpForReplay(playerManager.getCurrentPlayer()); //calls method to set up for turn which is about to happen
-					}
-
-				}
-			});
-
-		} else {
 			state = GameState.NORMAL;
-			animationFactor = 1;
 
 			playerManager.subscribeTurnChanged(new TurnListener() {
 				@Override
@@ -148,29 +107,25 @@ public class Game {
 				}
 			});
 		}
-	}
+
 
 	/**Returns the main game instance.*/
 	public static Game getInstance() {
 		return instance;
 	}
 
-	public static Game initialiseGame(boolean replay){
-		instance = new Game(replay);
+	public static Game initialiseGame(){
+		instance = new Game();
 		instance.initialisePlayers();
 		return instance;
 	}
 
 	/**Sets up the players. Only the first player is given goals and resources initially.*/
 	private void initialisePlayers() {
-		if (replay){
-			playerManager.setReplay();
-		}else {
 			Player player = playerManager.getAllPlayers().get(0);
 			goalManager.updatePlayerGoals(player);
 			resourceManager.addRandomResourceToPlayer(player);
 			resourceManager.addRandomResourceToPlayer(player);
-		}
 	}
 
 	/**@return The PlayerManager instance for this game.*/
@@ -209,16 +164,7 @@ public class Game {
 
 	/**Sets the GameState of the Game. Listeners are notified using stateChanged().*/
 	public void setState(GameState state) {
-		//if (!replay) {
 			this.state = state;
-		/*} else if (state == GameState.ANIMATING) {
-			this.state = GameState.ANIMATING;
-		} else {
-			this.state = GameState.REPLAY_SETUP;
-			setUpForReplay(playerManager.getCurrentPlayer());
-			playerManager.turnOver();
-		}*/
-
 		stateChanged();
 	}
 
@@ -301,37 +247,7 @@ public class Game {
 		return this.jelly;
 	}
 
-	public Recorder getRecorder(){
-		return this.recorder;
-	}
 
-	public boolean isReplay(){
-		return this.replay;
-	}
-
-	public void setUpForReplay(Player currentPlayer) {
-		//TODO:
-
-		if (playerManager.getTurnNumber() < savedReplay.getTurns().size()) { //condition to stop reading more turns than are stored in file
-			Replay.Turn replayData = savedReplay.getTurns().get(playerManager.getTurnNumber()); //get the replay data for this specific turn
-			replayManager.setUpForReplay(currentPlayer, replayData,savedReplay.getJellyRoute()); //call replayManager object to handle setup
-
-		}else{
-			Gdx.app.exit();
-		}
-
-
-	}
-
-	public int getAnimationFactor(){
-		return this.animationFactor;
-	}
-
-	public boolean getReplay() { return this.replay; }
-
-	public void setReplayManager(ReplayManager rm){
-		this.replayManager = rm;
-	}
 
 	public void flu(){
 		//Generates a new flu at a random station if one does not exist
@@ -385,7 +301,4 @@ public class Game {
 		}
 	}
 
-	public ReplayManager getReplayManager() {
-		return replayManager;
-	}
 }
