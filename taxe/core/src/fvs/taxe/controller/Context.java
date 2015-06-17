@@ -26,6 +26,8 @@ public class Context {
     /**A TopBarController for the context that can be get or set.*/
     private NotepadController notepadController;
 
+
+    private NewsFlashController newsFlashController;
     /**Instantiation method sets up private variables.
      * @param stage The stage to be used in the context
      * @param skin The skin to be used in the context
@@ -82,4 +84,11 @@ public class Context {
         this.notepadController = notepadController;
     }
 
+    public void setNewsFlashController(NewsFlashController newsFlashController){
+        this.newsFlashController = newsFlashController;
+    }
+
+    public NewsFlashController getNewsFlashController(){
+        return this.newsFlashController;
+    }
 }

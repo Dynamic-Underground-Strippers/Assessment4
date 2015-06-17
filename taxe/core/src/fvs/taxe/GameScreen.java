@@ -175,7 +175,7 @@ public class GameScreen extends ScreenAdapter {
 
 		context.setRouteController(routeController);
 		context.setNotepadController(notepadController);
-
+		context.setNewsFlashController(newsFlashController);
 
 
 
@@ -203,6 +203,7 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			public void changed() {
 				goalController.drawCurrentPlayerGoals();
+				scoreController.drawScoreDetails();
 			}
 		});
 

@@ -218,6 +218,7 @@ public class Game {
 						obstacleStarted(obstacle);
 					}
 				}
+				context.getNewsFlashController().showNewsFlash("FloodDisruption.png");
 			}
 		}
 	}
@@ -259,6 +260,7 @@ public class Game {
 				Obstacle obstacle = obstacleManager.findFluObstacle(station);
 				obstacleStarted(obstacle);
 				flus.add(obstacle);
+				context.getNewsFlashController().showNewsFlash("FreshersFluDistruption.png");
 			}
 		}
 	}
