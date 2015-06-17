@@ -92,9 +92,16 @@ public class GoalController {
 			label.addListener(new GoalClicked(goal, context));
 			goalButtons.addActor(label);
 			//FIX THIS
+			if(lastHeight<75.0){
+			if (label.getStyle().font
+					.getWrappedBounds(label.getText(), NotepadController.WIDTH - 30).height>33.0){
+				y-=10;
+				label.setPosition(x, y);
+				System.out.println(goal.toString());
+			}
+			}
 			lastHeight = label.getStyle().font
-					.getWrappedBounds(label.getText(), NotepadController.WIDTH - 30).height + ((33/(label.getStyle().font
-					.getWrappedBounds(label.getText(), NotepadController.WIDTH - 30)).height)*25);
+					.getWrappedBounds(label.getText(), NotepadController.WIDTH - 30).height + (20);
 			System.out.println(lastHeight);
 		}
 
