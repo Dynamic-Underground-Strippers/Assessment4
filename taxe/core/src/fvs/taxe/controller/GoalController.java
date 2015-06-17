@@ -58,7 +58,7 @@ public class GoalController {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
 				Gdx.files.internal("handwriting2.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		parameter.size = 15;
+		parameter.size = 12;
 		font = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose();
 	}
@@ -73,12 +73,12 @@ public class GoalController {
 		drawHeaderText();
 
 		float top = (float) TaxeGame.HEIGHT;
-		float x = TaxeGame.WIDTH - NotepadController.WIDTH + 10.0f;
-		float y = top - 35.0f;
+		float x = TaxeGame.WIDTH - NotepadController.WIDTH + 5.0f;
+		float y = top - 30.0f;
 
 		PlayerManager pm = context.getGameLogic().getPlayerManager();
 		Player currentPlayer = pm.getCurrentPlayer();
-		float lastHeight = 65;
+		float lastHeight = 60;
 
 		//Draws the current goals as clickable labels
 		for (Goal goal : currentPlayer.getActiveGoals()) {
@@ -91,8 +91,11 @@ public class GoalController {
 			label.setWrap(true);
 			label.addListener(new GoalClicked(goal, context));
 			goalButtons.addActor(label);
+			//FIX THIS
 			lastHeight = label.getStyle().font
-					.getWrappedBounds(label.getText(), label.getWidth()).height + 20;
+					.getWrappedBounds(label.getText(), NotepadController.WIDTH - 30).height + ((33/(label.getStyle().font
+					.getWrappedBounds(label.getText(), NotepadController.WIDTH - 30)).height)*25);
+			System.out.println(lastHeight);
 		}
 
 		context.getStage().addActor(goalButtons);
