@@ -235,7 +235,7 @@ editingRoute = false;
             context.getGameLogic().getMap().getConnections().get(indexPartial).getActor().clearPartialPosition();
         }
         indexPartial = -1;
-        drawRoute(Color.GRAY);
+        drawRoute(Color.OLIVE);
 
     }
 
