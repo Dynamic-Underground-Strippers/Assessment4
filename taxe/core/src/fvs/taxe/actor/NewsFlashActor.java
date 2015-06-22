@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class NewsFlashActor extends Actor {
 	Texture texture;
-	Texture cross;
 
 	public NewsFlashActor(String imagePath) {
 		texture = new Texture(Gdx.files.internal(imagePath));
-		cross = new Texture(Gdx.files.internal("CloseWindowCross.png"));
 		setPosition(0, 0);
 		setSize(512, 512);
 	}
@@ -21,7 +19,6 @@ public class NewsFlashActor extends Actor {
 		batch.end();
 		batch.begin();
 		batch.draw(texture, getX(), getY(), getWidth(), getHeight());
-		batch.draw(cross, 226, getHeight() - 80, 16, 16);
 		batch.end();
 		batch.begin();
 	}
