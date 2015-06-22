@@ -203,7 +203,6 @@ public class GameScreen extends ScreenAdapter {
 			@Override
 			public void changed() {
 				goalController.drawCurrentPlayerGoals();
-				scoreController.drawScoreDetails();
 			}
 		});
 
@@ -263,6 +262,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 		goalController.drawHeaderText();
+		scoreController.drawScoreDetails();
 	}
 
 	@Override

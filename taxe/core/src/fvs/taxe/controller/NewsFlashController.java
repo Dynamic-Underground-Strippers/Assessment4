@@ -10,9 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import fvs.taxe.actor.NewsFlashActor;
 import javafx.application.Application;
 
+import java.util.ArrayList;
+
 public class NewsFlashController {
 	private static NewsFlashController instance;
-	private NewsFlashActor newsFlashActor;
 	private Context context;
 
 	public NewsFlashController(Context context) {
@@ -20,8 +21,8 @@ public class NewsFlashController {
 		instance = this;
 	}
 
-	public void showNewsFlash(String imagePath) {
-		newsFlashActor = new NewsFlashActor(imagePath);
+	public synchronized void showNewsFlash(String imagePath) {
+		final NewsFlashActor newsFlashActor = new NewsFlashActor(imagePath);
 		final InputListener keyListener = new InputListener() {
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
 				newsFlashActor.remove();

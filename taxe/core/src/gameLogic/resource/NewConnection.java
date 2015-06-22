@@ -87,7 +87,7 @@ public class NewConnection extends Resource {
         //if exit loop then no connections overlap, so draw connection and return true
         final IPositionable start = connection.getStation1().getLocation();
         final IPositionable end = connection.getStation2().getLocation();
-        ConnectionActor connectionActor = new ConnectionActor(Color.GRAY, start, end, 5, context);
+        ConnectionActor connectionActor = new ConnectionActor(Color.GRAY, start, end, 5, context,connection);
         connection.setActor(connectionActor);
         context.getStage().addActor(connectionActor);
         

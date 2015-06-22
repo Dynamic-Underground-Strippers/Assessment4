@@ -1,10 +1,13 @@
 package fvs.taxe.actor;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import fvs.taxe.TaxeGame;
 import fvs.taxe.controller.Context;
 import gameLogic.Game;
 import gameLogic.GameState;
+import gameLogic.map.Connection;
 import gameLogic.map.IPositionable;
 
 import com.badlogic.gdx.graphics.Color;
@@ -24,7 +27,8 @@ public class ConnectionActor extends Image{
 	
 	/**The color of the connection between stations.*/
 	private Color color;
-	
+
+	private Connection connection;
 	/**The start position of the connection, where the line is drawn from.*/
 	private IPositionable start;
 	
@@ -44,13 +48,14 @@ public class ConnectionActor extends Image{
 	/** If the connection is being partially drawn, where the partial connection ends */
 	private IPositionable partialNext;
 
-	public ConnectionActor(Color color, IPositionable start, IPositionable end, float connectionWidth, Context context)  {
+	public ConnectionActor(Color color, IPositionable start, IPositionable end, float connectionWidth, Context context,Connection connection)  {
 		shapeRenderer = new ShapeRenderer();
 		this.color = color;
 		this.start = start;
 		this.end = end;
 		this.connectionWidth = connectionWidth;
 		game = context.getTaxeGame();
+		this.connection = connection;
 	}
 	
 	@Override
@@ -78,7 +83,12 @@ public class ConnectionActor extends Image{
 					midpoint.getY() + game.fontTiny.getBounds(text).height / 2f);
 			batch.end();
 		}
-
+		if (connection.isBlocked()){
+			batch.begin();
+			Texture gooseTexture = new Texture(Gdx.files.internal("Goose5.png"));
+			batch.draw(gooseTexture,this.getMidpoint().getX()-20.0f,this.getMidpoint().getY()-12.0f);
+			batch.end();
+		}
         batch.begin();
 	}
 
@@ -142,5 +152,4 @@ public class ConnectionActor extends Image{
 		partialStart = new Position((int)x, (int)y);
 		partialNext = position;
 	}
-
 }

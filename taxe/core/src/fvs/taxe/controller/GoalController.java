@@ -129,6 +129,6 @@ public class GoalController {
 	 * @return A string consisting of "Player " + the player number + " Goals:".
 	 */
 	private String playerGoalHeader() {
-		return "Goals for the day";
+		return "Player " + context.getGameLogic().getPlayerManager().getCurrentPlayer().getPlayerNumber() + "'s Goals";
 	}
 }
