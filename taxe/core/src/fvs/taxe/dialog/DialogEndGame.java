@@ -26,30 +26,24 @@ public class DialogEndGame extends Dialog{
 		
 		int highscore = 0;
 		int playernum = 0;
+
 		for(Player player : pm.getAllPlayers()) {
-			int goalsComplete = 0;
-			for(Goal goal : player.getActiveGoals()) {
-				if(goal.getComplete()){
-					goalsComplete++;
-				}
-			}
-			
-			text("Player " + player.getPlayerNumber() + " completed " + goalsComplete + " goals");
+			text("Player " + player.getPlayerNumber() + " scored " + player.getScore() + " points!");
 			getContentTable().row();
 			
-			if(goalsComplete > highscore) {
-				highscore = goalsComplete;
+			if(player.getScore() > highscore) {
+				highscore = player.getScore();
 				playernum = player.getPlayerNumber();
 			}
 		}
 		if(playernum != 0) {
 			text("PLAYER " + playernum + " WINS!");
 		} else {
-			text("NO WINNER");
+			text("It's a tie!");
 		}
 		
-		//button("Main Menu","MENU");
-		button("Exit","EXIT");
+
+		button(" Exit ","EXIT");
 	}
 	
 	@Override

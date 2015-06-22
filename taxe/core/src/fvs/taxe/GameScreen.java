@@ -189,9 +189,7 @@ public class GameScreen extends ScreenAdapter {
 		gameLogic.subscribeStateChanged(new GameStateListener() {
 			@Override
 			public void changed(GameState state) {
-				if (gameLogic.getPlayerManager().getCurrentPlayer().getScore() >=
-						gameLogic.TOTAL_POINTS ||
-						gameLogic.getPlayerManager().getTurnNumber() >= gameLogic.MAX_TURNS) {
+				if (gameLogic.getPlayerManager().getTurnNumber() >= gameLogic.MAX_TURNS) {
 					DialogEndGame dia = new DialogEndGame(GameScreen.this.game,
 							gameLogic.getPlayerManager(), skin);
 					dia.show(stage);
