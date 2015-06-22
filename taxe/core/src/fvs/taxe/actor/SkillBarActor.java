@@ -52,6 +52,7 @@ public class SkillBarActor extends Actor {
 		super.draw(batch, parentAlpha);
 		batch.end();
 		batch.begin();
+		int currentIndex = 0;
 		for (int i = 0; i < NUM_ITEMS; i++) {
 			batch.draw(bgTexture, getX() + ((float) i / (float) NUM_ITEMS) * getWidth(), getY(),
 					getHeight(), getHeight());
@@ -59,20 +60,23 @@ public class SkillBarActor extends Actor {
 				if (resources.get(i) instanceof Train) {
 						if (((Train)(resources.get(i))).getPosition()==null) {
 						batch.draw(textures.get(((Train) resources.get(i)).getName()),
-								getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
+								getX() + ((float) currentIndex / (float) NUM_ITEMS) * getWidth() +
 										(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
 								getHeight() * 0.8f, getHeight() * 0.8f);
+							currentIndex++;
 					}
 				} else if (resources.get(i) instanceof NewConnection) {
 					batch.draw(textures.get("New Connection"),
-							getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
+							getX() + ((float) currentIndex / (float) NUM_ITEMS) * getWidth() +
 									(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
 							getHeight() * 0.8f, getHeight() * 0.8f);
+					currentIndex++;
 				} else if (resources.get(i) instanceof DeleteConnection) {
 					batch.draw(textures.get("Delete Connection"),
-							getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
+							getX() + ((float) currentIndex / (float) NUM_ITEMS) * getWidth() +
 									(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
 							getHeight() * 0.8f, getHeight() * 0.8f);
+					currentIndex++;
 				}
 			}
 		}

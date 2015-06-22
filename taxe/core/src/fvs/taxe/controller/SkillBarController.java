@@ -3,6 +3,7 @@ package fvs.taxe.controller;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fvs.taxe.actor.SkillBarActor;
@@ -40,23 +41,34 @@ public class SkillBarController {
 		if (skillBarActor != null) skillBarActor.remove();
 		skillBarActor = new SkillBarActor();
 		resources = Game.getInstance().getPlayerManager().getCurrentPlayer().getResources();
+		final ArrayList<Resource> unplacedResources = new ArrayList<Resource>();
+		for (Resource resource:resources){
+			if (resource instanceof Train){
+				if (((Train) resource).getPosition()==null){
+					unplacedResources.add(resource);
+				}
+			}else
+			unplacedResources.add(resource);
+		}
 		skillBarActor.addListener(new ClickListener() {
 			public void clicked(InputEvent event, float x, float y) {
 				//Passes to the relevant click listener based on which resource was clicked by the player
-				for (int i = 0; i < SkillBarActor.NUM_ITEMS; i++) {
+				for (int i = 0; i < unplacedResources.size(); i++) {
 					if (x < ((float) (i + 1) / (float) SkillBarActor
 							.NUM_ITEMS) *
 							SkillBarActor.WIDTH) {
 
-						if (resources.get(i) instanceof Train) {
-							new TrainClicked(context, (Train) resources.get(i))
+						if (unplacedResources.get(i) instanceof Train) {
+								new TrainClicked(context, (Train) unplacedResources.get(i))
+										.clicked(event, x, y);
+
+						} else if (unplacedResources.get(i) instanceof NewConnection) {
+							new NewConnectionClicked(context, (NewConnection) unplacedResources.get(i))
 									.clicked(event, x, y);
-						} else if (resources.get(i) instanceof NewConnection) {
-							new NewConnectionClicked(context, (NewConnection) resources.get(i))
-									.clicked(event, x, y);
-						} else if (resources.get(i) instanceof DeleteConnection) {
+
+						} else if (unplacedResources.get(i) instanceof DeleteConnection) {
 							new DeleteConnectionClicked(context,
-									(DeleteConnection) resources.get(i)).clicked(event, x, y);
+									(DeleteConnection) unplacedResources.get(i)).clicked(event, x, y);
 						}
 						return;
 					}
