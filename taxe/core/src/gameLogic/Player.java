@@ -105,7 +105,7 @@ public class Player {
 
         activeGoals.add(goal);
         //Records the goal
-                changed();
+        changed();
     }
 
     

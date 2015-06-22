@@ -82,17 +82,17 @@ public class GoalClicked extends ClickListener {
 			tooltip1.setPosition(originActor.getX() + 20, originActor.getY() + 20);
 			tooltip1.show(origin.getName());
 			context.getStage().addActor(tooltip1);
-
-			//Sets the tooltip to have the destination's name and to be shown to the top right of the station
-			tooltip2 = new Tooltip(context.getSkin());
-			Station destination = goal.getDestination();
-			if (destination!=null) {
-				StationActor destinationActor = destination.getActor();
-				context.getStage().addActor(tooltip2);
-				tooltip2.setPosition(destinationActor.getX() + 20, destinationActor.getY() + 20);
-				tooltip2.show(destination.getName());
-			}
-
+try {
+	//Sets the tooltip to have the destination's name and to be shown to the top right of the station
+	tooltip2 = new Tooltip(context.getSkin());
+	Station destination = goal.getDestination();
+	if (destination != null) {
+		StationActor destinationActor = destination.getActor();
+		context.getStage().addActor(tooltip2);
+		tooltip2.setPosition(destinationActor.getX() + 20, destinationActor.getY() + 20);
+		tooltip2.show(destination.getName());
+	}
+}catch(Exception e){}
 			//If there is an intermediary station then a tooltip is also drawn for this station in the same way as the others
 			Station intermediary = goal.getExclusionStation();
 			if (intermediary != null) {

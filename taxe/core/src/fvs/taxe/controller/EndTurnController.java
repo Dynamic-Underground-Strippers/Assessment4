@@ -34,7 +34,7 @@ public class EndTurnController {
 			@Override
 			public void changed(GameState state) {
 				//Hides the end turn button while animating to prevent unintended behaviour
-				if ((state == GameState.ANIMATING || state == GameState.ROUTING) && !removed) {
+				if ((state != GameState.NORMAL) && !removed) {
 					endTurnActor.remove();
 					removed = true;
 				} else if (removed) {

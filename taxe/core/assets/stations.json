@@ -5,29 +5,27 @@
       "junction": false,
       "x": "145",
       "y": 159,
-      "type": "SPORTS"
+      "types": ["SPORTS"]
     },
     {
-      "name": "Random Node",
+      "name": "Roundabout",
       "junction": true,
-      "x": "270",
-      "y": 149,
-      "type" : "RANDOM"
+      "x": "230",
+      "y": 220,
+      "types" : ["RANDOM"]
     },
     {
       "name": "Halifax",
       "junction": false,
       "x": "360",
       "y": 50,
-      "type": "COLLEGE"
+      "types": ["COLLEGE","SPORTS"]
     },
     {
       "name": "Physics",
       "junction": false,
       "x": "200",
       "y": 273,
-      "type": "DEPARTMENT",
-      "aliases": ["Electronics"],
       "types": ["DEPARTMENT"]
     },
     {
@@ -35,141 +33,133 @@
       "junction": false,
       "x": "222",
       "y": 334,
-      "type": "RANDOM"
+      "types": ["RANDOM"]
     },
     {
       "name": "The Charles",
       "junction": false,
       "x": "481",
       "y": 240,
-      "type": "PUB"
+      "types": ["PUB"]
     },
     {
       "name": "Heslington Hall",
       "junction": false,
       "x": "415",
       "y": 270,
-      "type": "RANDOM"
+      "types": ["RANDOM"]
     },
     {
       "name": "Library",
       "junction": false,
       "x": "248",
       "y": 440,
-      "type": "RANDOM"
+      "types": ["RANDOM"]
     },
     {
       "name": "Alcuin",
       "junction": false,
       "x": "315",
       "y": 520,
-      "type": "COLLEGE"
+      "types": ["COLLEGE","RANDOM","DEPARTMENT"]
     },
     {
       "name": "Science Park",
       "junction": false,
       "x": "415",
       "y": 470,
-      "type": "RANDOM"
+      "types": ["RANDOM"]
     },
     {
       "name": "Chemistry",
       "junction": false,
       "x": "390",
       "y": 400,
-      "type": "RANDOM"
+      "types": ["DEPARTMENT"]
     },
     {
       "name": "Derwent",
       "junction": false,
       "x": "320",
       "y": 355,
-      "type": "COLLEGE",
-      "aliases": ["Maths", "D-BAR"],
-      "types": ["DEPARTMENT", "PUB"]
+      "types": ["COLLEGE","PUB"]
     },
     {
       "name": "Vanbrugh",
       "junction": false,
       "x": "200",
       "y": 380,
-      "type": "COLLEGE",
-      "aliases": ["History of Art", "V-BAR"],
-      "types": ["DEPARTMENT", "PUB"]
+      "types": ["COLLEGE","DEPARTMENT"]
     },
     {
       "name": "Wentworth",
       "junction": false,
       "x": "50",
       "y": 380,
-      "type": "COLLEGE"
+      "types": ["COLLEGE"]
     },
     {
       "name": "Taxi Rank",
       "junction": false,
       "x": "98",
       "y": 473,
-      "type" : "TAXI"
+      "types" : ["TAXI"]
     },
     {
       "name": "Biology",
       "junction": false,
       "x": "50",
       "y": 289,
-      "type": "DEPARTMENT"
+      "types": ["DEPARTMENT"]
     },
     {
-      "name": "Yellow Brick Road",
+      "name": "Bus Lane",
       "junction": true,
-      "x": "565",
-      "y": 360,
-      "type": "RANDOM"
+      "x": "535",
+      "y": 390,
+      "types": ["RANDOM"]
     },
     {
       "name": "Computer Science",
       "junction": false,
       "x": "600",
       "y": 136,
-      "type": "DEPARTMENT"
+      "types": ["DEPARTMENT"]
     },
     {
       "name": "Goodricke",
       "junction": false,
       "x": "625",
       "y": 225,
-      "type" : "COLLEGE"
+      "types" : ["COLLEGE","DEPARTMENT"]
     },
     {
       "name": "Langwith",
       "junction": false,
       "x": "720",
       "y": 200,
-      "type": "PUB",
-      "aliases": ["Morel Bar"],
-      "types": ["PUB"]
+      "types": ["PUB","COLLEGE"]
     },
     {
       "name": "Constantine",
       "junction": false,
       "x": "800",
       "y": 200,
-      "type":"COLLEGE"
+      "types":["COLLEGE"]
     },  
     {
       "name": "Sport Village",
       "junction": false,
       "x": "900",
       "y": 200,
-      "type":"SPORTS"
+      "types":["SPORTS"]
     },
     {
       "name": "James",
       "junction": false,
       "x": "116",
       "y": 220,
-      "aliases": ["Psychology", "Morel Bar"],
-      "types": ["DEPARTMENT", "PUB"],
-      "type": "COLLEGE"
+      "types": ["COLLEGE","DEPARTMENT","PUB"]
     }
 
   ],
@@ -181,22 +171,22 @@
     },
     {
       "station1": "Heslington Hall",
-      "station2": "Random Node"
+      "station2": "Roundabout"
     },
     {
-      "station1": "Random Node",
+      "station1": "Roundabout",
       "station2": "Halifax"
     },
     {
-      "station1": "Random Node",
+      "station1": "Roundabout",
       "station2": "Sports Centre"
     },
     {
-      "station1": "Random Node",
+      "station1": "Roundabout",
       "station2": "James"
     },
     {
-      "station1": "Random Node",
+      "station1": "Roundabout",
       "station2": "Physics"
     },
     {
@@ -249,18 +239,18 @@
     },
     {
       "station1": "Heslington Hall",
-      "station2": "Yellow Brick Road"
+      "station2": "Bus Lane"
     },
     {
-      "station1": "Yellow Brick Road",
+      "station1": "Bus Lane",
       "station2": "Goodricke"
     },
     {
-      "station1": "Yellow Brick Road",
+      "station1": "Bus Lane",
       "station2": "Langwith"
     },
     {
-      "station1": "Yellow Brick Road",
+      "station1": "Bus Lane",
       "station2": "Sport Village"
     },
     {

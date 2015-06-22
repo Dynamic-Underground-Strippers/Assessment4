@@ -1,9 +1,13 @@
 package fvs.taxe.controller;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -15,6 +19,7 @@ import java.util.List;
 
 import fvs.taxe.StationClickListener;
 import fvs.taxe.TaxeGame;
+import fvs.taxe.actor.SkillBarActor;
 import fvs.taxe.actor.TrainActor;
 import gameLogic.Game;
 import gameLogic.GameState;
@@ -172,20 +177,15 @@ public class RouteController {
 
     /**This method is called when Routing commences for a Train. It sets up buttons for cancelling and finishing the routing,*/
     private void addRoutingButtons() {
-        TextButton doneRouting = new TextButton("Route Complete", context.getSkin());
-        TextButton cancel = new TextButton("Cancel", context.getSkin());
-
-        doneRouting.setPosition(TaxeGame.WIDTH - 250, TaxeGame.HEIGHT - 33);
-        cancel.setPosition(TaxeGame.WIDTH - 100, TaxeGame.HEIGHT - 33);
-
-        cancel.addListener(new ClickListener() {
+        CancelActor cancelActor = new CancelActor();
+        cancelActor.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 endRouting();
             }
         });
-
-        doneRouting.addListener(new ClickListener() {
+        CompleteActor completeActor = new CompleteActor();
+        completeActor.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 if(!canEndRouting) {
@@ -198,8 +198,8 @@ public class RouteController {
             }
         });
 
-        routingButtons.addActor(doneRouting);
-        routingButtons.addActor(cancel);
+        routingButtons.addActor(cancelActor);
+        routingButtons.addActor(completeActor);
 
         context.getStage().addActor(routingButtons);
     }
@@ -271,5 +271,40 @@ editingRoute = false;
             connections.get(i).getActor().setConnectionColor(Color.BLACK);
         }
     }
+    private class CompleteActor extends Actor {
+        private final Texture image;
 
+        public CompleteActor() {
+            image = new Texture(Gdx.files.internal("complete.png"));
+            setSize(120, 60);
+            setPosition(TaxeGame.WIDTH / 2f - 140, SkillBarActor.HEIGHT);
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            batch.end();
+            batch.begin();
+            batch.draw(image, getX(), getY(), getWidth(), getHeight());
+            batch.end();
+            batch.begin();
+        }
+    }
+    private class CancelActor extends Actor {
+        private final Texture image;
+
+        public CancelActor() {
+            image = new Texture(Gdx.files.internal("cancel.png"));
+            setSize(120, 60);
+            setPosition(TaxeGame.WIDTH / 2f +20, SkillBarActor.HEIGHT);
+        }
+
+        @Override
+        public void draw(Batch batch, float parentAlpha) {
+            batch.end();
+            batch.begin();
+            batch.draw(image, getX(), getY(), getWidth(), getHeight());
+            batch.end();
+            batch.begin();
+        }
+    }
 }

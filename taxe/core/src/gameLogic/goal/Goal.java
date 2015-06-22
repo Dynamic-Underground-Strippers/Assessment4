@@ -166,9 +166,25 @@ public class Goal {
 				}
 			}
 		}
-		return (passedOrigin&&!(passedExclusion));
 
-
+		if (passedOrigin&&!(passedExclusion)){
+			if (destinationType!=null){
+				if (train.getFinalDestination().getTypes().contains(destinationType)){
+					return true;
+				}
+			}else{
+				if (train.getFinalDestination()==destination){
+					if (turnCount==-1) {
+						if (train.getName() == this.trainName) {
+							return true;
+						}
+					}else{
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 	
 	/**This method checks whether the goal has failed on turns. If the turnCount is less than <= 0, it returns true, otherwise false.*/
@@ -190,7 +206,7 @@ public class Goal {
 
 	public String byHour(){
 		//Converts the turn in the goal to a time, which can be represented in the string
-		int newTurn = turnCount+turnIssued;
+		int newTurn = turnCount+Game.getInstance().getPlayerManager().getTurnNumber();
 		int l = newTurn/2;
 		if (newTurn%2 ==1) return 9+l +":30 o'clock";
 		else  return 9+l +":00";

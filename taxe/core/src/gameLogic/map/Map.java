@@ -72,59 +72,36 @@ public class Map {
      * @param jsonVal The Json data to use.
      */
     private void parseStations(JsonValue jsonVal) {
-        for(JsonValue station = jsonVal.getChild("stations"); station != null; station = station.next) {
+        for (JsonValue station = jsonVal.getChild("stations"); station != null; station = station.next) {
             String name = "";
-            NodeType type = null;
+            ArrayList<NodeType> types = new ArrayList<NodeType>();
             int x = 0;
             int y = 0;
             boolean isJunction = false;
-            ArrayList<Pair<String, NodeType>> aliases = new ArrayList<Pair<String,NodeType>>();
-//            String[] aliases2;
-//            String[] aliases3;
-            String[] a = null;
-            String[] b = null;
-
-            for(JsonValue val = station.child; val != null; val = val.next) {
-                if(val.name.equalsIgnoreCase("name")) {
+            String[] typeStrings = null;
+            for (JsonValue val = station.child; val != null; val = val.next) {
+                if (val.name.equalsIgnoreCase("name")) {
                     name = val.asString();
-                } else if(val.name.equalsIgnoreCase("x")) {
+                } else if (val.name.equalsIgnoreCase("x")) {
                     x = val.asInt();
-                } else if(val.name.equalsIgnoreCase("y")) {
+                } else if (val.name.equalsIgnoreCase("y")) {
                     y = val.asInt();
-                } else if(val.name.equalsIgnoreCase("junction")) {
+                } else if (val.name.equalsIgnoreCase("junction")) {
                     isJunction = val.asBoolean();
-                }else if (val.name.equalsIgnoreCase("type")){
-                    type= NodeType.valueOf(val.asString());
-                } else if (val.name.equalsIgnoreCase("aliases")) {
-                    a = val.asStringArray();
                 } else if (val.name.equalsIgnoreCase("types")) {
-                    b = val.asStringArray();
-                }
-                if (a != null && b != null) {
-                    for (int i = 0; i < a.length; i++) {
-                        aliases.add(new Pair<String, NodeType>(a[i], NodeType.valueOf(b[i])));
+                    typeStrings = val.asStringArray();
+                    for (int i = 0; i < typeStrings.length; i++) {
+                        types.add(NodeType.valueOf(typeStrings[i]));
                     }
-                    a = null;
-                    b = null;
                 }
-//                else {
-//                    //save the aliases. String will look like "Goodricke:college, Glasshouse:bar"
-//                    aliases2 = val.asString().split(","); //split it into tokens of name:type
-//                    if (aliases2.length > 0) {
-//                        for (int i = 0; i < aliases2.length; i++) //for each token
-//                            aliases3 = aliases2[i].split(":"); //split it
-//                        Pair pair = new Pair(aliases3[0], aliases3[1]);
-//                        aliases.add(pair);//add the pair to aliases
-//                    }
-//                }
+            }
+                if (isJunction) {
+                    addJunction(name, new Position(x, y));
+                } else {
+                    addStation(name, new Position(x, y + 85), types);
+                }
             }
 
-            if (isJunction) {
-                addJunction(name, new Position(x,y));
-            } else {
-                addStation(name, new Position(x, y + 85), type ,aliases);
-            }
-        }
     }
 
     /**This method checks whether a connection exists between 2 stations.
@@ -175,8 +152,8 @@ public class Map {
      * @param location The position of the new station in the game.
      * @return The newly added station.
      */
-    public Station addStation(String name, Position location, NodeType type, ArrayList<Pair<String, NodeType>> aliases) {
-        Station newStation = new Station(name, location, type, aliases);
+    public Station addStation(String name, Position location, ArrayList<NodeType> types) {
+        Station newStation = new Station(name, location, types);
         stations.add(newStation);
         return newStation;
     }
@@ -563,7 +540,7 @@ public class Map {
         //Retrieves a random station of the NodeType passed to the method
         ArrayList<Station> ofThisType = new ArrayList<Station>();
         for (Station s : stations) {
-            if(s.getType() == type) ofThisType.add(s);
+            if(s.getTypes().contains(type)) ofThisType.add(s);
         }
         Random random = new Random();
         int i = random.nextInt(ofThisType.size());

@@ -76,28 +76,28 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
             case TRAIN_DELETE:
                 currentPlayer.removeResource(train);
                 break;
-            case TRAIN_PLACE:
+            case TRAIN_PLACE: {
                 Pixmap pixmap = new Pixmap(Gdx.files.internal(train.getCursorImage()));
                 Gdx.input.setCursorImage(pixmap, 0, 0);
                 pixmap.dispose();
 
                 Game.getInstance().setState(GameState.PLACING);
-               try {
-                   Game.getInstance().getJelly().getActor().setVisible(false);
-               }catch(Exception e){
+                try {
+                    Game.getInstance().getJelly().getActor().setVisible(false);
+                } catch (Exception e) {
 
-               }
+                }
                 final TrainController trainController = new TrainController(context);
                 trainController.setTrainsVisible(null, false);
 
                 StationController.subscribeStationClick(new StationClickListener() {
                     @Override
                     public void clicked(Station station) {
-                    	if(station instanceof CollisionStation) {
+                        if (station instanceof CollisionStation) {
 //                    		context.getNotepadController().displayFlashMessage("Trains cannot be placed at junctions.", Color.RED);
-                    		return;
-                    	}
-                    	
+                            return;
+                        }
+
                         train.setPosition(station.getLocation());
                         train.addHistory(station, Game.getInstance().getPlayerManager().getTurnNumber());
 
@@ -109,15 +109,37 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                         train.setActor(trainActor);
                         try {
                             Game.getInstance().getJelly().getActor().setVisible(true);
-                        }catch(Exception e){
+                        } catch (Exception e) {
 
                         }
                         StationController.unsubscribeStationClick(this);
                         Game.getInstance().setState(GameState.NORMAL);
                     }
                 });
+                final InputListener keyListener = new InputListener() {
+                    @Override
+                    public boolean keyDown(InputEvent event, int keycode) {
+                        //If the Escape key is pressed while placing an obstacle then it is cancelled
+                        if (keycode == Input.Keys.ESCAPE) {
+                            //Makes all trains visible
+                            TrainController trainController = new TrainController(context);
+                            trainController.setTrainsVisible(null, true);
 
+                            //Resets cursor
+                            Gdx.input.setCursorImage(null, 0, 0);
+                            Game.getInstance().setState(GameState.NORMAL);
 
+                            //Removes itself from the keylisteners of the game as otherwise there would be a lot of null pointer exceptions and unintended behaviour
+                            context.getStage().removeListener(this);
+                        }
+                        //keyDown requires you to return the boolean true when the function has completed, so this ends the function
+                        return true;
+                    }
+                };
+
+                //Adds the listeners to their relevant entities
+                context.getStage().addListener(keyListener);
+            }
                 break;
             case TRAIN_ROUTE:
                 context.getRouteController().begin(train);
@@ -134,12 +156,10 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                 currentPlayer.removeResource(newConnection);
                 break;
 
-            case NEWCONNECTION_CREATE:
-                /*
-                //Sets the cursor to be the one used to indicate placing a blockage
-                Pixmap pixmap = new Pixmap(Gdx.files.internal("BlockageCursor.png"));
+            case NEWCONNECTION_CREATE: {
+                Pixmap pixmap = new Pixmap(Gdx.files.internal("resources/cursor/NewTrackCursor.png"));
                 Gdx.input.setCursorImage(pixmap, 0, 0); // these numbers will need tweaking
-                pixmap.dispose(); */
+                pixmap.dispose();
 
                 //Indicates that a resource is currently being placed and to hide all trains
                 //While it would be useful to see trains while placing an obstacle, this was done to remove the possibility of trains preventing the user being able to click a node
@@ -169,7 +189,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                 //Create connection and actor then check if connection overlaps others
                                 Boolean bool = newConnection.use(context);
 
-                                if (bool){
+                                if (bool) {
                                     //new connection successfully added
                                     //The obstacle is removed from the player's inventory as it has been used
                                     currentPlayer.removeResource(newConnection);
@@ -193,7 +213,6 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                 }
 
                             } else {
-
 
 
                                 //Informs the player that their selection is invalid and cancels placement
@@ -254,7 +273,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                 StationController.subscribeStationClick(stationListener);
 
                 break;
-
+            }
             case DELETECONNECTION_DROP:
                 //Removes the resource from the current player's inventory if they click the NEWCONNECTION_DROP button
                 currentPlayer.removeResource(deleteConnection);
@@ -262,12 +281,11 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
 
 
 
-            case DELETECONNECTION_DELETE:
-                /*
-                //Sets the cursor to be the one used to indicate placing a blockage
-                Pixmap pixmap = new Pixmap(Gdx.files.internal("BlockageCursor.png"));
+            case DELETECONNECTION_DELETE: {
+
+                Pixmap pixmap = new Pixmap(Gdx.files.internal("resources/cursor/BlockageCursor.png"));
                 Gdx.input.setCursorImage(pixmap, 0, 0); // these numbers will need tweaking
-                pixmap.dispose(); */
+                pixmap.dispose();
 
                 //Indicates that a resource is currently being placed and to hide all trains
                 //While it would be useful to see trains while placing an obstacle, this was done to remove the possibility of trains preventing the user being able to click a node
@@ -295,13 +313,13 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                             if (context.getGameLogic().getMap().doesConnectionExist(deleteConnection.getStation1().getName(), deleteConnection.getStation2().getName())) {
 
                                 Boolean trainOnConnection = false;
-                                System.out.println("Clicked:"+deleteConnection.getStation1().getName()+","+deleteConnection.getStation2().getName());
-                                for (Player player : Game.getInstance().getPlayerManager().getAllPlayers()){
-                                    for (Train train : player.getActiveTrains()){
+                                System.out.println("Clicked:" + deleteConnection.getStation1().getName() + "," + deleteConnection.getStation2().getName());
+                                for (Player player : Game.getInstance().getPlayerManager().getAllPlayers()) {
+                                    for (Train train : player.getActiveTrains()) {
                                         if ((train.getLastStation().getName().equals(deleteConnection.getStation1().getName()) &&
                                                 train.getNextStation().getName().equals(deleteConnection.getStation2().getName())) ||
                                                 (train.getLastStation().getName().equals(deleteConnection.getStation2().getName()) &&
-                                                train.getNextStation().getName().equals(deleteConnection.getStation1().getName()))) {
+                                                        train.getNextStation().getName().equals(deleteConnection.getStation1().getName()))) {
                                             //sets trainOnConnection to true if a train is on the connection to be deleted
                                             trainOnConnection = true;
                                         }
@@ -322,7 +340,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                     //Delete connection ensuring that the two stations are still connected
                                     Boolean bool = deleteConnection.use(context);
 
-                                    if (bool){
+                                    if (bool) {
                                         //connection deleted successfully added
                                         //The obstacle is removed from the player's inventory as it has been used
                                         currentPlayer.removeResource(deleteConnection);
@@ -338,8 +356,6 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
                                     }
 
                                 }
-
-
 
 
                             } else {
@@ -403,7 +419,7 @@ public class DialogButtonClicked implements ResourceDialogClickListener {
 
                 break;
 
-
+            }
 
         }
         SkillBarController.getInstance().draw();

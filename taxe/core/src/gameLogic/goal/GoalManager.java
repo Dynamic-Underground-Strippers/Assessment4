@@ -110,7 +110,7 @@ public class GoalManager {
 			if(goal.isComplete(train)) {
 				player.completeGoal(goal);
 				player.removeResource(train);
-				completedString.add("Player " + player.getPlayerNumber() + " completed a goal to " + goal.toString() + "!");
+				System.out.println("Player " + player.getPlayerNumber() + " completed a goal to " + goal.toString() + "!");
 				goalFinished(goal);
 				//This break is necessary as a train can only complete a single goal and without it the game crashes due to an ieration error as the goal us renoved fron the iterated list
 				break;
@@ -236,7 +236,7 @@ public class GoalManager {
 		ArrayList<List <Station>> ofThisType= new ArrayList<List<Station>>();
 		for (int i=0; i< Game.getInstance().getMap().getStations().size();i++)
 		{
-			if (Game.getInstance().getMap().getStations().get(i).getType() == type)
+			if (Game.getInstance().getMap().getStations().get(i).getTypes().contains(type))
 				ofThisType.add(getIdealRoute(origin, Game.getInstance().getMap().getStations().get(i)));
 		}
 

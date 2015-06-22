@@ -40,9 +40,9 @@ public class MainMenuScreen extends ScreenAdapter {
         camera = new OrthographicCamera(TaxeGame.WIDTH, TaxeGame.HEIGHT);
         camera.setToOrtho(false);
 
-        playBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 + 100, 400, 100);
+        playBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 + 80, 400, 100);
 
-        exitBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 - 200, 400, 100);
+        exitBounds = new Rectangle(TaxeGame.WIDTH / 2 - 200, TaxeGame.HEIGHT / 2 - 100, 400, 100);
         touchPoint = new Vector3();
         mapTexture = new Texture(Gdx.files.internal("Map4.png"));
     }

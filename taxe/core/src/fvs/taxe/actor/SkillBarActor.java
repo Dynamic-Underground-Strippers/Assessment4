@@ -57,10 +57,12 @@ public class SkillBarActor extends Actor {
 					getHeight(), getHeight());
 			if (i < resources.size()) {
 				if (resources.get(i) instanceof Train) {
-					batch.draw(textures.get(((Train) resources.get(i)).getName()),
-							getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
-									(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
-							getHeight() * 0.8f, getHeight() * 0.8f);
+						if (((Train)(resources.get(i))).getPosition()==null) {
+						batch.draw(textures.get(((Train) resources.get(i)).getName()),
+								getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +
+										(getHeight() * 0.1f), getY() + (getHeight() * 0.15f),
+								getHeight() * 0.8f, getHeight() * 0.8f);
+					}
 				} else if (resources.get(i) instanceof NewConnection) {
 					batch.draw(textures.get("New Connection"),
 							getX() + ((float) i / (float) NUM_ITEMS) * getWidth() +

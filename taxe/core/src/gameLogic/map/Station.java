@@ -19,8 +19,8 @@ public class Station{
 	/**The obstacle occupying the station, if any.*/
 	private Obstacle obstacle;
 
-	private NodeType type;
-	private ArrayList<Station> aliases;
+	private ArrayList<NodeType> types;
+
 	/**Instantiation method.
 	 * @param name The name of the station.
 	 * @param location The location of the station.
@@ -28,14 +28,14 @@ public class Station{
 	public Station(String name, IPositionable location) {
 		this.name = name;
 		this.location = location;
-		aliases = new ArrayList<Station>();
+		this.types = new ArrayList<NodeType>();
+		this.types.add(NodeType.RANDOM);
 	}
 
-	public Station(String name, IPositionable location,NodeType type, ArrayList<Pair<String, NodeType>> aliases) {
+	public Station(String name, IPositionable location,ArrayList<NodeType> types) {
 		this.name = name;
 		this.location = location;
-		aliases = aliases;
-		this.type = type;
+		this.types = types;
 	}
 	
 	/**@return The name of the station.*/
@@ -98,8 +98,7 @@ public class Station{
 		this.obstacle = null;
 	}
 
-	public void addAlias(Station station){this.aliases.add(station);}
 
-	public NodeType getType () {return type;}
+	public ArrayList<NodeType> getTypes () {return types;}
 }
 
